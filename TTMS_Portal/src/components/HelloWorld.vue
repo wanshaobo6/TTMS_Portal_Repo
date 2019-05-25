@@ -11,8 +11,6 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  props: {
-    msg: String
   }
 }
 </script>
@@ -21,9 +19,6 @@ export default {
 <style scoped>
 h1, h2 {
   font-weight: normal;
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
 }
 ul {
   list-style-type: none;

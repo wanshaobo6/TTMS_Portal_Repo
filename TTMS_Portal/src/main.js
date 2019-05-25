@@ -19,4 +19,3 @@ new Vue({
   router,
   template: '<App/>'
 })
-
