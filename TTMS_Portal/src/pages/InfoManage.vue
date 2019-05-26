@@ -85,8 +85,14 @@
       prop="operation"
       label="操作">
 	  <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-        <el-button type="text" size="small">发布</el-button>
+         <el-button
+          size="mini"
+          type="text" v-if="scope.row.public == '是'"
+          >撤回</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            v-else>修改 发布</el-button>
       </template>
     </el-table-column>
   </el-table>

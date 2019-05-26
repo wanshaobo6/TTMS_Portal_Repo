@@ -98,7 +98,11 @@
 	  label="操作">
 	  <template slot-scope="scope">
 	    <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-	    <el-button type="text" size="small">禁用</el-button>
+		<el-button
+		  size="mini"
+		  type="text" v-if="scope.row.validate == '启用'"
+		  >禁用</el-button>
+		  <el-button type="text" size="small" v-else>启用</el-button>
 	  </template>
 	</el-table-column>
   </el-table>
@@ -122,7 +126,7 @@
 
 <script>
 export default {
-	name: 'InfoManage',
+	name: 'ChannelManage',
 	data() {
 		return {
 			options: [{
