@@ -22,6 +22,7 @@ var router =  new Router({
 		route("/Login",'/Login',"Login"),
 		route("/InfoManage",'/InfoManage',"InfoManage"),
 		route("/City",'/City',"City"),
+		route("/ChannelManage",'/ChannelManage',"ChannelManage"),
     /*    {
           path:"/", // 根路径，路由到 Layout组件
           component: () => import('../pages/Layout'),

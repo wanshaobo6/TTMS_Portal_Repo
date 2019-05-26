@@ -92,47 +92,9 @@ export default {
 	name: 'InfoManage',
 	data() {
 		return {
-			options: [{
-			  value: '选项1',
-			  label: '一级分类'
-			}, {
-			  value: '选项2',
-			  label: '二级分类'
-			}, {
-			  value: '选项3',
-			  label: '三级分类'
-			}, ],
-			value: '',
 			input1: '',
 			input2: '',
 			input3: '',
-			pickerOptions: {
-			  disabledDate(time) {
-			    return time.getTime() > Date.now();
-			  },
-			  shortcuts: [{
-			    text: '今天',
-			    onClick(picker) {
-			      picker.$emit('pick', new Date());
-			    }
-			  }, {
-			    text: '昨天',
-			    onClick(picker) {
-			      const date = new Date();
-			      date.setTime(date.getTime() - 3600 * 1000 * 24);
-			      picker.$emit('pick', date);
-			    }
-			  }, {
-			    text: '一周前',
-			    onClick(picker) {
-			      const date = new Date();
-			      date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-			      picker.$emit('pick', date);
-			    }
-			  }]
-			},
-			value1: '',
-			value2: '',
 			 tableData: [{
           number: 'CITY00002',
 		  name:'阿尔巴尼亚',
