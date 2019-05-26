@@ -47,8 +47,47 @@
 		
 					</el-row>
 					<div class="Search"><el-button type="primary">查询</el-button>
-						<el-button type="primary" @click="addProject(scope.$index, scope.row)">新增</el-button></div>
-						<!-- @click="addProject(scope.$index, scope.row)" -->
+						<el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
+						<el-dialog title="添加项目信息" :visible.sync="dialogFormVisible">
+  <el-form :model="form" >
+	  		  <el-form-item label="项目编号:" :rules="[
+	  { required: true },]">
+	  		    <el-input v-model="form.id" placeholder="TP性质-日期-国家地区-城市-序号"></el-input>
+	  		  </el-form-item>
+	  		   <el-form-item label="项目名称:" :rules="[
+	  { required: true },]">
+	  		    <el-input v-model="form.name"></el-input>
+	  		  </el-form-item>
+			  <el-form-item label="日期:">
+			    <el-col :span="8">
+			      <el-date-picker type="date" placeholder="起始日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+			    </el-col>
+			    <el-col class="line" :span="2">-</el-col>
+			    <el-col :span="8">
+			      <el-date-picker type="date" placeholder="结束日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+			    </el-col>
+			  </el-form-item>
+			  <el-form-item label="归属部门:">
+			    <div class="choose"><el-select v-model="form.region" placeholder="选择归属部门">
+			      <el-option label="华中部" value="shanghai"></el-option>
+			      <el-option label="东北部" value="beijing"></el-option>
+			  			  <el-option label="东南部" value="shanghai"></el-option>
+			  			  <el-option label="欧美部" value="beijing"></el-option>
+			  			  <el-option label="日韩部" value="shanghai"></el-option>
+			  			  <el-option label="西南部" value="beijing"></el-option>
+			    </el-select></div>
+			  </el-form-item>
+			  <el-form-item label="备注:">
+			    <el-input type="textarea" v-model="form.desc"></el-input>
+			  </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+  </div>
+</el-dialog>
+						</div>
+						
 					</div>
 					<div class="body">
 						<el-table
@@ -132,6 +171,19 @@ export default {
 	name: 'ProInfoManage',
 	data() {
 		return {
+			dialogFormVisible: false,
+        form: {
+			id:'',
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '120px',
 			pickerOptions: {
           disabledDate(time) {
             return time.getTime() > Date.now();
@@ -263,9 +315,6 @@ export default {
 		};
 	},
 	methods: {
-		 addProject(index, row){
-		    this.$router.push({ path: "addProject"})
-		},
 		handleEdit(index, row) {
         console.log(index, row);
       },
@@ -297,6 +346,9 @@ export default {
 	            height:100%;
 	
 	        }
+.choose{
+		float: left;
+	}
 .Search{
 	margin-top: 10px;
 	  margin-left: 860px;
