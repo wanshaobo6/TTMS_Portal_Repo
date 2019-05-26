@@ -25,6 +25,9 @@ var router =  new Router({
 		route("/ChannelManage",'/ChannelManage',"ChannelManage"),
 		route("/OrganizeManage",'/OrganizeManage',"OrganizeManage"),
 		route("/ProductList",'/ProductList',"ProductList"),
+		route("/ProInfoManage",'/ProInfoManage',"ProInfoManage"),
+		route("/addProject",'/addProject',"addProject"),
+		
     /*    {
           path:"/", // 根路径，路由到 Layout组件
           component: () => import('../pages/Layout'),
