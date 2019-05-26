@@ -17,7 +17,10 @@ function route (path, file, name, children) {
 /*注册页面路由*/
 var router =  new Router({
   routes: [
-    route("/liyunfei",'/liyunfei',"liyunfei"),// /login路径，路由到登录组件
+    route("/liyunfei",'/liyunfei',"liyunfei"),
+		// /login路径，路由到登录组件
+		route("/Login",'/Login',"Login"),
+		route("/InfoManage",'/InfoManage',"InfoManage"),
     /*    {
           path:"/", // 根路径，路由到 Layout组件
           component: () => import('../pages/Layout'),

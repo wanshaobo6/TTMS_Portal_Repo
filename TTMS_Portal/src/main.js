@@ -8,7 +8,11 @@ import config from "./config"
 import Vuetify from 'vuetify' //导入vuetify
 import 'vuetify/dist/vuetify.min.css'   //导入vuetifyCSS
 import './assets/material.css'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
+
+Vue.use(ElementUI);
 Vue.use(Vuetify, { theme: config.theme})
 Vue.config.productionTip = false
 
