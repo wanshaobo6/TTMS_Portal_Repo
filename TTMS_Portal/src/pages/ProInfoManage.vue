@@ -80,7 +80,7 @@
 			    <el-input type="textarea" v-model="form.desc"></el-input>
 			  </el-form-item>
   </el-form>
-  <div slot="footer" class="dialog-footer">
+  <div slot-scope="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
   </div>
@@ -121,7 +121,7 @@
 	prop="status"
 	  label="状态"
 	  width="60">
-	  <template scope="scope">
+	  <template slot-scope="scope">
 		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
 		<span v-else style="color: red">禁用</span>
 	</template>
