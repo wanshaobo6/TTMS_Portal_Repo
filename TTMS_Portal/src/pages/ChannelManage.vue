@@ -48,7 +48,7 @@
       prop="name"
       label="渠道名称"
       width="120">
-	  <template scope="scope">
+	  <template slot-scope="scope">
 		  <span v-if="scope.row.status=== 0">携程线上渠道</span>
                     <span v-else style="color: royalblue">携程线上渠道</span>
 	  </template>

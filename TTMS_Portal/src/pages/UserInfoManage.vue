@@ -43,7 +43,7 @@
 															   </el-form-item> 
 													 
 						  </el-form>
-						  <div slot="footer" class="dialog-footer">
+						  <div slot-scope="footer" class="dialog-footer">
 						    <el-button @click="dialogFormVisible = false">取 消</el-button>
 						    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
 						  </div>
@@ -58,7 +58,7 @@
     border
     style="width: 100%">
 	<el-table-column label="选择" width="80" align="center">
-    <template scope="scope">
+    <template slot-scope="scope">
       <el-radio class="radio"  v-model="radio"  :label="scope.$index">&nbsp;</el-radio>
    </template>
 </el-table-column> 
@@ -82,7 +82,7 @@
 	  prop="status"
 	  label="状态"
 	  width="180">
-	   <template scope="scope">
+	   <template slot-scope="scope">
 	  	<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
 	  	<span v-else style="color: red">禁用</span>
 	  </template>
