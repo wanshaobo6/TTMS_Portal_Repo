@@ -10,7 +10,7 @@
   <el-breadcrumb-item>渠道商资料管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="20">
+					<el-row :gutter="22">
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="渠道编号"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="渠道名称/简称"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">

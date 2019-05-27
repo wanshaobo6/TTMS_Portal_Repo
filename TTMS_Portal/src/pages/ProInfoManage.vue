@@ -43,11 +43,10 @@
       :value="item.value">
     </el-option>
   </el-select></div></el-col>
-						
-		
 					</el-row>
-					<div class="Search"><el-button type="primary">查询</el-button>
-						<el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
+				<el-row :gutter="20">
+  <el-col :span="20"><div class="grid-content Search"><el-button type="primary">查询</el-button></div></el-col>
+  <el-col :span="2"><div class="grid-content "><el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 						<el-dialog title="添加项目信息" :visible.sync="dialogFormVisible">
   <el-form :model="form" >
 	  		  <el-form-item label="项目编号:" :rules="[
@@ -85,8 +84,8 @@
     <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
   </div>
-</el-dialog>
-						</div>
+</el-dialog></div></el-col>
+</el-row>
 						
 					</div>
 					<div class="body">
@@ -350,8 +349,7 @@ export default {
 		float: left;
 	}
 .Search{
-	margin-top: 10px;
-	  margin-left: 860px;
+	float: right;
 }			
 .el-header {
     background-color: #B3C0D1;
@@ -419,5 +417,31 @@ export default {
   
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
+  }
+  .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
   }
 </style>
