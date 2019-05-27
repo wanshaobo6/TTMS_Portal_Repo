@@ -3,38 +3,16 @@
   <el-header>Header</el-header>
   <el-container>
     <el-aside width="200px">Aside</el-aside>
-    <el-main><div class="top"><p class="title" style="color:#B3C0D1">项目信息管理</p>
+    <el-main><div class="top"><p class="title" style="color:#B3C0D1">团号管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-  <el-breadcrumb-item>项目</el-breadcrumb-item>
-  <el-breadcrumb-item>项目信息管理</el-breadcrumb-item>
+  <el-breadcrumb-item>团号</el-breadcrumb-item>
+  <el-breadcrumb-item>团号管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
 					<el-row :gutter="20">
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="项目编号"></el-input></div></el-col>
+						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="团名称"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
-						<el-col :span="4"><div class="grid-content "><el-select v-model="value" filterable placeholder="选择归属部门">
-    <el-option
-      v-for="item in options1"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select></div></el-col>
-  <el-col :span="5"><div class="grid-content ">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="起始日期">
-    </el-date-picker>
-  </div></el-col>
-   <el-col :span="5"><div class="grid-content ">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="终止日期">
-    </el-date-picker>
-  </div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="选择状态">
     <el-option
       v-for="item in options"
@@ -43,53 +21,41 @@
       :value="item.value">
     </el-option>
   </el-select></div></el-col>
-					</el-row>
-				<el-row :gutter="20">
-  <el-col :span="20"><div class="grid-content bg-purple Search"><el-button type="primary">查询</el-button></div></el-col>
-  <el-col :span="2"><div class="grid-content bg-purple"><el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
+  <el-col :span="2"><div class="grid-content Search"><el-button type="success">查询</el-button></div></el-col>
+  <el-col :span="2"><div class="grid-content "><el-button type="success" @click="dialogFormVisible = true">新增</el-button>
 
-<el-dialog title="项目信息管理" :visible.sync="dialogFormVisible">
-  <el-form ref="form" :model="form" label-width="100px">
-    <el-form-item label="项目编号:" :rules="[
-    { required: true },]">
-      <el-input v-model="form.id" placeholder="TP性质-日期-国家地区-城市-序号"></el-input>
+<el-dialog title="创建团" :visible.sync="dialogFormVisible">
+  <el-form :model="form">
+    <el-form-item label="团名称" :label-width="formLabelWidth" :rules="[
+	  { required: true },]">
+      <el-input v-model="form.name" autocomplete="off" placeholder="请输入团名称"></el-input>
     </el-form-item>
-     <el-form-item label="项目名称:" :rules="[
-    { required: true },]">
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
-    
-    <el-form-item label="日期:">
-      <el-col :span="11">
-        <el-date-picker type="date" placeholder="起始日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-      </el-col>
-      <el-col class="line" :span="2">-</el-col>
-      <el-col :span="11">
-        <el-date-picker type="date" placeholder="结束日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
-      </el-col>
-    </el-form-item>
-    <el-form-item label="归属部门:">
-      <div class="choose"><el-select v-model="form.region" placeholder="选择归属部门">
-        <el-option label="华中部" value="shanghai"></el-option>
-        <el-option label="东北部" value="beijing"></el-option>
-  	  <el-option label="东南部" value="shanghai"></el-option>
-  	  <el-option label="欧美部" value="beijing"></el-option>
-  	  <el-option label="日韩部" value="shanghai"></el-option>
-  	  <el-option label="西南部" value="beijing"></el-option>
+    <el-form-item label="所属项目" :label-width="formLabelWidth" :rules="[
+	  { required: true },]">
+      <div class="choose">
+		  <el-select v-model="form.region">
+        <el-option label="西安 清风唐韵" value="shanghai"></el-option>
+        <el-option label="哈尔滨旅游团" value="beijing"></el-option>
       </el-select></div>
     </el-form-item>
-    <el-form-item label="备注:">
-      <el-input type="textarea" v-model="form.desc"></el-input>
-    </el-form-item>
+	<el-form-item label="负责人" :label-width="formLabelWidth" :rules="[
+	  { required: true },]">
+	 <div class="choose"> <el-select v-model="form.region" placeholder="请输入负责人名称">
+	    <el-option label="王悦" value="shanghai"></el-option>
+	    <el-option label="张可可" value="beijing"></el-option>
+		<el-option label="李林" value="beijing"></el-option>
+	  </el-select></div>
+	</el-form-item>
+	<el-form-item label="团号说明" :label-width="formLabelWidth">
+    <el-input type="textarea" v-model="form.desc" ></el-input>
+  </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
   </div>
-</el-dialog>
-  
-  </div></el-col>
-</el-row>
+</el-dialog></div></el-col>
+					</el-row>
 						
 					</div>
 					<div class="body">
@@ -97,43 +63,38 @@
     :data="tableData"
     style="width: 100%">
     <el-table-column
-	  prop="id"
-      label="项目编号"
+	  prop="name"
+      label="团名称"
       width="210">
     </el-table-column>
 	<el-table-column
-	  prop="name"
-	  label="项目名称"
-	  width="140">
-	</el-table-column>
-	<el-table-column
-	  prop="department"
-	  label="归属部门"
-	  width="100">
+	  prop="project"
+	  label="所属项目"
+	  width="180">
 	</el-table-column>
     <el-table-column
-	prop="start"
-      label="开始日期"
+	prop="principal"
+      label="负责人"
       width="100">
     </el-table-column>
 	<el-table-column
-	prop="end"
-	  label="结束日期"
-	  width="100">
+	prop="phone"
+	  label="负责人联系方式"
+	  width="180">
+	</el-table-column>
+	<el-table-column
+	prop="explain"
+	  label="团号说明"
+	  width="200">
 	</el-table-column>
 	<el-table-column
 	prop="status"
 	  label="状态"
 	  width="60">
-	  <template scope="scope">
+	  <template slot-scope="scope">
 		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
 		<span v-else style="color: red">禁用</span>
 	</template>
-	</el-table-column>
-	<el-table-column
-	  label="备注"
-	  prop="comment"
-	  width="220">
 	</el-table-column>
     <el-table-column label="操作">
 		
@@ -187,98 +148,63 @@ export default {
           desc: ''
         },
         formLabelWidth: '120px',
-			pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: '',
 			 tableData: [{
-				 id:'TPCN-CHN-20170605-XA-11',
-				 name:'西安，清风唐韵',
-				 department:'华中部',
-				 start:'2019-5-26',
-				 end:'2019-5-31',
+				 name:'20170605西安四天三夜游团',
+				 project:'西安 清风唐韵',
+				 principal:'李梅',
+				 phone:'18778876545',
+				 explain:'20170605西安四天三夜游团',
 				 status:'启用',
-				 comment:'西安，清风唐韵的项目',
         }, {
-          id:'TPCN-CHN-20170605-XA-11',
-          name:'西安，清风唐韵',
-          department:'日韩部',
-          start:'2019-5-26',
-          end:'2019-5-31',
-          status:'禁用',
-          comment:'西安，清风唐韵的项目',
-        }, {
-         id:'TPCN-CHN-20170605-XA-11',
-         name:'西安，清风唐韵',
-         department:'华中部',
-         start:'2019-5-26',
-         end:'2019-5-31',
-         status:'禁用',
-         comment:'西安，清风唐韵的项目',
-        }, {
-          id:'TPCN-CHN-20170605-XA-11',
-          name:'西安，清风唐韵',
-          department:'华中部',
-          start:'2019-5-26',
-          end:'2019-5-31',
+           name:'20170605西安四天三夜游团',
+          project:'西安 清风唐韵',
+          principal:'李梅',
+          phone:'18778876545',
+          explain:'20170605西安四天三夜游团',
           status:'启用',
-          comment:'西安，清风唐韵的项目',
+        }, {
+          name:'20170605西安四天三夜游团',
+         project:'西安 清风唐韵',
+         principal:'李梅',
+         phone:'18778876545',
+         explain:'20170605西安四天三夜游团',
+         status:'启用',
+        }, {
+           name:'20170605西安四天三夜游团',
+          project:'西安 清风唐韵',
+          principal:'李梅',
+          phone:'18778876545',
+          explain:'20170605西安四天三夜游团',
+          status:'禁用',
         },
 		{
-		  id:'TPCN-CHN-20170605-XA-11',
-		  name:'西安，清风唐韵',
-		  department:'日韩部',
-		  start:'2019-5-26',
-		  end:'2019-5-31',
-		  status:'禁用',
-		  comment:'西安，清风唐韵的项目',
+		   name:'20170605西安四天三夜游团',
+		  project:'西安 清风唐韵',
+		  principal:'李梅',
+		  phone:'18778876545',
+		  explain:'20170605西安四天三夜游团',
+		  status:'启用',
 		}, {
-		 id:'TPCN-CHN-20170605-XA-11',
-		 name:'西安，清风唐韵',
-		 department:'华中部',
-		 start:'2019-5-26',
-		 end:'2019-5-31',
-		 status:'启用',
-		 comment:'西安，清风唐韵的项目',
-		},{
-		 id:'TPCN-CHN-20170605-XA-11',
-		 name:'西安，清风唐韵',
-		 department:'西南部',
-		 start:'2019-5-26',
-		 end:'2019-5-31',
+		  name:'20170605西安四天三夜游团',
+		 project:'西安 清风唐韵',
+		 principal:'李梅',
+		 phone:'18778876545',
+		 explain:'20170605西安四天三夜游团',
 		 status:'禁用',
-		 comment:'西安，清风唐韵的项目',
 		},{
-		 id:'TPCN-CHN-20170605-XA-11',
-		 name:'西安，清风唐韵',
-		 department:'日韩部',
-		 start:'2019-5-26',
-		 end:'2019-5-31',
+		  name:'20170605西安四天三夜游团',
+		 project:'西安 清风唐韵',
+		 principal:'李梅',
+		 phone:'18778876545',
+		 explain:'20170605西安四天三夜游团',
 		 status:'禁用',
-		 comment:'西安，清风唐韵的项目',
+		},{
+		 name:'20170605西安四天三夜游团',
+		project:'西安 清风唐韵',
+		principal:'李梅',
+		phone:'18778876545',
+		explain:'20170605西安四天三夜游团',
+		status:'启用',
 		}],
 			input1: '',
 			input2: '',
