@@ -64,8 +64,11 @@
       prop="operation"
       label="操作">
 	  <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-        <el-button type="text" size="small">禁用</el-button>
+        <el-button
+          size="mini"
+          type="text" v-if="scope.row.available == '启用'"
+          >禁用</el-button>
+          <el-button type="text" size="small" v-else>启用</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -89,7 +92,7 @@
 
 <script>
 export default {
-	name: 'InfoManage',
+	name: 'City',
 	data() {
 		return {
 			input1: '',
@@ -111,7 +114,7 @@ export default {
           Ename:'Tirana',
           pinyin:'DALA NA',
           capital:'是',
-          available:'启用',
+          available:'禁用',
         }, {
            number: 'CITY00002',
           name:'阿尔巴尼亚',
@@ -119,7 +122,7 @@ export default {
           Ename:'Tirana',
           pinyin:'DALA NA',
           capital:'是',
-          available:'启用',
+          available:'禁用',
         }, {
            number: 'CITY00002',
           name:'阿尔巴尼亚',
@@ -127,7 +130,7 @@ export default {
           Ename:'Tirana',
           pinyin:'DALA NA',
           capital:'是',
-          available:'启用',
+          available:'禁用',
         },
 		{
 		   number: 'CITY00002',

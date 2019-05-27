@@ -10,7 +10,7 @@
   <el-breadcrumb-item>渠道商资料管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="20">
+					<el-row :gutter="22">
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="渠道编号"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="渠道名称/简称"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">
@@ -48,7 +48,7 @@
       prop="name"
       label="渠道名称"
       width="120">
-	  <template scope="scope">
+	  <template slot-scope="scope">
 		  <span v-if="scope.row.status=== 0">携程线上渠道</span>
                     <span v-else style="color: royalblue">携程线上渠道</span>
 	  </template>
@@ -98,7 +98,11 @@
 	  label="操作">
 	  <template slot-scope="scope">
 	    <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-	    <el-button type="text" size="small">禁用</el-button>
+		<el-button
+		  size="mini"
+		  type="text" v-if="scope.row.validate == '启用'"
+		  >禁用</el-button>
+		  <el-button type="text" size="small" v-else>启用</el-button>
 	  </template>
 	</el-table-column>
   </el-table>
@@ -122,7 +126,7 @@
 
 <script>
 export default {
-	name: 'InfoManage',
+	name: 'ChannelManage',
 	data() {
 		return {
 			options: [{

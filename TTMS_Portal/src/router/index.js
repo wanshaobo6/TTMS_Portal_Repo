@@ -23,6 +23,14 @@ var router =  new Router({
 		route("/InfoManage",'/InfoManage',"InfoManage"),
 		route("/City",'/City',"City"),
 		route("/ChannelManage",'/ChannelManage',"ChannelManage"),
+		route("/OrganizeManage",'/OrganizeManage',"OrganizeManage"),
+		route("/ProductList",'/ProductList',"ProductList"),
+		route("/ProInfoManage",'/ProInfoManage',"ProInfoManage"),
+		route("/addProject",'/addProject',"addProject"),
+		route("/UserInfoManage",'/UserInfoManage',"UserInfoManage"),
+		route("/RoleInfoManage",'/RoleInfoManage',"RoleInfoManage"),
+		route("/addRole",'/addRole',"addRole"),
+		route("/TeamNumManage",'/TeamNumManage',"TeamNumManage"),
     route("/InfoPanel",'/InfoPanel',"InfoPanel"),
     /*    {
           path:"/", // 根路径，路由到 Layout组件
