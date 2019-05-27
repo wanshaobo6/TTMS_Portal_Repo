@@ -26,7 +26,8 @@ var router =  new Router({
 		route("/OrganizeManage",'/OrganizeManage',"OrganizeManage"),
 		route("/ProductList",'/ProductList',"ProductList"),
 		route("/ProInfoManage",'/ProInfoManage',"ProInfoManage"),
-		route("/addProject",'/addProject',"addProject"),
+		/* route("/addProject",'/addProject',"addProject"), */
+		route("/UserInfoManage",'/UserInfoManage',"UserInfoManage"),
 		
     /*    {
           path:"/", // 根路径，路由到 Layout组件
