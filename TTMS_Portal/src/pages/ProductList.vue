@@ -10,7 +10,7 @@
   <el-breadcrumb-item>产品列表</el-breadcrumb-item>
 </el-breadcrumb></div>
 					<div class="firstRow">
-						<el-row :gutter="20">
+						<el-row :gutter="10">
 												<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">
 						  <el-option
 						    v-for="item in options"
@@ -50,13 +50,13 @@
 					</div>
 						
 						<div class="secondRow">
-							<el-row :gutter="20">
+							<el-row :gutter="10">
 						<el-col :span="5"><div class="grid-content "> <div class="block">
     
     <el-date-picker
       v-model="value1"
       type="date"
-      placeholder="选择日期">
+      placeholder="服务开始日期">
     </el-date-picker>
   </div></div></el-col>
 						<el-col :span="5"><div class="grid-content "><div class="block">
@@ -64,7 +64,7 @@
     <el-date-picker
       v-model="value2"
       type="date"
-      placeholder="选择日期">
+      placeholder="服务结束日期">
     </el-date-picker>
   </div></div></el-col>
   <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
@@ -75,12 +75,12 @@
 						<el-col :span="2"><el-button >下架</el-button></el-col>
 					</el-row></div>
 					 <div class="thirdRow">
-						 <el-row :gutter="20">
-						 							<el-col :span="3"><div class="grid-content "><el-button type="warning">库存分销</el-button></div></el-col>
-						 	<el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
-							<el-col :span="2"><div class="grid-content "><el-button type="primary">附件</el-button></div></el-col>
-							<el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-							<el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
+						 <el-row :gutter="10">
+							 <el-col :span="3"><el-button type="warning">库存分销</el-button></el-col>
+						 	<el-col :span="3"><el-button type="info">价格政策</el-button></el-col>
+							<el-col :span="2"><el-button type="primary">附件</el-button></el-col>
+							<el-col :span="3"><el-button type="info">导游信息</el-button></el-col>
+							<el-col :span="3"><el-button type="info">行程设置</el-button></el-col>
 						 							</el-row>
 						 </div>
 					 </div>
@@ -356,7 +356,6 @@ export default {
 		  price:'3000',
 		 },
 		 {
-		 	
 		  status:'待售',
 		  classify:'国内游-东北部-哈尔滨',
 		  project:'哈尔滨灯节冬季项目',

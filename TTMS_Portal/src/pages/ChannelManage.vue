@@ -10,10 +10,10 @@
   <el-breadcrumb-item>渠道商资料管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="22">
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="渠道编号"></el-input></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="渠道名称/简称"></el-input></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">
+					<el-row :gutter="10">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3"><div class="grid-content "><el-input v-model="input1" placeholder="渠道编号"></el-input></div></el-col>
+						<el-col :xs="3" :sm="3" :md="4" :lg="3"><div class="grid-content "><el-input v-model="input2" placeholder="渠道名称/简称"></el-input></div></el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -21,11 +21,11 @@
       :value="item.value">
     </el-option>
   </el-select></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input3" placeholder="管理人"></el-input></div></el-col>
-						<el-col :span="2"><div class="grid-content "><el-button type="primary">查询</el-button></div></el-col>
-						<el-col :span="2"><div class="grid-content "><el-button type="success">新增</el-button></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-button type="primary">渠道管理部门</el-button></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-button type="primary">渠道管理人</el-button></div></el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3"><div class="grid-content "><el-input v-model="input3" placeholder="管理人"></el-input></div></el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="grid-content "><el-button type="primary">查询</el-button></div></el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="grid-content "><el-button type="success">新增</el-button></div></el-col>
+						<el-col :xs="3" :sm="3" :md="4" :lg="3"><div class="grid-content "><el-button type="primary">渠道管理部门</el-button></div></el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3"><div class="grid-content "><el-button type="primary">渠道管理人</el-button></div></el-col>
 		
 					</el-row></div>
 					<div class="body">
