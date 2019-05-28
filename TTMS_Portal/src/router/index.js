@@ -32,6 +32,8 @@ var router =  new Router({
 		route("/addRole",'/addRole',"addRole"),
 		route("/TeamNumManage",'/TeamNumManage',"TeamNumManage"),
 		route("/CreateProduct",'/CreateProduct',"CreateProduct"),
+    route("/InfoPanel",'/InfoPanel',"InfoPanel"),
+    route("/ProductClassify",'/ProductClassify',"ProductClassify")
     /*    {
           path:"/", // 根路径，路由到 Layout组件
           component: () => import('../pages/Layout'),
