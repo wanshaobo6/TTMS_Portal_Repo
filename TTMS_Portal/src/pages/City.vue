@@ -10,7 +10,7 @@
   <el-breadcrumb-item>城市</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="20">
+					<el-row :gutter="10">
 						<el-col :span="4">
 							<div class="grid-content "><el-input v-model="input1" placeholder="国家名称"></el-input></div>
 						</el-col>

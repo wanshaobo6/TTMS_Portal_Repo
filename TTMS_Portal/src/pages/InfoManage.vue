@@ -10,7 +10,7 @@
   <el-breadcrumb-item>通知管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="20">
+					<el-row :gutter="10">
 						<el-col :span="3">
 							<div class="grid-content "><el-select v-model="value" placeholder="选择分类">
     <el-option

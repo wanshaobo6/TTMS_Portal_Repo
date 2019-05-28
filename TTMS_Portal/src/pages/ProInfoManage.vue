@@ -10,7 +10,7 @@
   <el-breadcrumb-item>项目信息管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="20">
+					<el-row :gutter="1">
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="项目编号"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
 						<el-col :span="4"><div class="grid-content "><el-select v-model="value" filterable placeholder="选择归属部门">
