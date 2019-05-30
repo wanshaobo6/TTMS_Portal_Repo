@@ -56,11 +56,16 @@ export default {
         this.dialog = true;
         return false;
       }
-      this.$http.get("/login").then(()=>{
+      this.$http.post("/login", this.$qs.stringify({
+        username: this.username,
+        password: this.password
+      })).then(()=>{
+        this.$router.push("/");
+      }).catch(()=>{
 
       });
+
       console.log(this.username + " ... " + this.password);
-      this.$router.push("/");
     }
   }
 };

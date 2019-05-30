@@ -1,13 +1,9 @@
 <template>
 	<el-container>
-  <el-header>Header</el-header>
-  <el-container>
-    <el-aside width="200px">Aside</el-aside>
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">组织结构管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">机构管理</el-breadcrumb-item>
   <el-breadcrumb-item>组织机构信息管理</el-breadcrumb-item>
-  
 </el-breadcrumb></div>
 					<el-row :gutter="20">
 						<el-col :span="4"><div class="grid-content "><el-input v-model="input1" placeholder="国家名称"></el-input></div></el-col>
@@ -84,7 +80,6 @@
   </div>
   
   </el-main>
-  </el-container>
 </el-container>
 </template>
 
@@ -168,15 +163,15 @@ export default {
 
 <style>
 	html,body {
-	
+
 	            overflow:hidden;
-	
+
 	            margin:0px;
-	
+
 	            width:100%;
-	
+
 	            height:100%;
-	
+
 	        }
 .el-header {
     background-color: #B3C0D1;
@@ -186,15 +181,15 @@ export default {
 	width: -webkit-fill-available;
 	position:fixed; z-index:999999; top:0px;
   }
-  
+
   .title {
   	text-align: left;
   	font-size: 30px;
   	margin-bottom: 15px;
   	font-family: "Helvetica Neue";
   	font-style: normal;
-	
-  	
+
+
   }
   .path {
   	text-align: left;
@@ -209,39 +204,29 @@ export default {
  .page{
 	 position: relative;
      padding-top: 20px;
- } 
+ }
   .body{
 	  margin-top: 5px;
 	  margin-bottom: 100px;
 	  padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-	height:700px;
-	
-	position: fixed;
-  }
-  
+
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
-	height:700px;
-	margin-left: 200px;
+	  height:700px;
+    margin-top: -60px;
   }
-  
+
   body > .el-container {
     margin-bottom: 40px;
   }
-  
+
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
   }
-  
+
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }

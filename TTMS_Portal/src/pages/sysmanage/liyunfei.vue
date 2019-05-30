@@ -3,7 +3,7 @@
 </template>
 
 <script>
-   import hello from "../components/HelloWorld"
+   import hello from "../../components/HelloWorld"
     export default {
         name: "liyunfei",
         components:{hello}
