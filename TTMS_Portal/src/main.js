@@ -10,8 +10,10 @@ import 'vuetify/dist/vuetify.min.css'   //导入vuetifyCSS
 import './assets/material.css'
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// post请求是格式化数据
+import qs from 'qs';
 
-
+Vue.prototype.$qs = qs;
 Vue.use(elementUI);
 Vue.use(Vuetify, { theme: config.theme})
 Vue.config.productionTip = false

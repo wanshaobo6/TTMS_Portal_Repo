@@ -125,7 +125,7 @@
 	prop="status"
 	  label="状态"
 	  width="60">
-	  <template scope="scope">
+	  <template slot-scope="scope">
 		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
 		<span v-else style="color: red">禁用</span>
 	</template>
