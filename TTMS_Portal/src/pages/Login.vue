@@ -61,12 +61,15 @@ export default {
         username: this.username,
         password: this.password
       })).then((resp)=>{
+        console.log(resp)
         this.$router.push("/");
         //保存
         localStorage.setItem("Modules",JSON.stringify(resp.data));
       }).catch((data)=>{
+        console.log(data);
         this.errorTip = data.response.data.message;
         this.dialog = true;
+        localStorage.setItem("Modules",JSON.stringify("[]"));
       });
 
       console.log(this.username + " ... " + this.password);
