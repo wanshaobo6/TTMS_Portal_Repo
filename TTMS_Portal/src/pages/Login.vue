@@ -67,7 +67,7 @@ export default {
         localStorage.setItem("Modules",JSON.stringify(resp.data));
       }).catch((data)=>{
         console.log(data);
-        this.errorTip = data.response.data.message;
+        this.errorTip = data.message;
         this.dialog = true;
         localStorage.setItem("Modules",JSON.stringify("[]"));
       });
