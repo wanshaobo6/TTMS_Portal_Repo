@@ -34,8 +34,7 @@
       </v-container>
     </v-content>
     <v-dialog v-model="dialog" width="300px">
-      <v-alert icon="warning" color="error" :value="true">
-      用户名和密码不能为空
+      <v-alert icon="warning" color="error" :value="true" v-text="errorTip">
       </v-alert>
     </v-dialog>
   </v-app>
@@ -47,22 +46,30 @@ export default {
   data: () => ({
     username: "",
     password: "",
+    errorTip:"",
     dialog: false,
     e1:false
   }),
   methods: {
     doLogin() {
       if (!this.username || !this.password) {
+        this.errorTip = "用户名和密码不能为空";
         this.dialog = true;
         return false;
       }
       this.$http.post("/login", this.$qs.stringify({
         username: this.username,
         password: this.password
-      })).then(()=>{
+      })).then((resp)=>{
+        console.log(resp)
         this.$router.push("/");
-      }).catch(()=>{
-
+        //保存
+        localStorage.setItem("Modules",JSON.stringify(resp.data));
+      }).catch((data)=>{
+        console.log(data);
+        this.errorTip = data.response.data.message;
+        this.dialog = true;
+        localStorage.setItem("Modules",JSON.stringify("[]"));
       });
 
       console.log(this.username + " ... " + this.password);

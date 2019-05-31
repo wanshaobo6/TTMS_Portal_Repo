@@ -39,7 +39,7 @@
             </v-list-tile-content>
           </v-list-tile>
           <!-- 二级菜单 -->
-          <v-list-tile v-for="subItem in item.items" :key="subItem.title" :to="item.path + subItem.path">
+          <v-list-tile v-for="subItem in item.menusItems" :key="subItem.title" :to="baseUrl + item.path + subItem.path">
             <v-list-tile-content>
               <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
             </v-list-tile-content>
@@ -65,9 +65,7 @@
       </v-btn>
       <!--模块名称-->
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>消息中心</v-btn>
-        <v-btn flat>产品管理</v-btn>
-        <v-btn flat>系统管理</v-btn>
+        <v-btn flat v-for="module in modules"  :key="module.moduleName" v-text="module.moduleName" @click="updateMenus(module)"></v-btn>
       </v-toolbar-items>
       <!-- 顶部导航标题 -->
       <v-flex xs3></v-flex>
@@ -94,7 +92,9 @@
         miniVariant: false,// 左侧导航是否收起
         title: '旅游管理系统',// 顶部导航条名称,
         menuMap: {},
-        items:null,
+        baseUrl:"",
+        items:[],
+        modules:[]
       }
     },
     computed: {
@@ -108,8 +108,14 @@
       }
     },
     name: 'App',
+    methods:{
+      updateMenus(module){
+        this.items = module.menus;
+        this.baseUrl = module.path;
+      }
+    },
     watch: {},
-    created() {
+    created(){
       // menus.forEach(m => {
       //   const p1 = m.path.slice(1);
       //   this.menuMap[p1] = {name: m.title};
@@ -117,62 +123,13 @@
       //     this.menuMap[p1][i.path.slice(1)] = i.title;
       //   })
       // });
+      //初始化Modules数据
+      this.modules = JSON.parse(localStorage.getItem("Modules"));
+      //没有modules跳到登录界面
+      if(this.modules == null){
+        this.$router.push("/Login");
+      }
 
-      //获取menu
-      this.items=JSON.parse("[\n" +
-        "      {\n" +
-        "        \"action\": \"Menus\",\n" +
-        "        \"title\": \"项目\",\n" +
-        "        \"path\": \"/project\",\n" +
-        "        \"items\": [\n" +
-        "          {\n" +
-        "            \"title\": \"项目信息管理\",\n" +
-        "            \"path\": \"/projectinfomanage\"\n" +
-        "          }\n" +
-        "        ]\n" +
-        "      },\n" +
-        "      {\n" +
-        "        \"action\": \"Menus\",\n" +
-        "        \"title\": \"团号\",\n" +
-        "        \"path\": \"/group\",\n" +
-        "        \"items\": [\n" +
-        "          {\n" +
-        "            \"title\": \"团号管理\",\n" +
-        "            \"path\": \"/groupmanage\"\n" +
-        "          }\n" +
-        "        ]\n" +
-        "      },\n" +
-        "      {\n" +
-        "        \"action\": \"Menus\",\n" +
-        "        \"title\": \"产品\",\n" +
-        "        \"path\": \"/product\",\n" +
-        "        \"items\": [\n" +
-        "          {\n" +
-        "            \"title\": \"创建产品\",\n" +
-        "            \"path\": \"/createproduct\"\n" +
-        "          },\n" +
-        "          {\n" +
-        "            \"title\": \"产品列表\",\n" +
-        "            \"path\": \"/productlist\"\n" +
-        "          },\n" +
-        "          {\n" +
-        "            \"title\": \"产品分类\",\n" +
-        "            \"path\": \"/productcat\"\n" +
-        "          }\n" +
-        "        ]\n" +
-        "      },\n" +
-        "      {\n" +
-        "        \"action\": \"Menus\",\n" +
-        "        \"title\": \"政策\",\n" +
-        "        \"path\": \"/policy\",\n" +
-        "        \"items\": [\n" +
-        "          {\n" +
-        "            \"title\": \"价格政策\",\n" +
-        "            \"path\": \"/pricepolicy\"\n" +
-        "          }\n" +
-        "        ]\n" +
-        "      }\n" +
-        "    ]");
     }
   }
 </script>
