@@ -23,6 +23,7 @@ export default new Router({
       redirect:"/index/dashboard",
       children:[ // 其它所有组件都是 Layout的子组件
         route("/index/dashboard","/Dashboard","Dashboard"),
+        ///#后面的路径index/dashboard   对应带pages/producemanage/group/groupmanage
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
       ]
