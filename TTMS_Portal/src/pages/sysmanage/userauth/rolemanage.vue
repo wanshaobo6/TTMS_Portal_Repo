@@ -1,8 +1,8 @@
 <template>
 	<el-container>
-  <el-header>Header</el-header>
+
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">角色信息管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">信息管理</el-breadcrumb-item>
@@ -16,7 +16,7 @@
 </div></el-col>
 						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
 						 <el-col :span="2"><div class="grid-content ">
-               <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+               <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
                <el-dialog title="添加角色" :visible.sync="dialogFormVisible">
                  <el-form ref="form" :model="form" label-width="80px">
@@ -65,7 +65,7 @@
     <el-table-column
       prop="roleName"
       label="角色名称"
-      width="300">
+      width="270">
     </el-table-column>
     <el-table-column
       prop="comment"
@@ -96,7 +96,7 @@
 <script>
 	const roleOptions = ['系统管理员', '产品经理', '团负责人'];
 export default {
-	name: 'UserInfoManage',
+	name: 'RoleManage',
 	data() {
 		return {
       data: [{
@@ -368,14 +368,7 @@ handleEdit(index, row) {
 	            height:100%;
 	
 	        }
-.el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-	width: -webkit-fill-available;
-	position:fixed; z-index:999999; top:0px;
-  }
+
   .roles{
 	  float: left;
   }
@@ -396,7 +389,7 @@ handleEdit(index, row) {
   	text-align: center;
   	width: -webkit-max-content;
   	margin-bottom: 20px;
-  	background:#E9EEF3;
+
   }
  .page{
 	 position: relative;
@@ -407,22 +400,14 @@ handleEdit(index, row) {
 	  margin-bottom: 100px;
 	  padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-	height:700px;
-	
-	position: fixed;
-  }
+
   
   .el-main {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
 	height:700px;
-	margin-left: 200px;
+	margin-top: -60px;
   }
   
   body > .el-container {

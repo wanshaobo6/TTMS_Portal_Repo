@@ -47,7 +47,7 @@
 	<el-table-column
 	  label="备注"
 	  prop="comment"
-	  width="350">
+	  width="300">
 	</el-table-column>
     <el-table-column label="操作">
 		
@@ -85,7 +85,7 @@
 
 <script>
 export default {
-	name: 'OrganizeManage',
+	name: 'OrganManage',
 	data() {
 		return {
 			 tableData: [{
@@ -199,7 +199,7 @@ export default {
   	text-align: center;
   	width: -webkit-max-content;
   	margin-bottom: 20px;
-  	background:#E9EEF3;
+
   }
  .page{
 	 position: relative;

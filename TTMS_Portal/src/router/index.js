@@ -38,6 +38,7 @@ export default new Router({
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/sysmanage/userauth/RoleInfoManage",'/sysmanage/userauth/RoleInfoManage',"RoleInfoManage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
+        route("/RouteSetting",'/RouteSetting',"RouteSetting")
       ]
     }
   ]
