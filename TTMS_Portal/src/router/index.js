@@ -34,7 +34,7 @@ export default new Router({
         route("/appendix",'/appendix',"appendix"),
         route("/DreferentialPolicy",'/DreferentialPolicy',"DreferentialPolicy"),
         route("/InfoPanel",'/InfoPanel',"InfoPanel"),
-        route("/ProductClassify",'/ProductClassify',"ProductClassify"),
+        route("/ProductClassify",'/ProductClassify',"ProductClassify")
 
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/sysmanage/userauth/RoleInfoManage",'/sysmanage/userauth/RoleInfoManage',"RoleInfoManage"),
