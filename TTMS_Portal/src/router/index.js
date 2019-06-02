@@ -16,7 +16,8 @@ function route (path, file, name, children) {
 
 export default new Router({
   routes: [
-    route("/Login",'/Login',"Login"),// /login路径，路由到登录组件
+    route("/Login",'/Login',"Login"),
+    // /login路径，路由到登录组件
     {
       path:"/", // 根路径，路由到 Layout组件
       component: () => import('../pages/Layout'),
@@ -28,6 +29,13 @@ export default new Router({
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
         route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
+        route("/TourismInformation",'/TourismInformation',"TourismInformation"),
+        route("/InventoryDistribution",'/InventoryDistribution',"InventoryDistribution"),
+        route("/appendix",'/appendix',"appendix"),
+        route("/DreferentialPolicy",'/DreferentialPolicy',"DreferentialPolicy"),
+        route("/InfoPanel",'/InfoPanel',"InfoPanel"),
+        route("/ProductClassify",'/ProductClassify',"ProductClassify")
+
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/producemanage/product/productcat",'/producemanage/product/productcat',"ProductCat"),
         route("/producemanage/policy/pricepolicy",'/producemanage/policy/pricepolicy',"PricePolicy"),

@@ -65,9 +65,9 @@ export default {
         this.$router.push("/");
         //保存
         localStorage.setItem("Modules",JSON.stringify(resp.data));
-      }).catch((data)=>{
-        console.log(data);
-        this.errorTip = data.message;
+      }).catch((error)=>{
+        console.log(error.message);
+        this.errorTip = error.message;
         this.dialog = true;
         localStorage.setItem("Modules",JSON.stringify("[]"));
       });
