@@ -138,11 +138,8 @@
     overflow:hidden;
 
     margin:0px;
-
     width:100%;
-
     height:100%;
-
   }
   .el-header {
     background-color: #B3C0D1;

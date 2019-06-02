@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-
 Vue.use(Router)
 
 function route (path, file, name, children) {
@@ -16,7 +15,8 @@ function route (path, file, name, children) {
 
 export default new Router({
   routes: [
-    route("/Login",'/Login',"Login"),// /login路径，路由到登录组件
+    route("/Login",'/Login',"Login"),
+    // /login路径，路由到登录组件
     {
       path:"/", // 根路径，路由到 Layout组件
       component: () => import('../pages/Layout'),
@@ -26,6 +26,13 @@ export default new Router({
         ///#后面的路径index/dashboard   对应带pages/producemanage/group/groupmanage
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
+        route("/TourismInformation",'/TourismInformation',"TourismInformation"),
+        route("/InventoryDistribution",'/InventoryDistribution',"InventoryDistribution"),
+        route("/appendix",'/appendix',"appendix"),
+        route("/DreferentialPolicy",'/DreferentialPolicy',"DreferentialPolicy"),
+        route("/InfoPanel",'/InfoPanel',"InfoPanel"),
+        route("/ProductClassify",'/ProductClassify',"ProductClassify")
+
       ]
     }
   ]

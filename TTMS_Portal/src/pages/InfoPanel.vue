@@ -1,8 +1,8 @@
 <template>
   <el-container>
-    <el-header>Header</el-header>
+
     <el-container>
-      <el-aside width="200px">Aside</el-aside>
+
       <el-main>
         <div class="top">
           <div class="title03">
@@ -20,8 +20,8 @@
 
         <div class="body" style="width:100%;height:100%">
 
-           <el-row :gutter="22">
-             <el-col :span="11"><div class="body-left">
+           <el-row :gutter="24">
+             <el-col :span="12"><div class="left-top">
                <el-row :gutter="20">
                  <el-col :span="5"><div class="grid-content"><i class="el-icon-tickets"></i><span><b>最新通知</b></span></div></el-col>
                  <el-col :span="14"><div class="grid-content "><span>&nbsp;</span></div></el-col>
@@ -43,16 +43,15 @@
                <el-table-column
                  prop="name"
                  label="姓名"
-                 width="195">
+                 width="180">
                </el-table-column>
-
              </el-table>
-
              </div></el-col>
-             <el-col :span="11"><div class="right-top "><el-row :gutter="20">
+             <el-col :span="12"><div class="right-top">
+               <el-row :gutter="20">
                <el-col :span="5"><div class="grid-content "><i class="el-icon-tickets"></i><span><b>最新通知</b></span></div></el-col>
                <el-col :span="14"><div class="grid-content "><span>&nbsp;</span></div></el-col>
-               <el-col :span="1"><div class="grid-content "><span>                <el-button type="primary" plain>更多</el-button>
+               <el-col :span="1"><div class="grid-content "><span><el-button type="primary" plain>更多</el-button>
 </span></div></el-col>
              </el-row>
                <el-table
@@ -61,12 +60,12 @@
                  <el-table-column
                    prop="createTime"
                    label="时间"
-                   width="150">
+                   width="140">
                  </el-table-column>
                  <el-table-column
                    prop="information"
                    label="订单信息"
-                   width="345">
+                   width="340">
                  </el-table-column>
                </el-table></div></el-col>
            </el-row>
@@ -79,13 +78,12 @@
              <el-col :span="11"><div class="right-bottom">
                <el-row :gutter="20">
                    <el-col :span="6"><div class="grid-content "><i class="el-icon-tickets"></i><span><b>最新汇率</b></span></div></el-col>
-                   <el-col :span="7"><div class="grid-content "><span>&nbsp;</span></div></el-col>
-                   <el-col :span="7"><div class="grid-content"><span>更新时间:2019-5-26</span></div></el-col>
-
+                   <el-col :span="5"><div class="grid-content "><span>&nbsp;</span></div></el-col>
+                   <el-col :span="9"><div class="grid-content"><span>更新时间:2019-5-26</span></div></el-col>
                  </el-row>
                    <el-row>
-                     <el-col :span="4"><div class="grid-content"><span style="border:1px solid #B3C0D1; padding:5px; background: #B3C0D1">菲律宾比索</span></div></el-col>
-                     <el-col :span="1"><div class="grid-content"><span style="border:1px solid #B3C0D1;padding:3px 25px 7px 25px ">0.0</span></div></el-col>
+                     <el-col :span="5"><div class="grid-content"><span style="border:1px solid #B3C0D1; padding:5px 15px 5px 5px; background: #B3C0D1">菲律宾比索</span></div></el-col>
+                     <el-col :span="5"><div class="grid-content" ><span style="border:1px solid #B3C0D1;padding:5px 25px 5px 40px ">0.12</span></div></el-col>
                    </el-row>
              </div></el-col>
            </el-row>
@@ -135,13 +133,7 @@
           },
         ],
 
-
-
-
         methods: {
-
-
-
         }
       }
     }
@@ -178,14 +170,7 @@
 
 
 
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-    width: -webkit-fill-available;
-    position:fixed; z-index:999999; top:0px;
-  }
+
 
 
   .title {
@@ -202,36 +187,28 @@
   .el-col {
     border-radius: 4px;
   }
-  .body-left {
+  .left- {
     position: relative;
 
-    margin-top: 5px;
+
 
     padding: 10px 10px 10px 10px;
-    float: left;
+
   }
-  .body-right{
+  .{
     margin-top: 5px;
     margin-bottom: 100px;
     padding: 10px 10px 10px 10px;
-     float:left;
-  }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    height:700px;
 
-    position: fixed;
   }
+
 
   .el-main {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
     height:700px;
-    margin-left: 200px;
+    margin-top:-60px ;
     background-color: white;
   }
 
