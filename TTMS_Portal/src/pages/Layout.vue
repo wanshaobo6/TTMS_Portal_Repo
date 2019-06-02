@@ -74,10 +74,16 @@
       <v-spacer/>
     </v-toolbar>
     <!--中间内容主体-->
-    <v-content>
+    <v-content style="padding-top:0px">
+      <v-breadcrumbs >
+        <v-icon slot="divider">chevron_right</v-icon>
+        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
+        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
+        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
+      </v-breadcrumbs>
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
-        <router-view/>
+          <router-view/>
       </div>
     </v-content>
   </v-app>
@@ -99,14 +105,14 @@
       }
     },
     computed: {
-      item1() {
-        const arr = this.$route.path.split("/");
-        return this.menuMap[arr[1]].name;
-      },
-      item2() {
-        const arr = this.$route.path.split("/");
-        return this.menuMap[arr[1]][arr[2]];
-      }
+      // item1() {
+      //   const arr = this.$route.path.split("/");
+      //   return this.menuMap[arr[1]].name;
+      // },
+      // item2() {
+      //   const arr = this.$route.path.split("/");
+      //   return this.menuMap[arr[1]][arr[2]];
+      // }
     },
     name: 'App',
     methods:{
@@ -117,15 +123,16 @@
     },
     watch: {},
     created(){
-      // menus.forEach(m => {
+      //初始化Modules数据
+      this.modules = JSON.parse(localStorage.getItem("Modules"));
+
+      // this.modules .forEach(m => {
       //   const p1 = m.path.slice(1);
       //   this.menuMap[p1] = {name: m.title};
       //   m.items.forEach(i => {
       //     this.menuMap[p1][i.path.slice(1)] = i.title;
       //   })
       // });
-      //初始化Modules数据
-      this.modules = JSON.parse(localStorage.getItem("Modules"));
       //没有modules跳到登录界面
       if(this.modules == null){
         this.$router.push("/Login");
