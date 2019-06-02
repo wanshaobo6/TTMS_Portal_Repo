@@ -1,8 +1,6 @@
 <template>
   <el-container>
-
     <el-container>
-
       <el-main>
         <div class="top">
           <div class="title03">
@@ -18,7 +16,7 @@
           </div>
         </div>
 
-        <div class="body" style="width:100%;height:100%">
+        <div class="body" style="width:100%;height:110%">
 
            <el-row :gutter="24">
              <el-col :span="12"><div class="left-top">
@@ -38,12 +36,12 @@
                <el-table-column
                  prop="inform"
                  label="通知"
-                 width="150">
+                 width="160">
                </el-table-column>
                <el-table-column
                  prop="name"
                  label="姓名"
-                 width="180">
+                 width="160">
                </el-table-column>
              </el-table>
              </div></el-col>
@@ -60,12 +58,12 @@
                  <el-table-column
                    prop="createTime"
                    label="时间"
-                   width="140">
+                   width="100">
                  </el-table-column>
                  <el-table-column
                    prop="information"
                    label="订单信息"
-                   width="340">
+                   width="360">
                  </el-table-column>
                </el-table></div></el-col>
            </el-row>
@@ -73,7 +71,6 @@
              <el-col :span="11"><div class="left-bottom">
                <el-col :span="5"><div class="grid-content ">
                  <i class="el-icon-tickets"></i><span><b>待办事项</b></span></div></el-col>
-
              </div></el-col>
              <el-col :span="11"><div class="right-bottom">
                <el-row :gutter="20">
@@ -187,17 +184,14 @@
   .el-col {
     border-radius: 4px;
   }
-  .left- {
+  .left-top {
     position: relative;
-
-
-
-    padding: 10px 10px 10px 10px;
+    padding: 10px 10px 0px 10px;
 
   }
-  .{
+  .right-top{
     margin-top: 5px;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
     padding: 10px 10px 10px 10px;
 
   }
