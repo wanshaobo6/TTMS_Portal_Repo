@@ -15,39 +15,34 @@
 						<el-col :span="5"><div class="grid-content "><el-input v-model="input1" placeholder="角色名称"></el-input>
 </div></el-col>
 						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
-						 <el-col :span="2"><div class="grid-content "><el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
-												<el-dialog title="编辑用户" :visible.sync="dialogFormVisible">
-						  <el-form :model="form" >
-							  		  <el-form-item label="用户名:" :rules="[
-							  { required: true },]">
-							  		    <el-input v-model="form.id" placeholder="登录账号"></el-input>
-							  		  </el-form-item>
-							  		   <el-form-item label="密码:" :rules="[
-							  { required: true },]">
-							  		    <el-input v-model="form.password" placeholder="密码"></el-input>
-							  		  </el-form-item>
-									   <el-form-item label="邮箱:">
-									  		    <el-input v-model="form.email" placeholder="邮箱"></el-input>
-									  		  </el-form-item>
-											  <el-form-item label="手机号:" :rules="[
-											  { required: true },]">
-											  		    <el-input v-model="form.phoneNum" placeholder="手机号"></el-input>
-											  		  </el-form-item>
-													 <el-form-item label="角色:">
-														<div class="roles"><el-checkbox-group 
-    v-model="checkedRoles"
-    :min="1"
-    :max="2">
-    <el-checkbox v-for="role in roles" :label="role" :key="role">{{role}}</el-checkbox>
-  </el-checkbox-group></div> 
-															   </el-form-item> 
-													 
-						  </el-form>
-						  <div slot-scope="footer" class="dialog-footer">
-						    <el-button @click="dialogFormVisible = false">取 消</el-button>
-						    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-						  </div>
-						</el-dialog></div></el-col>
+						 <el-col :span="2"><div class="grid-content ">
+               <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+
+               <el-dialog title="添加角色" :visible.sync="dialogFormVisible">
+                 <el-form ref="form" :model="form" label-width="80px">
+                   <el-form-item label="活动名称">
+                     <el-input v-model="form.name"></el-input>
+                   </el-form-item>
+                   <el-form-item label="备注">
+                     <el-input v-model="form.comment"></el-input>
+                   </el-form-item>
+                   <el-form-item label="授权">
+                     <el-tree
+                       :data="data"
+                       show-checkbox
+                       node-key="id"
+                       :default-expanded-keys="[2, 3]"
+                       :default-checked-keys="[5]">
+                     </el-tree>
+                   </el-form-item>
+
+                 </el-form>
+                 <div slot="footer" class="dialog-footer">
+                   <el-button @click="dialogFormVisible = false">取 消</el-button>
+                   <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                 </div>
+               </el-dialog>
+             </div></el-col>
 						<el-col :span="2"><el-button type="primary">修改</el-button><div class="grid-content "></div></el-col>
 						<el-col :span="2"><el-button type="primary">删除</el-button><div class="grid-content "></div></el-col>
 					</el-row></div>
@@ -104,6 +99,193 @@ export default {
 	name: 'UserInfoManage',
 	data() {
 		return {
+      data: [{
+        id: 1,
+        label: '信息面板',
+        children: [{
+          id: 2,
+          label: '信息面板',
+          children: [{
+            id: 3,
+            label: '发布通知'
+          }, {
+            id: 4,
+            label: '通知管理',
+            disabled: true
+          }]
+        },]
+      },
+        {
+          id: 5,
+          label: '消息中心',
+          children: [{
+            id: 6,
+            label: '通知管理',
+            children: [{
+              id: 7,
+              label: '日志管理'
+            }, ]
+          },]
+        },
+        {
+          id: 8,
+          label: '产品管理',
+          children: [{
+            id: 9,
+            label: '项目信息',
+            children: [{
+              id: 10,
+              label: '新增'
+            }, {
+              id: 11,
+              label: '启用',
+              disabled: true
+            },
+              {
+                id: 12,
+                label: '禁用',
+                disabled: true
+              },
+              {
+                id: 13,
+                label: '修改',
+                disabled: true
+              }]
+          },
+            {
+              id: 14,
+              label: '团号',
+              children: [{
+                id: 10,
+                label: '团号管理'
+              }]
+            },
+            {
+              id: 15,
+              label: '产品',
+              children: [{
+                id: 10,
+                label: '创建产品'
+              },{
+                id: 10,
+                label: '产品列表'
+              },{
+                id: 10,
+                label: '产品分类'
+              }]
+            },
+            {
+              id: 14,
+              label: '政策',
+              children: [{
+                id: 10,
+                label: '价格政策'
+              }]
+            },
+          ]
+        },
+        {
+          id: 1,
+          label: '销售订单',
+          children: [{
+            id: 3,
+            label: '订单',
+            children: [{
+              id: 4,
+              label: '订单管理'
+            }, ]
+          },]
+        },
+        {
+          id: 1,
+          label: '资源管理',
+          children: [{
+            id: 3,
+            label: '信息面板',
+            children: [{
+              id: 4,
+              label: '发布通知'
+            }, {
+              id: 5,
+              label: '通知管理',
+              disabled: true
+            }]
+          },]
+        },
+        {
+          id: 1,
+          label: '信息面板',
+          children: [{
+            id: 3,
+            label: '信息面板',
+            children: [{
+              id: 4,
+              label: '发布通知'
+            }, {
+              id: 5,
+              label: '通知管理',
+              disabled: true
+            }]
+          },]
+        },
+        {
+          id: 1,
+          label: '信息面板',
+          children: [{
+            id: 3,
+            label: '信息面板',
+            children: [{
+              id: 4,
+              label: '发布通知'
+            }, {
+              id: 5,
+              label: '通知管理',
+              disabled: true
+            }]
+          },]
+        },
+        {
+          id: 1,
+          label: '信息面板',
+          children: [{
+            id: 3,
+            label: '信息面板',
+            children: [{
+              id: 4,
+              label: '发布通知'
+            }, {
+              id: 5,
+              label: '通知管理',
+              disabled: true
+            }]
+          },]
+        },
+        {
+          id: 1,
+          label: '信息面板',
+          children: [{
+            id: 3,
+            label: '信息面板',
+            children: [{
+              id: 4,
+              label: '发布通知'
+            }, {
+              id: 5,
+              label: '通知管理',
+              disabled: true
+            }]
+          },]
+        },
+
+      ],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+      form: {
+        name: '',
+        comment:'',
+      },
 			 checkedRoles: ['系统管理员', '产品经理'],
         roles: roleOptions,
 			dialogFormVisible: false,

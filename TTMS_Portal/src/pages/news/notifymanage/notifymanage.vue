@@ -1,8 +1,8 @@
 <template>
 	<el-container>
-  <el-header>Header</el-header>
+
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">通知管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">消息中心</el-breadcrumb-item>
@@ -59,7 +59,7 @@
 	<el-table-column
 	  prop="title"
 	  label="标题"
-	  width="420">
+	  width="300">
 	</el-table-column>
 	<el-table-column
 	  prop="name"
@@ -116,7 +116,7 @@
 
 <script>
 export default {
-	name: 'InfoManage',
+	name: 'NotifyManage',
 	data() {
 		return {
 			options: [{
@@ -258,14 +258,7 @@ export default {
 	            height:100%;
 	
 	        }
-.el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-	width: -webkit-fill-available;
-	position:fixed; z-index:999999; top:0px;
-  }
+
   
   .title {
   	text-align: left;
@@ -295,22 +288,15 @@ export default {
 	  margin-bottom: 100px;
 	  padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-	height:700px;
-	
-	position: fixed;
-  }
+
   
   .el-main {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
 	height:700px;
-	margin-left: 200px;
+
+    margin-top: -60px;
   }
   
   body > .el-container {

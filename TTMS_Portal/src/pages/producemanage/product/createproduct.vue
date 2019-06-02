@@ -1,8 +1,8 @@
 <template>
 	<el-container>
-  <el-header>Header</el-header>
+
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">创建产品</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
@@ -113,7 +113,7 @@
 
 <script>
 export default {
-	name: 'CreateProject',
+	name: 'CreateProduct',
 	data() {
 		return {
 			activeName: 'first',
@@ -161,14 +161,7 @@ export default {
 	            height:100%;
 	
 	        }
-.el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-	width: -webkit-fill-available;
-	position:fixed; z-index:999999; top:0px;
-  }
+
   
   .title {
   	text-align: left;
@@ -184,7 +177,7 @@ export default {
   }
   .left{
 	  float: left;
-	  margin-left: 100px;
+	  margin-left: 50px;
   }
   .right{
 	  float: right;
@@ -217,15 +210,7 @@ export default {
 	  margin-bottom: 100px;
 	  padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-	height:700px;
-	
-	position: fixed;
-  }
+
   .formInfo{
 	  margin-top: 120px;
 	  height: 500px;
@@ -236,7 +221,7 @@ export default {
     color: #333;
     text-align: center;
 	height:700px;
-	margin-left: 200px;
+	margin-top: -60px;
   }
   
   body > .el-container {
