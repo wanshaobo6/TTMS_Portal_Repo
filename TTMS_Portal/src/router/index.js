@@ -29,8 +29,11 @@ export default new Router({
         route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
-        route("/sysmanage/userauth/RoleInfoManage",'/sysmanage/userauth/RoleInfoManage',"RoleInfoManage"),
+        route("/producemanage/product/productcat",'/producemanage/product/productcat',"ProductCat"),
+        route("/producemanage/policy/pricepolicy",'/producemanage/policy/pricepolicy',"PricePolicy"),
+        route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"RoleManage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
+        route("/sysmanage/userauth/organmanage",'/sysmanage/userauth/organmanage',"OrganManage"),
       ]
     }
   ]

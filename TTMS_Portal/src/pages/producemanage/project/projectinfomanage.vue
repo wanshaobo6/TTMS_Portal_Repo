@@ -374,7 +374,7 @@ export default {
   	text-align: center;
   	width: -webkit-max-content;
   	margin-bottom: 20px;
-  	background:#E9EEF3;
+
   }
  .page{
 	 position: relative;

@@ -16,7 +16,7 @@
 </div></el-col>
 						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
 						 <el-col :span="2"><div class="grid-content ">
-               <el-button type="text" @click="dialogFormVisible = true">新增</el-button>
+               <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
                <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
                  <el-form :model="form" >
@@ -243,7 +243,7 @@ handleEdit(index, row) {
   	text-align: center;
   	width: -webkit-max-content;
   	margin-bottom: 20px;
-  	background:#E9EEF3;
+
   }
  .page{
 	 position: relative;
