@@ -24,8 +24,13 @@ export default new Router({
       children:[ // 其它所有组件都是 Layout的子组件
         route("/index/dashboard","/Dashboard","Dashboard"),
         ///#后面的路径index/dashboard   对应带pages/producemanage/group/groupmanage
+        route("/news/notifymanage/notifymanage",'/news/notifymanage/notifymanage',"NotifyManage"),
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
+        route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
+        route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
+        route("/sysmanage/userauth/RoleInfoManage",'/sysmanage/userauth/RoleInfoManage',"RoleInfoManage"),
+        route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
       ]
     }
   ]

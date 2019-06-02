@@ -1,8 +1,8 @@
 <template>
 	<el-container>
-  <el-header>Header</el-header>
+
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">项目信息管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
@@ -10,10 +10,10 @@
   <el-breadcrumb-item>项目信息管理</el-breadcrumb-item>
   
 </el-breadcrumb></div>
-					<el-row :gutter="1">
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input1" placeholder="项目编号"></el-input></div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
-						<el-col :span="4"><div class="grid-content "><el-select v-model="value" filterable placeholder="选择归属部门">
+					<el-row :gutter="5">
+						<el-col :span="4"><div class="grid-content "><el-input v-model="input1" placeholder="项目编号"></el-input></div></el-col>
+						<el-col :span="4"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
+						<el-col :span="5"><div class="grid-content "><el-select v-model="value" filterable placeholder="选择归属部门">
     <el-option
       v-for="item in options1"
       :key="item.value"
@@ -21,34 +21,35 @@
       :value="item.value">
     </el-option>
   </el-select></div></el-col>
-  <el-col :span="5"><div class="grid-content ">
+  <el-col :span="5">
     <el-date-picker
       v-model="value1"
       type="date"
       placeholder="起始日期">
     </el-date-picker>
-  </div></el-col>
-   <el-col :span="5"><div class="grid-content ">
+ </el-col>
+   <el-col :span="6"><div class="grid-content ">
     <el-date-picker
       v-model="value1"
       type="date"
       placeholder="终止日期">
     </el-date-picker>
   </div></el-col>
-						<el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="选择状态">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select></div></el-col>
+
 					</el-row>
 				<el-row :gutter="20">
-  <el-col :span="20"><div class="grid-content bg-purple Search"><el-button type="primary">查询</el-button></div></el-col>
+          <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="选择状态">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select></div></el-col>
+  <el-col :span="2"><div class="grid-content bg-purple "><el-button type="primary">查询</el-button></div></el-col>
   <el-col :span="2"><div class="grid-content bg-purple"><el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
-<el-dialog title="项目信息管理" :visible.sync="dialogFormVisible">
+<el-dialog title="添加项目信息" :visible.sync="dialogFormVisible">
   <el-form ref="form" :model="form" label-width="100px">
     <el-form-item label="项目编号:" :rules="[
     { required: true },]">
@@ -89,6 +90,7 @@
 </el-dialog>
   
   </div></el-col>
+
 </el-row>
 						
 					</div>
@@ -99,32 +101,32 @@
     <el-table-column
 	  prop="id"
       label="项目编号"
-      width="210">
+      width="200">
     </el-table-column>
 	<el-table-column
 	  prop="name"
 	  label="项目名称"
-	  width="140">
+	  width="130">
 	</el-table-column>
 	<el-table-column
 	  prop="department"
 	  label="归属部门"
-	  width="100">
+	  width="80">
 	</el-table-column>
     <el-table-column
 	prop="start"
       label="开始日期"
-      width="100">
+      width="90">
     </el-table-column>
 	<el-table-column
 	prop="end"
 	  label="结束日期"
-	  width="100">
+	  width="90">
 	</el-table-column>
 	<el-table-column
 	prop="status"
 	  label="状态"
-	  width="60">
+	  width="50">
 	  <template slot-scope="scope">
 		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
 		<span v-else style="color: red">禁用</span>
@@ -133,7 +135,7 @@
 	<el-table-column
 	  label="备注"
 	  prop="comment"
-	  width="220">
+	  width="200">
 	</el-table-column>
     <el-table-column label="操作">
 		
@@ -171,7 +173,7 @@
 
 <script>
 export default {
-	name: 'ProInfoManage',
+	name: 'ProjectInfoManage',
 	data() {
 		return {
 			dialogFormVisible: false,
@@ -352,17 +354,8 @@ export default {
 .choose{
 		float: left;
 	}
-.Search{
-	float: right;
-}			
-.el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-	width: -webkit-fill-available;
-	position:fixed; z-index:999999; top:0px;
-  }
+
+
   
   .title {
   	text-align: left;
@@ -392,22 +385,14 @@ export default {
 	  margin-bottom: 100px;
 	  padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-	height:700px;
-	
-	position: fixed;
-  }
+
   
   .el-main {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
 	height:700px;
-	margin-left: 200px;
+	margin-top: -60px;
   }
   
   body > .el-container {

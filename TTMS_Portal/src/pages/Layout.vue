@@ -66,6 +66,7 @@
       <!--模块名称-->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="module in modules"  :key="module.moduleName" v-text="module.moduleName" @click="updateMenus(module)"></v-btn>
+        <!--用户头像-->
       </v-toolbar-items>
       <!-- 顶部导航标题 -->
       <v-flex xs3></v-flex>
