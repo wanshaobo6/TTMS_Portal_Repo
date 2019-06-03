@@ -23,9 +23,9 @@
               </el-option>
   </el-select></div></el-col>
   <el-col :span="2"><div class="grid-content Search"><el-button type="success" @click="loadData()">查询</el-button></div></el-col>
-  <el-col :span="2"><div class="grid-content "><el-button type="success" @click="dialogFormVisible = true">新增</el-button>
+  <el-col :span="2"><div class="grid-content "><el-button type="success" @click="showAddDialog()">新增</el-button>
 
-<el-dialog title="创建团" :visible.sync="dialogFormVisible">
+<el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
   <el-form :model="form">
     <el-form-item label="团名称" :label-width="formLabelWidth" :rules="[
 	  { required: true },]">
@@ -35,9 +35,9 @@
 	  { required: true },]">
       <div class="choose">
 		  <el-select v-model="form.region">
-        <el-option label="西安 清风唐韵" value="shanghai"></el-option>
-        <el-option label="哈尔滨旅游团" value="beijing"></el-option>
-      </el-select></div>
+        <el-option v-for="project in projects" :key="project.id" :label="project.projectname" :value="project.id"></el-option>
+      </el-select>
+      </div>
     </el-form-item>
 	<el-form-item label="团号说明" :label-width="formLabelWidth">
     <el-input type="textarea" v-model="form.desc" ></el-input>
@@ -45,7 +45,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+    <el-button type="primary" @click="addGroup()">确 定</el-button>
   </div>
 </el-dialog></div></el-col>
 					</el-row>
@@ -143,39 +143,21 @@ export default {
         },
        formLabelWidth: '120px',
 			 tableData: [],
-			options1: [{
-          value: '选项1',
-          label: '华中部'
-        }, {
-          value: '选项2',
-          label: '东北部'
-        }, {
-          value: '选项3',
-          label: '东南部'
-        }, {
-          value: '选项4',
-          label: '欧美部'
-        }, {
-          value: '选项5',
-          label: '日韩部'
-        },
-		{
-		  value: '选项5',
-		  label: '西南部'
-		}],
-     options: [{
-      value: '1',
-      label: '启用'
-    }, {
-      value: '0',
-      label: '禁用'
-    },],
-      groupName:"",
-      projectName:"",
-      valid:"",
-      currentPage: 1,  //当前页
-      rows:5,    //每页大小
-      totalItem : 20,   //总条数
+       options: [{
+        value: '1',
+        label: '启用'
+      }, {
+        value: '0',
+        label: '禁用'
+      },],
+       dialogTitle:"",
+        projects:[],
+        groupName:"",
+        projectName:"",
+        valid:"",
+        currentPage: 1,  //当前页
+        rows:5,    //每页大小
+        totalItem : 20,   //总条数
 		};
 	},
   created(){
@@ -184,6 +166,7 @@ export default {
 	methods: {
     handleEdit(index, row) {
       console.log(index, row);
+
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -211,7 +194,6 @@ export default {
         }
       }).then(resp => {
           //成功
-        console.log(resp);
         this.totalItem = resp.data.total;
         var tables = [];
         resp.data.items.forEach(groupItem => {
@@ -232,12 +214,42 @@ export default {
           alert(error.message);
       });
     },
+    //改变团的状态
     changeStatus(table) {
       this.$http.put("/producemanage/group/groupmanage/validorinvalid/" + table.id).then(resp => {
         this.tableData.filter(data =>{
           return data.id == table.id;
         })[0].status = !table.status
       }).catch(error => {
+        alert(error.message);
+      })
+    },
+    //提前加载所有的项目
+    showAddDialog(){
+      this.dialogTitle = "创建团";
+      this.dialogFormVisible = true;
+      this.$http.get("/producemanage/group/groupmanage/getProjectInfo")
+        .then(resp=>{
+            this.projects = resp.data;
+        }).catch(error=>{
+           alert(error.message);
+         });
+    },
+    //新增团
+    addGroup(){
+      this.$http.post("/producemanage/group/groupmanage",
+                this.$qs.stringify({
+                  groupName:this.form.name,
+                  groupNote:this.form.desc,
+                  belongProjectId:this.form.region
+                })
+      ).then(resp=>{
+        //创建成功  更新团
+        alert("开团成功！");
+        this.dialogFormVisible = false;
+        this.loadData();
+      }).catch(error=>{
+        alert(error.message);
       })
     }
   }
