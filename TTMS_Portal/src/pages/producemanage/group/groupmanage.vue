@@ -23,7 +23,7 @@
               </el-option>
   </el-select></div></el-col>
   <el-col :span="2"><div class="grid-content Search"><el-button type="success" @click="loadData()">查询</el-button></div></el-col>
-  <el-col :span="2"><div class="grid-content "><el-button type="success" @click="showAddDialog()">新增</el-button>
+  <el-col :span="2"><div class="grid-content "><el-button type="success" @click="showDialog(false)">新增</el-button>
 
 <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
   <el-form :model="form">
@@ -45,7 +45,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addGroup()">确 定</el-button>
+    <el-button type="primary" @click="dialogSubmit()">确 定</el-button>
   </div>
 </el-dialog></div></el-col>
 					</el-row>
@@ -134,8 +134,6 @@ export default {
 		    	id:'',
           name: '',
           region: '',
-          date1: '',
-          date2: '',
           delivery: false,
           type: [],
           resource: '',
@@ -150,10 +148,11 @@ export default {
         value: '0',
         label: '禁用'
       },],
-       dialogTitle:"",
+       dialogTitle:"",   //弹出框标题
+        isEdit:false, //是否是编辑
         projects:[],
-        groupName:"",
-        projectName:"",
+        groupName:"",   //弹出框中组名称
+        projectName:"", //项目名称
         valid:"",
         currentPage: 1,  //当前页
         rows:5,    //每页大小
@@ -165,8 +164,8 @@ export default {
   },
 	methods: {
     handleEdit(index, row) {
-      console.log(index, row);
-
+      //点击修改按钮  传入row
+      this.showDialog(true,row)
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -225,32 +224,69 @@ export default {
       })
     },
     //提前加载所有的项目
-    showAddDialog(){
-      this.dialogTitle = "创建团";
+    showDialog(isEdit,row){
+      this.isEdit = isEdit;
       this.dialogFormVisible = true;
       this.$http.get("/producemanage/group/groupmanage/getProjectInfo")
         .then(resp=>{
-            this.projects = resp.data;
+          this.projects = resp.data;
         }).catch(error=>{
-           alert(error.message);
-         });
-    },
-    //新增团
-    addGroup(){
-      this.$http.post("/producemanage/group/groupmanage",
-                this.$qs.stringify({
-                  groupName:this.form.name,
-                  groupNote:this.form.desc,
-                  belongProjectId:this.form.region
-                })
-      ).then(resp=>{
-        //创建成功  更新团
-        alert("开团成功！");
-        this.dialogFormVisible = false;
-        this.loadData();
-      }).catch(error=>{
         alert(error.message);
-      })
+      });
+      if(isEdit){
+        this.showEditDialog(row);
+      }else{
+        this.showAddDialog();
+      }
+    },
+    //如果是添加
+    showAddDialog(){
+      this.dialogTitle = "创建团";
+    },
+    //如果是修改
+    showEditDialog(row){
+      this.dialogTitle = "修改团";
+      console.log(row);
+      this.form.name = row.name;
+      this.form.desc = row.explain;
+      this.form.region = row.projectId;
+      this.form.id = row.id;
+    },
+    dialogSubmit(){
+      if(this.isEdit){
+        //编辑团
+        this.$http.put("/producemanage/group/groupmanage",
+          this.$qs.stringify({
+            groupId:this.form.id,
+            groupName:this.form.name,
+            belongProjectId:this.form.region,
+            groupNote: this.form.desc
+          })
+        ).then(resp=>{
+          //创建成功  更新团
+          alert("修改团信息成功！");
+          this.dialogFormVisible = false;
+          this.loadData();
+        }).catch(error=>{
+          alert(error.message);
+        })
+      }else{
+        //新增团
+        this.$http.post("/producemanage/group/groupmanage",
+          this.$qs.stringify({
+            groupName:this.form.name,
+            groupNote:this.form.desc,
+            belongProjectId:this.form.region
+          })
+        ).then(resp=>{
+          //创建成功  更新团
+          alert("开团成功！");
+          this.dialogFormVisible = false;
+          this.loadData();
+        }).catch(error=>{
+          alert(error.message);
+        })
+      }
     }
   }
 };
