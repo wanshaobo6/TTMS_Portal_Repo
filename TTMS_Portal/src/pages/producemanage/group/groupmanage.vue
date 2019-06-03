@@ -4,6 +4,13 @@
 
     <el-main>
       <div class="top">
+         <p class="title" style="color:#B3C0D1">组织结构管理</p>
+          <div class="path" >
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">机构管理</el-breadcrumb-item>
+              <el-breadcrumb-item>组织机构信息管理</el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
 					<el-row :gutter="20">
 						<el-col :span="3"><div class="grid-content "><el-input v-model="groupName" placeholder="团名称"></el-input></div></el-col>
 						<el-col :span="3"><div class="grid-content "><el-input v-model="projectName" placeholder="项目名称"></el-input></div></el-col>
@@ -15,7 +22,7 @@
                 :value="item.value">
               </el-option>
   </el-select></div></el-col>
-  <el-col :span="2"><div class="grid-content Search"><el-button type="success">查询</el-button></div></el-col>
+  <el-col :span="2"><div class="grid-content Search"><el-button type="success" @click="loadData()">查询</el-button></div></el-col>
   <el-col :span="2"><div class="grid-content "><el-button type="success" @click="dialogFormVisible = true">新增</el-button>
 
 <el-dialog title="创建团" :visible.sync="dialogFormVisible">
@@ -78,8 +85,8 @@
 	  label="状态"
 	  width="60">
 	  <template slot-scope="scope">
-		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
-		<span v-else style="color: red">禁用</span>
+		<span v-show="scope.row.status==1" style="color: green" >启用</span>
+		<span v-show="scope.row.status!=1" style="color: red" >禁用</span>
 	</template>
 	</el-table-column>
     <el-table-column label="操作">
@@ -90,12 +97,13 @@
           @click="handleEdit(scope.$index, scope.row)">修改</el-button>
         <el-button
           size="mini"
-           v-if="scope.row.status == '启用'"
+          v-show="scope.row.status==1"
+          @click="changeStatus(scope.row)"
           >禁用</el-button>
-		  <el-button
-		    size="mini"
-		    v-else>启用</el-button>
-      </template>
+          <el-button
+            size="mini"
+            v-show="scope.row.status!=1"  @click="changeStatus(scope.row)">启用</el-button>
+          </template>
     </el-table-column>
   </el-table>
   <div class="page">
@@ -134,64 +142,7 @@ export default {
           desc: ''
         },
        formLabelWidth: '120px',
-			 tableData: [{
-				 name:'20170605西安四天三夜游团',
-				 project:'西安 清风唐韵',
-				 principal:'李梅',
-				 phone:'18778876545',
-				 explain:'20170605西安四天三夜游团',
-				 status:'启用',
-        }, {
-           name:'20170605西安四天三夜游团',
-          project:'西安 清风唐韵',
-          principal:'李梅',
-          phone:'18778876545',
-          explain:'20170605西安四天三夜游团',
-          status:'启用',
-        }, {
-          name:'20170605西安四天三夜游团',
-         project:'西安 清风唐韵',
-         principal:'李梅',
-         phone:'18778876545',
-         explain:'20170605西安四天三夜游团',
-         status:'启用',
-        }, {
-           name:'20170605西安四天三夜游团',
-          project:'西安 清风唐韵',
-          principal:'李梅',
-          phone:'18778876545',
-          explain:'20170605西安四天三夜游团',
-          status:'禁用',
-        },
-		{
-		   name:'20170605西安四天三夜游团',
-		  project:'西安 清风唐韵',
-		  principal:'李梅',
-		  phone:'18778876545',
-		  explain:'20170605西安四天三夜游团',
-		  status:'启用',
-		}, {
-		  name:'20170605西安四天三夜游团',
-		 project:'西安 清风唐韵',
-		 principal:'李梅',
-		 phone:'18778876545',
-		 explain:'20170605西安四天三夜游团',
-		 status:'禁用',
-		},{
-		  name:'20170605西安四天三夜游团',
-		 project:'西安 清风唐韵',
-		 principal:'李梅',
-		 phone:'18778876545',
-		 explain:'20170605西安四天三夜游团',
-		 status:'禁用',
-		},{
-		 name:'20170605西安四天三夜游团',
-		project:'西安 清风唐韵',
-		principal:'李梅',
-		phone:'18778876545',
-		explain:'20170605西安四天三夜游团',
-		status:'启用',
-		}],
+			 tableData: [],
 			options1: [{
           value: '选项1',
           label: '华中部'
@@ -222,13 +173,13 @@ export default {
       groupName:"",
       projectName:"",
       valid:"",
-      currentPage: 4,  //当前页
+      currentPage: 1,  //当前页
       rows:5,    //每页大小
       totalItem : 20,   //总条数
 		};
 	},
   created(){
-    //this.loadData();
+    this.loadData();
   },
 	methods: {
     handleEdit(index, row) {
@@ -241,24 +192,53 @@ export default {
       console.log(row);
     },
     handleSizeChange(val) {
+      this.rows= val;
       this.loadData();
     },
     handleCurrentChange(val) {
+      this.currentPage = val;
       this.loadData();
     },
     loadData(){
-      this.$http.get("/producemanage/project/projectinfomanage/page" , {
-         groupName : this.groupName  ,
-        projectName: this.projectName,
-        valid :this.valid,
-        page : this.currentPage,
-        rows:this.rows
-      }).then(data => {
+      //加载团信息
+      this.$http.get("/producemanage/group/groupmanage/page" , {
+        params: {
+          groupName: this.groupName,
+          projectName: this.projectName,
+          valid: this.valid,
+          page: this.currentPage,
+          rows: this.rows
+        }
+      }).then(resp => {
           //成功
-        console.log(data);
+        console.log(resp);
+        this.totalItem = resp.data.total;
+        var tables = [];
+        resp.data.items.forEach(groupItem => {
+          var table = {};
+          table.id = groupItem.proGroup.id;
+          table.name = groupItem.proGroup.groupname;
+          table.projectId = groupItem.proGroup.projectid;
+          table.project = groupItem.proGroup.projectname;
+          table.principal = groupItem.chargerName;
+          table.phone = groupItem.chargerPhoneNumber;
+          table.explain = groupItem.proGroup.groupnote;
+          table.status = groupItem.proGroup.valid;
+          table.chargeuserid = groupItem.proGroup.chargeuserid;
+          tables.push(table);
+        });
+        this.tableData = tables;
       }).catch(error =>{
-
+          alert(error.message);
       });
+    },
+    changeStatus(table) {
+      this.$http.put("/producemanage/group/groupmanage/validorinvalid/" + table.id).then(resp => {
+        this.tableData.filter(data =>{
+          return data.id == table.id;
+        })[0].status = !table.status
+      }).catch(error => {
+      })
     }
   }
 };

@@ -75,12 +75,6 @@
     </v-toolbar>
     <!--中间内容主体-->
     <v-content style="padding-top:0px">
-      <v-breadcrumbs >
-        <v-icon slot="divider">chevron_right</v-icon>
-        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
-        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
-        <v-breadcrumbs-item>项目</v-breadcrumbs-item>
-      </v-breadcrumbs>
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
           <router-view/>
