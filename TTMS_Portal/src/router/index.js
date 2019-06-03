@@ -29,6 +29,7 @@ export default new Router({
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
         route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
+        route("/producemanage/product/productcat",'/producemanage/product/productcat',"Productcat"),
         route("/TourismInformation",'/TourismInformation',"TourismInformation"),
         route("/InventoryDistribution",'/InventoryDistribution',"InventoryDistribution"),
         route("/appendix",'/appendix',"appendix"),
