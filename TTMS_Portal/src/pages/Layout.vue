@@ -74,7 +74,7 @@
       <v-spacer/>
     </v-toolbar>
     <!--中间内容主体-->
-    <v-content style="padding-top:0px">
+    <v-content >
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
           <router-view/>

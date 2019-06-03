@@ -72,7 +72,6 @@
                 width="150">
               </el-table-column>
 
-              </el-table-column>
               <el-table-column label="操作" align="center" min-width="100">
                 　　　　<template slot-scope="scope">
                 　　　　　　<el-button type="info" @click="deleteUser(scope.row.phone)">删除</el-button>
@@ -86,7 +85,6 @@
 
       </el-main>
     </el-container>
-  </el-container>
 </template>
 
 <script>

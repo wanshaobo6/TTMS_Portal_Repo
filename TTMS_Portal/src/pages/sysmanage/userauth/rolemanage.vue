@@ -12,9 +12,9 @@
 </el-breadcrumb></div>
 					<el-row :gutter="20">
 						
-						<el-col :span="5"><div class="grid-content "><el-input v-model="input1" placeholder="角色名称"></el-input>
+						<el-col :span="5"><div class="grid-content "><el-input v-model="roleName" placeholder="角色名称"></el-input>
 </div></el-col>
-						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
+						<el-col :span="2"><el-button type="primary" @click="loadData()">查询</el-button><div class="grid-content "></div></el-col>
 						 <el-col :span="2"><div class="grid-content ">
                <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
@@ -79,11 +79,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[50, 70, 90, 110]"
-      :page-size="50"
+      :current-page="currentPage"
+      :page-sizes="[5,10,15,20]"
+      :page-size="rows"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="110">
+      :total="totalItem">
     </el-pagination>
   </div>
   </div>
@@ -308,36 +308,50 @@ export default {
 				roleName:'系统管理员',
 				comment:'系统管理员',
 				
-        }, {
-         roleID:'2',
-         roleName:'产品经理',
-         comment:'产品经理',
-        }, {
-         roleID:'3',
-         roleName:'团负责人',
-         comment:'团负责人',
-        }, {
-          roleID:'1',
-          roleName:'系统管理员',
-          comment:'系统管理员',
         }],
 		multipleSelection: [],
-				radio: '',
-				selected:{},
-			input1: '',
-		currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4
+			radio: '',
+			selected:{},
+      roleName: '',
+      totalItem:0,//总记录数
+	  	currentPage: 1,//当前页
+      rows:5 //页大小
 		};
 	},
+  created(){
+    //加载分页数据
+    this.loadData();
+  },
 	methods: {
-	showRow(row){
-	//赋值给radio
-	this.radio = this.tableData.indexOf(row);
-	this.selected=row;
-},
-handleEdit(index, row) {
+	  //加载分页数据
+	  loadData(){
+	    this.$http.get("/sysmanage/userauth/rolemanage/page",{
+	      params:{
+          name : this.roleName,
+          page : this.currentPage,
+          rows: this.rows
+        }
+      }).then(resp=>{
+        this.totalItem = resp.data.total;
+        var datas = [];
+        resp.data.items.forEach(item=>{
+           var data = {};
+           data.roleID = item.id;
+           data.roleName = item.name;
+           data.comment = item.note;
+           datas.push(data);
+        });
+        this.tableData = datas;
+      }).catch(error=>{
+          alert(error.message);
+      })
+    },
+    showRow(row){
+      //赋值给radio
+      this.radio = this.tableData.indexOf(row);
+      this.selected=row;
+    },
+    handleEdit(index, row) {
         console.log(index, row);
       },
       handleDelete(index, row) {
@@ -346,29 +360,25 @@ handleEdit(index, row) {
       handleClick(row) {
         console.log(row);
       },
-	  handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+	    handleSizeChange(val) {
+          this.rows = val;
+          this.loadData();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+	       this.currentPage = val;
+        this.loadData();
       }
     },
 };
 </script>
 
 <style>
-	html,body {
-	
-	            overflow:hidden;
-	
-	            margin:0px;
-	
-	            width:100%;
-	
-	            height:100%;
-	
-	        }
-
+html,body {
+        overflow:hidden;
+        margin:0px;
+        width:100%;
+        height:100%;
+   }
   .roles{
 	  float: left;
   }

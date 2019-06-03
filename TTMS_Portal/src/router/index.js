@@ -36,7 +36,7 @@ export default new Router({
         route("/InfoPanel",'/InfoPanel',"InfoPanel"),
         route("/ProductClassify",'/ProductClassify',"ProductClassify"),
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
-        route("/sysmanage/userauth/RoleInfoManage",'/sysmanage/userauth/RoleInfoManage',"RoleInfoManage"),
+        route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
         route("/RouteSetting",'/RouteSetting',"RouteSetting")
       ]
