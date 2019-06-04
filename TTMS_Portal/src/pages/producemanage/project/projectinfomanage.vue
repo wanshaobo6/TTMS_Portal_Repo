@@ -246,7 +246,7 @@ export default {
             })
            this.departOptions = deps;
         }).catch(error=>{
-            console.log(error.message);
+          this.$message.error(error.message);
         })
       },
     //加载表格数据
@@ -298,9 +298,9 @@ export default {
                 departmentId:this.form.region,
                 note:this.form.desc
           }) ).then(resp=>{
-            alert("更新项目成功");
+              this.$message("更新项目成功");
             }).catch(error=>{
-              alert(error.message);
+              this.$message.error(error.message);
             });
           }else{
             //新增
@@ -313,9 +313,9 @@ export default {
                 departmentId:this.form.region,
                 note:this.form.desc
             })).then(resp=>{
-              alert("新增项目成功");
+              this.$message("新增项目成功");
             }).catch(error=>{
-              alert(error.message);
+              this.$message.error(error.message);
             });
           }
           //更新表格  关闭弹窗
@@ -326,7 +326,7 @@ export default {
         this.$http.get("/producemanage/project/projectinfomanage/validorinvalid/"+row.id).then(resp=>{
           row.status = ! row.status;
         }).catch(error=>{
-          alert(error.message);
+          this.$message.error(error.message);
         })
 
     }

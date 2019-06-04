@@ -171,7 +171,7 @@
           this.tableData3 = table3;
         }).catch(error => {
           this.table3show = false;
-          alert(error.message);
+          this.$message(error.message);
         })
       }
     }
