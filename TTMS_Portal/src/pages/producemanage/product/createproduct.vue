@@ -21,24 +21,24 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label="团号   " class="right" :rules="[
+                  <el-form-item label="团号" class="pl-0" :rules="[
                      { required: true },]">
-                    <el-select v-model="value" placeholder="请选择产品团号">
-                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="selectedGroupId" placeholder="请选择产品团号">
+                      <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="产品分类" class="pl-0" :rules="[
                     { required: true },]">
-                    <el-select v-model="value" placeholder="一级分类" class="wid">
-                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="selectedFirstCatId" placeholder="一级分类" class="wid">
+                      <el-option v-for="item in catOptions1" :key="item.value" :label="item.label" :value="item.value" @click="loadSecondCats(item.value)"></el-option>
                     </el-select>
-                    <el-select v-model="value" placeholder="二级分类" class="wid">
-                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="selectedSecondCatId" placeholder="二级分类" class="wid">
+                      <el-option v-for="item in catOptions2" :key="item.value"  :label="item.label" :value="item.value" @click="loadThridCats(item.value)"></el-option>
                     </el-select>
-                    <el-select v-model="value" placeholder="三级分类" class="wid">
-                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="selectedThirdCatId" placeholder="三级分类" class="wid">
+                      <el-option v-for="item in catOptions3" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -141,23 +141,14 @@
     data() {
       return {
         activeName: 'first',
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: '',
+        catOptions1:[],
+        catOptions2:[],
+        catOptions3:[],
+        groupOptions: [],
+        selectedFirstCatId: '',
+        selectedSecondCatId: '',
+        selectedThirdCatId: '',
+        selectedGroupId:"",
         form: {
           user: '',
           region: ''
@@ -168,8 +159,72 @@
     methods: {
       handleClick(tab, event) {
         console.log(tab, event);
+      },
+      //根据父id和级别加载对应的分类
+      loadNCatById(pid,level){
+        this.$http.get("/producemanage/product/createproduct/queryCatById",{
+          params:{
+            catId : pid
+          }
+        }).then(resp=>{
+          var tempCats = [];
+          resp.data.forEach(item=>{
+            var tempCat = {};
+            tempCat.label = item.productcatname;
+            tempCat.value =  item.id;
+            tempCats.push(tempCat);
+          });
+          switch(level) {
+            case 1:
+             this.catOptions1 = tempCats;
+              break;
+            case 2:
+              this.catOptions2 = tempCats;
+              break;
+            case 3:
+              this.catOptions3 = tempCats;
+              break;
+            default:
+              break;
+          }
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
+      //加载二级分类
+      loadSecondCats(pid){
+        console("loadSecondCats");
+        this.loadNCatById(pid,2);
+      },
+      //加载三级分类
+      loadThridCats(pid){
+        this.loadNCatById(pid,3);
+      },
+      loadGroup(){
+        this.$http.get("/producemanage/product/createproduct/queryAllGroups").then(resp=>{
+            var  tempGroups = [];
+            resp.data.forEach(item=>{
+              var tempGroup = {};
+              tempGroup.label = item.groupname;
+              tempGroup.value = item.id;
+              tempGroups.push(tempGroup);
+            })
+           this.groupOptions = tempGroups;
+        }).catch(error=>{
+
+        })
       }
     },
+    props:[
+     'user',//父组件传来的当前用户参数
+    ],
+    created(){
+      //加载一级分类
+      this.loadNCatById(0,1);
+
+      //加载可用团
+      this.loadGroup();
+    }
   };
 </script>
 
