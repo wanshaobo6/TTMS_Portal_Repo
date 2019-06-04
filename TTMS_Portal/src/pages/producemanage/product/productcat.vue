@@ -85,14 +85,14 @@
     name: 'ProductCat',
     data() {
       return {
-        tableData1: [],
-        tableData2: [],
-        tableData3: [],
-        table1show: true,
-        table2show: false,
-        table3show: false,
-        secondCatName:"",
-        thirdCatName :""
+        tableData1: [],   //一级分类数据
+        tableData2: [],    //二级分类数据
+        tableData3: [],    //三级分类数据
+        table1show: true,  //是否显示一级分类
+        table2show: false,  //是否显示二级分类
+        table3show: false,  //是否显示三级分类
+        secondCatName:"",    //二级分类标题
+        thirdCatName :""     //三级分类标题
       }
     },
     created() {
