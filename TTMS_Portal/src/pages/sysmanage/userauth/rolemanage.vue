@@ -287,7 +287,7 @@ export default {
         comment:'',
       },
 			 checkedRoles: ['系统管理员', '产品经理'],
-        roles: roleOptions,
+      roles: roleOptions,
 			dialogFormVisible: false,
 			form: {
 				id:'',
@@ -303,12 +303,7 @@ export default {
 			  desc: ''
 			},
 			formLabelWidth: '120px',
-			tableData: [{
-				roleID:'1',
-				roleName:'系统管理员',
-				comment:'系统管理员',
-				
-        }],
+			tableData: [],
 		multipleSelection: [],
 			radio: '',
 			selected:{},

@@ -144,8 +144,8 @@
               label="状态"
               width="50">
 	  <template slot-scope="scope">
-		<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
-		<span v-else style="color: red">禁用</span>
+		<span  v-show="scope.row.status == 1" style="color: green">启用</span>
+		<span  v-show="scope.row.status == 0" style="color: red">禁用</span>
 	</template>
 	</el-table-column>
 	<el-table-column
@@ -154,18 +154,18 @@
 	  width="200">
 	</el-table-column>
     <el-table-column label="操作">
-		
       <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-        <el-button
-          size="mini"
-           v-if="scope.row.status == '启用'"
-          >禁用</el-button>
-		  <el-button
-		    size="mini"
-		    v-else>启用</el-button>
+        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+          <el-button
+            size="mini"
+             v-show="scope.row.status == 1"
+            @click="validOrInValid(scope.row)"
+            >禁用</el-button>
+          <el-button
+            size="mini"
+            v-show="scope.row.status == 0"
+            @click="validOrInValid(scope.row)"
+          >启用</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -341,8 +341,8 @@ export default {
               project.name = item.projectname;
               project.departmentId = item.departmentid;
               project.department = item.departmentName;
-              project.start = item.starttime;
-              project.end = item.endtime;
+              project.start = new Date(item.starttime).format("yyyy-MM-dd hh:mm:ss");
+              project.end = new Date(item.endtime).format("yyyy-MM-dd hh:mm:ss");
               project.status = item.valid;
               project.comment = item.note;
               projects.push(project);
@@ -366,9 +366,9 @@ export default {
                 departmentId:this.form.region,
                 note:this.form.desc
           }) ).then(resp=>{
-
+            alert("更新项目成功");
             }).catch(error=>{
-
+              alert(error.message);
             });
           }else{
             //新增
@@ -381,12 +381,23 @@ export default {
                 departmentId:this.form.region,
                 note:this.form.desc
             })).then(resp=>{
-
+              alert("新增项目成功");
             }).catch(error=>{
-
+              alert(error.message);
             });
           }
-      }
+          //更新表格  关闭弹窗
+          this.dialogFormVisible = false;
+          this.loadData();
+      },
+    validOrInValid(row){
+        this.$http.get("/producemanage/project/projectinfomanage/validorinvalid/"+row.id).then(resp=>{
+          row.status = ! row.status;
+        }).catch(error=>{
+          alert(error.message);
+        })
+
+    }
     },
 };
 </script>

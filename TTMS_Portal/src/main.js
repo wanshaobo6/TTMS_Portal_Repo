@@ -18,6 +18,7 @@ Vue.use(elementUI);
 Vue.use(Vuetify, { theme: config.theme})
 Vue.config.productionTip = false
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
