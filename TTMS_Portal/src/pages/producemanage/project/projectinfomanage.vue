@@ -1,190 +1,122 @@
 <template>
-	<el-container>
   <el-container>
-
-    <el-main>
-      <div class="top"><p class="title" style="color:#B3C0D1">项目信息管理</p>
-					<div class="path" >
+    <el-container>
+      <el-main>
+        <div class="top">
+          <p class="title" style="color:#B3C0D1">项目信息管理</p>
+          <div class="path">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-                <el-breadcrumb-item>项目</el-breadcrumb-item>
-                <el-breadcrumb-item>项目信息管理</el-breadcrumb-item>
-            </el-breadcrumb>
+              <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
+              <el-breadcrumb-item>项目</el-breadcrumb-item>
+              <el-breadcrumb-item>项目信息管理</el-breadcrumb-item></el-breadcrumb>
           </div>
-            <el-row :gutter="5">
-              <el-col :span="4">
-                <div class="grid-content ">
-                  <el-input v-model="projectNumber" placeholder="项目编号"></el-input>
-                 </div>
-              </el-col>
-              <el-col :span="4">
-                <div class="grid-content ">
-                  <el-input v-model="projectName" placeholder="项目名称"></el-input>
-                </div>
-              </el-col>
-              <el-col :span="5">
-                <div class="grid-content ">
-                 <el-select v-model="departId" filterable placeholder="选择归属部门">
-                    <el-option
-                      v-for="item in departOptions"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                 </el-select>
-                </div>
-              </el-col>
-            <el-col :span="5">
-              <el-date-picker
-                v-model="startTime"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                type="date"
-                placeholder="起始日期">
-              </el-date-picker>
-           </el-col>
-            <el-col :span="6">
+          <el-row :gutter="5">
+            <el-col :span="4">
               <div class="grid-content ">
-                <el-date-picker
-                  v-model="endTime"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  type="date"
-                  placeholder="终止日期">
-                </el-date-picker>
+                <el-input v-model="projectNumber" placeholder="项目编号"></el-input>
               </div>
             </el-col>
-					</el-row>
-				<el-row :gutter="20">
-          <el-col :span="3"><div class="grid-content "><el-select v-model="valid" placeholder="选择状态">
-            <el-option
-              v-for="item in options"
-              :label="item.label"
-              :value="item.value"
-              :key="item.value">
-            </el-option>
-          </el-select></div></el-col>
-  <el-col :span="2"><div class="grid-content bg-purple "><el-button type="primary" @click="loadData()">查询</el-button></div></el-col>
-  <el-col :span="2"><div class="grid-content bg-purple"><el-button type="primary" @click="showDialog(false)">新增</el-button>
-
-<el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
-  <el-form ref="form" :model="form" label-width="100px">
-    <el-form-item label="项目编号:" :rules="[
-    { required: true },]">
-      <el-input v-model="form.number" placeholder="TP性质-日期-国家地区-城市-序号"></el-input>
-    </el-form-item>
-     <el-form-item label="项目名称:" :rules="[
-    { required: true },]">
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
-    
-    <el-form-item label="日期:">
-      <el-col :span="11">
-        <el-date-picker type="date" placeholder="起始日期" v-model="form.startTime"   value-format="yyyy-MM-dd HH:mm:ss"  style="width: 100%;"></el-date-picker>
-      </el-col>
-      <el-col class="line" :span="2">-</el-col>
-      <el-col :span="11">
-        <el-date-picker type="date" placeholder="结束日期" v-model="form.endTime"   value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
-      </el-col>
-    </el-form-item>
-    <el-form-item label="归属部门:">
-      <div class="choose"><el-select v-model="form.region" placeholder="选择归属部门">
-        <el-option
-          v-for="item in departOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select></div>
-    </el-form-item>
-    <el-form-item label="备注:">
-      <el-input type="textarea" v-model="form.desc"></el-input>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="submitForm()">确 定</el-button>
-  </div>
-</el-dialog>
-  
-  </div></el-col>
-
-</el-row>
-						
-					</div>
-					<div class="body">
-						<el-table
-              :data="tableData"
-              style="width: 100%">
-              <el-table-column
-              prop="number"
-                label="项目编号"
-                width="200">
-              </el-table-column>
-            <el-table-column
-              prop="name"
-              label="项目名称"
-              width="130">
+            <el-col :span="4">
+              <div class="grid-content ">
+                <el-input v-model="projectName" placeholder="项目名称"></el-input>
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="grid-content ">
+                <el-select v-model="departId" filterable placeholder="选择归属部门">
+                  <el-option v-for="item in departOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <el-date-picker v-model="startTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="起始日期"></el-date-picker>
+            </el-col>
+            <el-col :span="6">
+              <div class="grid-content ">
+                <el-date-picker v-model="endTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="终止日期"></el-date-picker>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="3">
+              <div class="grid-content ">
+                <el-select v-model="valid" placeholder="选择状态">
+                  <el-option v-for="item in options" :label="item.label" :value="item.value" :key="item.value"></el-option>
+                </el-select>
+              </div>
+            </el-col>
+            <el-col :span="2">
+              <div class="grid-content bg-purple ">
+                <el-button type="primary" @click="loadData()">查询</el-button></div>
+            </el-col>
+            <el-col :span="2">
+              <div class="grid-content bg-purple">
+                <el-button type="primary" @click="showDialog(false)">新增</el-button>
+                <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
+                  <el-form ref="form" :model="form" label-width="100px">
+                    <el-form-item label="项目编号:" :rules="[
+                    { required: true },]">
+                      <el-input v-model="form.number" placeholder="TP性质-日期-国家地区-城市-序号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="项目名称:" :rules="[
+                    { required: true },]">
+                      <el-input v-model="form.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="日期:">
+                      <el-col :span="11">
+                        <el-date-picker type="date" placeholder="起始日期" v-model="form.startTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
+                      </el-col>
+                      <el-col class="line" :span="2">-</el-col>
+                      <el-col :span="11">
+                        <el-date-picker type="date" placeholder="结束日期" v-model="form.endTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
+                      </el-col>
+                    </el-form-item>
+                    <el-form-item label="归属部门:">
+                      <div class="choose">
+                        <el-select v-model="form.region" placeholder="选择归属部门">
+                          <el-option v-for="item in departOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                      </div>
+                    </el-form-item>
+                    <el-form-item label="备注:">
+                      <el-input type="textarea" v-model="form.desc"></el-input>
+                    </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="submitForm()">确 定</el-button></div>
+                </el-dialog>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="body">
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="number" label="项目编号" width="200"></el-table-column>
+            <el-table-column prop="name" label="项目名称" width="130"></el-table-column>
+            <el-table-column prop="department" label="归属部门" width="80"></el-table-column>
+            <el-table-column prop="start" label="开始日期" width="90"></el-table-column>
+            <el-table-column prop="end" label="结束日期" width="90"></el-table-column>
+            <el-table-column prop="status" label="状态" width="50">
+              <template slot-scope="scope">
+                <span v-show="scope.row.status == 1" style="color: green">启用</span>
+                <span v-show="scope.row.status == 0" style="color: red">禁用</span></template>
             </el-table-column>
-            <el-table-column
-              prop="department"
-              label="归属部门"
-              width="80">
+            <el-table-column label="备注" prop="comment" width="200"></el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+                <el-button size="mini" v-show="scope.row.status == 1" @click="validOrInValid(scope.row)">禁用</el-button>
+                <el-button size="mini" v-show="scope.row.status == 0" @click="validOrInValid(scope.row)">启用</el-button></template>
             </el-table-column>
-              <el-table-column
-            prop="start"
-                label="开始日期"
-                width="90">
-              </el-table-column>
-            <el-table-column
-            prop="end"
-              label="结束日期"
-              width="90">
-            </el-table-column>
-            <el-table-column
-            prop="status"
-              label="状态"
-              width="50">
-	  <template slot-scope="scope">
-		<span  v-show="scope.row.status == 1" style="color: green">启用</span>
-		<span  v-show="scope.row.status == 0" style="color: red">禁用</span>
-	</template>
-	</el-table-column>
-	<el-table-column
-	  label="备注"
-	  prop="comment"
-	  width="200">
-	</el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-          <el-button
-            size="mini"
-             v-show="scope.row.status == 1"
-            @click="validOrInValid(scope.row)"
-            >禁用</el-button>
-          <el-button
-            size="mini"
-            v-show="scope.row.status == 0"
-            @click="validOrInValid(scope.row)"
-          >启用</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-  <div class="page">
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="rows"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="totalItem">
-    </el-pagination>
-  </div>
-  </div>
-  
-  </el-main>
+          </el-table>
+          <div class="page">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5, 10, 15, 20]" :page-size="rows" layout="total, sizes, prev, pager, next, jumper" :total="totalItem"></el-pagination>
+          </div>
+        </div>
+      </el-main>
+    </el-container>
   </el-container>
-</el-container>
 </template>
 
 <script>
