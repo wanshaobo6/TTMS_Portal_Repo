@@ -12,7 +12,7 @@
 </el-breadcrumb></div>
 					<el-row :gutter="20">
 						
-						<el-col :span="4"><div class="grid-content "><el-input v-model="input1" placeholder="用户名"></el-input>
+						<el-col :span="4"><div class="grid-content "><el-input v-model="name" placeholder="用户名"></el-input>
 </div></el-col>
 						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
 						 <el-col :span="2"><div class="grid-content ">
@@ -86,7 +86,7 @@
 	  label="状态"
 	  width="165">
 	   <template slot-scope="scope">
-	  	<span v-if="scope.row.status==='启用'" style="color: green">启用</span>
+	  	<span v-if="scope.row.status=='1'" style="color: green">启用</span>
 	  	<span v-else style="color: red">禁用</span>
 	  </template>
 	</el-table-column>
@@ -102,12 +102,12 @@
       <template slot-scope="scope">
 		  <el-button
 		    size="mini"
-		    type="danger" v-if="scope.row.status == '启用'"
-		    >禁用</el-button>
+		    type="danger" v-if="scope.row.status == '1'"
+		    @click="profit(scope.row)" >禁用</el-button>
 		    <el-button
 		      size="mini"
 		      type="success"
-		      v-else>启用</el-button>
+		      v-else @click="enable(scope.row)">启用</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -118,10 +118,10 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[50, 70, 90, 110]"
+      :page-sizes="[5, 10, 15]"
       :page-size="50"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="110">
+      :total="total">
     </el-pagination>
   </div>
   </div>
@@ -154,38 +154,90 @@ export default {
 			  desc: ''
 			},
 			formLabelWidth: '120px',
-			tableData: [{
-				username: '罗占',
-				status:'启用',
-				email: 'admin@tedu.cn',
-				phoneNum: '18765748930',
-        }, {
-          username: '罗占',
-		  status:'禁用',
-          email: 'admin@tedu.cn',
-          phoneNum: '18765748930',
-        }, {
-         username: '廖和福',
-		 status:'禁用',
-         email: 'admin@tedu.cn',
-         phoneNum: '18765748930',
-        }, {
-          username: '廖和福',
-		  status:'启用',
-          email: 'admin@tedu.cn',
-          phoneNum: '18765748930',
-        }],
+			tableData: [],
 		multipleSelection: [],
 				radio: '',
 				selected:{},
-			input1: '',
+			name: '',
 		currentPage1: 5,
         currentPage2: 5,
         currentPage3: 5,
-        currentPage4: 4
+        currentPage4: 4,
+        page:1,
+        total:0,
+        rows:5,
 		};
 	},
+  created(){
+	  this.name==null ? "" : this.name;
+    // 在页面加载前获取数据
+    this.loadData();
+  },
+  watch:{
+	  rows:{
+      handler:function(){
+        this.loadData();
+      },
+      deep:true
+    },
+    page:{
+      handler:function(){
+        this.loadData();
+      },
+      deep:true
+    },
+    name:{
+	    deep:true,
+      handler:function () {
+        this.loadData();
+      }
+    }
+
+  },
 	methods: {
+	  //禁用用户
+    profit(user){
+      console.log(user.id);
+      this.$http.put("/sysmanage/userauth/usermanage/valid/"+user.id).then(
+
+      ).catch(
+        error=>{
+        alert(error.message);
+      })
+    },
+      enable(user){
+        console.log(user.id);
+        this.$http.put("/sysmanage/userauth/usermanage/valid/"+user.id).then(
+
+        ).catch(
+          error=>{
+            alert(error.message);
+          });
+      },
+    loadData(){
+      this.$http.get("/sysmanage/userauth/usermanage/page",{
+        params:{
+          name : this.name,
+          page : this.page,
+          rows: this.rows
+        }
+      }).then(resp=>{
+        this.total=resp.data.total;
+        let datas=[];
+          resp.data.items.forEach(e=>{
+              var data = {};
+            data.id=e.id;
+            data.username=e.username;
+            data.status=e.valid;
+            data.email=e.email;
+            data.phoneNum=e.mobile;
+            datas.push(data);
+          });
+        this.tableData = datas;
+      }).catch(error=>{
+        //alert(error.message);
+      })
+    },
 		showRow(row){
 	//赋值给radio
 	this.radio = this.tableData.indexOf(row);
@@ -201,9 +253,11 @@ handleEdit(index, row) {
         console.log(row);
       },
 	  handleSizeChange(val) {
+      this.rows=val;
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
+      this.page=val;
         console.log(`当前页: ${val}`);
       }
     },
