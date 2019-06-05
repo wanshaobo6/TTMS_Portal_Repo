@@ -382,7 +382,7 @@
     line-height: 25px;
     height: 25px;
     text-align: center;
-    width: -webkit-max-content;
+    width: -webkit-fill-avaliable;
     margin-bottom: 20px;
     background:#E9EEF3;
   }
