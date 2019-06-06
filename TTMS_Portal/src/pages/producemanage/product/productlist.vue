@@ -78,19 +78,20 @@
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning">库存分销</el-button>
+            <el-col :span="3"><div class="grid-content "><el-button type="warning" @click="signUp1">库存分销</el-button>
 
             </div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">附件</el-button>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp2">价格政策</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info" @click="signUp3">附件</el-button>
             </div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp4" >导游信息</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp5">行程设置</el-button></div></el-col>
           </el-row>
         </div>
       </div>
-        </div>
+
         <div class="body">
+          <router-view></router-view>
           <el-table
             ref="multipleTable"
             :data="tableData"
@@ -422,7 +423,33 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
-      }
+      },
+      signUp1(){
+        this.$router.push({
+          path:'/producemanage/product/InventoryDistribution'
+        })
+      },
+      signUp2(){
+        this.$router.push({
+          path:'/producemanage/product/DreferentialPolicy'
+        })
+      },
+      signUp3(){
+        this.$router.push({
+          path:'/producemanage/product/appendix'
+        })
+      },
+      signUp4(){
+        this.$router.push({
+          path:'/producemanage/product/TourismInformation'
+        })
+      },
+      signUp5(){
+        this.$router.push({
+          path:'/producemanage/product/RouteSetting'
+        })
+      },
+
     },
   };
 </script>

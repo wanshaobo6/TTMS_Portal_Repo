@@ -4,11 +4,12 @@
 
     <el-main>
       <div class="top">
-         <p class="title" style="color:#B3C0D1">组织结构管理</p>
+         <p class="title" style="color:#B3C0D1">团号管理</p>
           <div class="path" >
             <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item :to="{ path: '/' }">机构管理</el-breadcrumb-item>
-              <el-breadcrumb-item>组织机构信息管理</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
+              <el-breadcrumb-item>团号</el-breadcrumb-item>
+              <el-breadcrumb-item>团号管理</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
 					<el-row :gutter="20">
