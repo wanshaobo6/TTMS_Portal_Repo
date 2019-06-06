@@ -219,19 +219,11 @@
       },
       deleteRow(index){
         this.tableData.splice(index,1)
-        //alert(index)
         var id = null
         this.tableData.some((item,i)=>{
 
           if(i === index){
             id = item.roleID
-            /*this.tableData.some((item,i)=>{
-              if(item.roleID === id){
-                this.tableData.splice(i,1)
-                return true
-              }
-            })
-        */
             return true
           }
         })
