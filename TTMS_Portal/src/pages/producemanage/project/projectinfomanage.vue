@@ -64,11 +64,11 @@
                     </el-form-item>
                     <el-form-item label="日期:">
                       <el-col :span="11">
-                        <el-date-picker type="date" placeholder="起始日期" v-model="form.startTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="datetime"  placeholder="起始日期" v-model="form.startTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
                       </el-col>
                       <el-col class="line" :span="2">-</el-col>
                       <el-col :span="11">
-                        <el-date-picker type="date" placeholder="结束日期" v-model="form.endTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="datetime"  placeholder="结束日期" v-model="form.endTime" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
                       </el-col>
                     </el-form-item>
                     <el-form-item label="归属部门:">
