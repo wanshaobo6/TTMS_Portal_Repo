@@ -40,7 +40,7 @@
             <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="三级分类">
               <el-option
                 v-for="item in options3"
-             :key="item.value"
+                :key="item.value"
                 :label="item.label"
                 :value="item.value">
               </el-option>
@@ -63,12 +63,12 @@
             </div></div></el-col>
             <el-col :span="4"><div class="grid-content "><div class="block">
 
-            <el-date-picker
-              v-model="value2"
-              type="date"
-              placeholder="服务结束日期">
-            </el-date-picker>
-          </div></div></el-col>
+              <el-date-picker
+                v-model="value2"
+                type="date"
+                placeholder="服务结束日期">
+              </el-date-picker>
+            </div></div></el-col>
             <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
             <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
             <el-col :span="2"><el-button type="success">修改</el-button></el-col>

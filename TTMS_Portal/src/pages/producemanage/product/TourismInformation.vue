@@ -21,7 +21,7 @@
                 </div>
               </el-col>
               <el-col :span="14">
-                <div class="grid-content"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;兵马俑制作+大明宫游+拓片体验亲子文化游3晚4天</span></div>
+                <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;兵马俑制作+大明宫游+拓片体验亲子文化游3晚4天</span></div>
                   <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;2019-05-28~2019-6-29</span></div>
                   <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品上架</span></div>
                 </div>
@@ -89,10 +89,10 @@
               </el-table-column>
               <el-table-column prop="Remarks" label="备注" width="120">
               </el-table-column>
-
+              </el-table-column>
               <el-table-column label="操作" align="center" min-width="70">
                 　　　　<template slot-scope="scope">
-                　　　　　<el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
+                　　　　　<el-button type="info" @click="deleteUser(scope.row.phone)">删除</el-button>
                 　　　　</template>
                 　　</el-table-column>
             </el-table>
@@ -219,7 +219,17 @@
 
   }
 
-
+  .path {
+    text-align: left;
+    font-size: 17px;
+    line-height: 25px;
+    height: 25px;
+    text-align: center;
+    width: -webkit-max-content;
+    margin-bottom: 10px ;
+    background:#E9EEF3;
+    padding:10px 10px 20px 10px;
+  }
   .page{
     position: relative;
     padding-top: 20px;
@@ -229,7 +239,7 @@
     padding: 10px 10px 10px 10px;
     font-size: 20px;
     margin-bottom: 20px;
-    font-family: normal;
+    font-family: stXinkai;
     font-style: normal;
   }
   .title02{
@@ -248,9 +258,9 @@
   .title01{
     text-align: left;
     padding:10px 50px 20px 100px;
-    font-family: normal;
+    font-family: Arial;
     font-style: normal;
-    font-size:12px;
+    font-size:16px;
 
   }
   .el-aside {
