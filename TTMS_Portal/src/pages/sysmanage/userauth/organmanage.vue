@@ -6,8 +6,8 @@
   <el-breadcrumb-item>组织机构信息管理</el-breadcrumb-item>
 </el-breadcrumb></div>
 					<el-row :gutter="20">
-						<el-col :span="4"><div class="grid-content "><el-input v-model="input1" placeholder="国家名称"></el-input></div></el-col>
-						<el-col :span="4"><div class="grid-content "><el-select v-model="value" placeholder="选择状态">
+						<el-col :span="4"><div class="grid-content "><el-input v-model="departmentname" placeholder="机构名称"></el-input></div></el-col>
+						<el-col :span="4"><div class="grid-content "><el-select v-model="valid" placeholder="选择状态">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -16,7 +16,7 @@
     </el-option>
   </el-select></div></el-col>
 						<el-col :span="4"><div class="grid-content "></div></el-col>
-						<el-col :span="2"><div class="grid-content "><el-button type="primary">查询</el-button></div></el-col>
+						<el-col :span="2"><div class="grid-content "><el-button type="primary" @click="loadData()">查询</el-button></div></el-col>
 						<el-col :span="2"><div class="grid-content "><el-button type="primary">新增</el-button></div></el-col>
 		
 					</el-row></div>
@@ -43,6 +43,10 @@
 	prop="status"
 	  label="状态"
 	  width="100">
+    <template slot-scope="scope">
+      <span v-show="scope.row.status==1" style="color: green" >启用</span>
+      <span v-show="scope.row.status!=1" style="color: red" >禁用</span>
+    </template>
 	</el-table-column>
 	<el-table-column
 	  label="备注"
@@ -57,12 +61,14 @@
           @click="handleEdit(scope.$index, scope.row)">修改</el-button>
         <el-button
           size="mini"
-          type="danger" v-if="scope.row.status == '启用'"
+          type="danger"
+          v-show="scope.row.status==1"
+          @click="changeStatus(scope.row)"
           >禁用</el-button>
 		  <el-button
 		    size="mini"
 		    type="success"
-		    v-else>启用</el-button>
+        v-show="scope.row.status!=1"  @click="changeStatus(scope.row)">启用</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -70,11 +76,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[50, 70, 90, 110]"
-      :page-size="50"
+      :current-page="currentPage"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="5"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="110">
+      :total="totalItem">
     </el-pagination>
   </div>
   </div>
@@ -88,59 +94,26 @@ export default {
 	name: 'OrganManage',
 	data() {
 		return {
-			 tableData: [{
-				 id:'6',
-				 name:'行政部',
-				 code:'EXEC',
-				 status:'启用',
-				 comment:'负责产品售后工作',
-        }, {
-           id:'6',
-          name:'行政部',
-          code:'EXEC',
-          status:'启用',
-          comment:'负责产品售后工作',
-        }, {
-           id:'6',
-          name:'行政部',
-          code:'EXEC',
-          status:'禁用',
-          comment:'负责产品售后工作',
-        }, {
-           id:'6',
-          name:'行政部',
-          code:'EXEC',
-          status:'禁用',
-          comment:'负责产品售后工作',
-        },
-		{
-		   id:'6',
-		  name:'行政部',
-		  code:'EXEC',
-		  status:'禁用',
-		  comment:'负责产品售后工作',
-		}, {
-		   id:'6',
-		  name:'行政部',
-		  code:'EXEC',
-		  status:'禁用',
-		  comment:'负责产品售后工作',
-		}],
+			 tableData: [],
 			input1: '',
 			options: [{
-          value: '选项1',
+          value: '1',
           label: '启用'
         }, {
-          value: '选项2',
+          value: '0',
           label: '禁用'
         },],
         value: '',
-		currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4
+      departmentname:"",
+      valid:"",
+      currentPage: 1,  //当前页
+      rows:5,    //每页大小
+      totalItem : 20,
 		};
 	},
+  created(){
+    this.loadData();
+  },
 	methods: {
 		handleEdit(index, row) {
         console.log(index, row);
@@ -152,11 +125,49 @@ export default {
         console.log(row);
       },
 	  handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+      this.rows= val;
+      this.loadData();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
+        this.currentPage = val;
+        this.loadData();
+      },
+    loadData(){
+      this.$http.get("/sysmanage/userauth/organmanage/page" , {
+        params: {
+          departmentname: this.departmentname,
+          valid: this.valid,
+          page: this.currentPage,
+          rows: this.rows
+        }
+      }).then(resp => {
+        //成功
+        console.log(resp);
+        this.totalItem = resp.data.total;
+        var tables = [];
+        resp.data.items.forEach(organItem => {
+          var table = {};
+          table.id= organItem.id,
+            table.name=organItem.departmentname,
+          table.status=organItem.valid,
+          table.code=organItem.departmentcode,
+          table.comment=organItem.note;
+          tables.push(table);
+
+        });
+        this.tableData = tables;
+      }).catch(error =>{
+        alert(error.message);
+      });
+    },
+    changeStatus(table) {
+      this.$http.put("/sysmanage/userauth/organmanage/valid/" + table.id).then(resp => {
+        this.tableData.filter(data =>{
+          return data.id == table.id;
+        })[0].status = !table.status
+      }).catch(error => {
+      })
+    }
     },
 };
 </script>
@@ -207,15 +218,16 @@ export default {
  }
   .body{
 	  margin-top: 5px;
-	  margin-bottom: 100px;
+	  margin-bottom: 10px;
 	  padding: 10px 0 30px;
+    height:600px;
   }
 
   .el-main {
     background-color: #E9EEF3;
     color: #333;
 	  height:700px;
-    margin-top: -60px;
+
   }
 
   body > .el-container {

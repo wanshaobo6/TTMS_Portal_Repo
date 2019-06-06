@@ -264,11 +264,11 @@ export default {
           })
         ).then(resp=>{
           //创建成功  更新团
-          alert("修改团信息成功！");
+          this.$message("修改团信息成功！");
           this.dialogFormVisible = false;
           this.loadData();
         }).catch(error=>{
-          alert(error.message);
+          this.$message.error(error.message);
         })
       }else{
         //新增团
@@ -280,11 +280,11 @@ export default {
           })
         ).then(resp=>{
           //创建成功  更新团
-          alert("开团成功！");
+          this.$message("开团成功！");
           this.dialogFormVisible = false;
           this.loadData();
         }).catch(error=>{
-          alert(error.message);
+          this.$message.error(error.message);
         })
       }
     }

@@ -77,7 +77,7 @@
     <v-content >
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
-          <router-view/>
+          <router-view :user="curUser"/>
       </div>
     </v-content>
   </v-app>
@@ -95,7 +95,8 @@
         menuMap: {},
         baseUrl:"",
         items:[],
-        modules:[]
+        modules:[],
+        curUser:{}
       }
     },
     computed: {
@@ -131,7 +132,13 @@
       if(this.modules == null){
         this.$router.push("/Login");
       }
-
+      //查询当前用户的信息
+      this.$http.post("/getCuruser").then(resp=>{
+        this.curUser = resp.data;
+      }).catch(error=>{
+        //登录失败  退回登录页面
+        this.$router.push("/Login");
+      })
     }
   }
 </script>

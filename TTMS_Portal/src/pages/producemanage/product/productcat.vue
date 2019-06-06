@@ -1,84 +1,80 @@
 <template>
   <el-container>
-
     <el-container>
-
       <el-main>
-        <div class="top"><p class="title" style="color:#B3C0D1">通知管理</p>
-          <div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-            <el-breadcrumb-item>产品</el-breadcrumb-item>
-            <el-breadcrumb-item>产品分类</el-breadcrumb-item>
-          </el-breadcrumb>
+        <div class="top">
+          <p class="title" style="color:#B3C0D1">通知管理</p>
+          <div class="path">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
+              <el-breadcrumb-item>产品</el-breadcrumb-item>
+              <el-breadcrumb-item>产品分类</el-breadcrumb-item></el-breadcrumb>
           </div>
         </div>
         <div class="body">
           <el-row :gutter="20">
-            <el-col :span="7"><div class="grid-content bg-purple">
+            <el-col :span="7" v-show="table1show">
               <div class="grid-content bg-purple">
-              <div class="block" style="border:1px solid #B3C0D1">
-                <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf">主分类</div>
-                <div class="title1"><el-link type="primary" >添加</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link>
-                </div>
-                <div class="ff" >
-                  <el-table
-                    :data="tableData1"
-                    style="width: 100%"><el-table-column
-                    prop="name"
-                    label="名称"
-                    width="200">
-                  </el-table-column>
-                  </el-table>
+                <div class="grid-content bg-purple">
+                  <div class="block" style="border:1px solid #B3C0D1">
+                    <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf">主分类</div>
+                    <div class="title1">
+                      <el-link type="primary">添加</el-link>
+                      <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
+                      <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
+                    <div class="ff">
+                      <el-table :data="tableData1"  style="width: 100%"  @row-click="handleFirstClick">
+                        <el-table-column prop="name" label="分类名称" width="200"  >
+                            <template slot-scope="scope">
+                              <span v-text="scope.row.name" ></span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                      </el-table>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            </div></el-col>
-            <el-col :span="7"><div class="grid-content bg-purple-light">
-              <div class="grid-content bg-purple">
-              <div class="block" style="border:1px solid #B3C0D1">
-                <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf">次分类</div>
-                <div class="title1"><el-link type="primary" >添加</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link>
-                </div>
-                <div class="ff" >
-                  <el-table
-                    :data="tableData2"
-                    style="width: 100%"><el-table-column
-                    prop="name"
-                    label="名称"
-                    width="200">
-                  </el-table-column>
-                  </el-table>
+            </el-col>
+            <el-col :span="7" v-show="table2show">
+              <div class="grid-content bg-purple-light">
+                <div class="grid-content bg-purple">
+                  <div class="block" style="border:1px solid #B3C0D1">
+                    <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf" v-text="secondCatName">次分类</div>
+                    <div class="title1">
+                      <el-link type="primary">添加</el-link>
+                      <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
+                      <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
+                    <div class="ff">
+                      <el-table :data="tableData2" @row-click="handleSecondClick" style="width: 100%">
+                        <el-table-column prop="name" label="名称" width="200"></el-table-column>
+                        <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                      </el-table>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            </div></el-col>
-            <el-col :span="7"><div class="grid-content bg-purple"></div>
+            </el-col>
+            <el-col :span="7" v-show="table3show">
+              <div class="grid-content bg-purple"></div>
               <div class="grid-content bg-purple">
-              <div class="block" style="border:1px solid #B3C0D1">
-                <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf">子分类</div>
-                <div class="title1"><el-link type="primary" >添加</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
-                  <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link>
-                </div>
-                <div class="ff" >
-                  <el-table
-                    :data="tableData3"
-                    style="width: 100%"><el-table-column
-                    prop="name"
-                    label="名称"
-                    width="200">
-                  </el-table-column>
-                  </el-table>
+                <div class="block" style="border:1px solid #B3C0D1">
+                  <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf" v-text="thirdCatName">子分类</div>
+                  <div class="title1">
+                    <el-link type="primary">添加</el-link>
+                    <el-link type="primary">&nbsp;&nbsp;&nbsp;删除</el-link>
+                    <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
+                  <div class="ff">
+                    <el-table :data="tableData3" style="width: 100%">
+                      <el-table-column prop="name" label="名称" width="200"></el-table-column>
+                      <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                    </el-table>
+                  </div>
                 </div>
               </div>
-            </div></el-col>
+            </el-col>
           </el-row>
         </div>
-
       </el-main>
     </el-container>
   </el-container>
@@ -89,45 +85,95 @@
     name: 'ProductCat',
     data() {
       return {
-        tableData1:[{
-          name:'出境游'},
-          {
-            name:'国内游'
-          },
-          {
-            name:'海岛游'
-          }
-        ],
-        tableData2:[{
-          name:'欧美大国'},
-          {
-            name:'澳非探秘'
-          },
-          {
-            name:'日港澳'
-          },
-          {
-            name:'东南亚风情'},
-        ],
-        tableData3:[{
-          name:'美洲'},
-          {
-            name:'欧洲'
-          },
-          {
-            name:'澳洲'
-          },
-
-        ],
-
-
-
+        tableData1: [],   //一级分类数据
+        tableData2: [],    //二级分类数据
+        tableData3: [],    //三级分类数据
+        table1show: true,  //是否显示一级分类
+        table2show: false,  //是否显示二级分类
+        table3show: false,  //是否显示三级分类
+        secondCatName:"",    //二级分类标题
+        thirdCatName :""     //三级分类标题
       }
     },
+    created() {
+      this.loadFirstCat();
+    },
     methods: {
+      loadFirstCat() {
+        //加载一级分类
+        this.$http.get("/producemanage/product/productcat/queryCatById", {
+          params: {
+            catId: 0,
+          }
+        }).then(resp => {
+          var table1 = [];
+          resp.data.forEach(item => {
+            var t1 = {};
+            t1.id = item.id;
+            t1.name = item.productcatname;
+            t1.note = item.note;
+            table1.push(t1);
+          })
+          this.tableData1 = table1;
+        }).catch(error => {
 
+        })
+      },
+      handleFirstClick(row, event, column) {
+        if(row.name != this.secondCatName)
+           this.showSecondCat(row.id , row.name);
+      },
+      showSecondCat(id , name) {
+        this.secondCatName = name;
+        this.table3show = false;
+        this.table2show = true;
+        //加载二级分类
+        this.$http.get("/producemanage/product/productcat/queryCatById", {
+          params: {
+            catId: id,
+          }
+        }).then(resp => {
+          var table2 = [];
+          resp.data.forEach(item => {
+            var t2 = {};
+            t2.id = item.id;
+            t2.name = item.productcatname;
+            t2.note = item.note;
+            table2.push(t2);
+          })
+          this.tableData2 = table2;
+        }).catch(error => {
 
-
+        })
+      },
+      handleSecondClick(row, event, column){
+        if(row.name != this.thirdCatName)
+           this.showThirdCat(row.id, row.name)
+      },
+      showThirdCat(id , name) {
+        //改变名称
+        this.thirdCatName = name;
+        //加载二级分类
+        this.$http.get("/producemanage/product/productcat/queryCatById", {
+          params: {
+            catId: id,
+          }
+        }).then(resp => {
+          this.table3show = true;
+          var table3= [];
+          resp.data.forEach(item => {
+            var t3 = {};
+            t3.id = item.id;
+            t3.name = item.productcatname;
+            t3.note = item.note;
+            table3.push(t3);
+          })
+          this.tableData3 = table3;
+        }).catch(error => {
+          this.table3show = false;
+          this.$message(error.message);
+        })
+      }
     }
   }
 </script>
