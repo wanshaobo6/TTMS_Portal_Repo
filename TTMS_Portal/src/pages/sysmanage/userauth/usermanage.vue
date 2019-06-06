@@ -3,46 +3,91 @@
 
   <el-container>
 
+      <el-main><div class="top"><p class="title" style="color:#B3C0D1">用户信息管理</p>
+        <div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">信息管理</el-breadcrumb-item>
+          <el-breadcrumb-item>用户</el-breadcrumb-item>
+          <el-breadcrumb-item>用户信息管理</el-breadcrumb-item>
+
+        </el-breadcrumb></div>
+        <el-row :gutter="20">
+
+          <el-col :span="4"><div class="grid-content "><el-input v-model="name" placeholder="用户名"></el-input>
+          </div></el-col>
+          <el-col :span="2"><el-button type="primary" @click="loadData()">查询</el-button><div class="grid-content "></div></el-col>
+          <el-col :span="2"><div class="grid-content ">
+            <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">用户信息管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
   <el-breadcrumb-item :to="{ path: '/' }">信息管理</el-breadcrumb-item>
   <el-breadcrumb-item>用户</el-breadcrumb-item>
   <el-breadcrumb-item>用户信息管理</el-breadcrumb-item>
-  
+
 </el-breadcrumb></div>
 					<el-row :gutter="20">
-						
+
 						<el-col :span="4"><div class="grid-content "><el-input v-model="name" placeholder="用户名"></el-input>
 </div></el-col>
 						<el-col :span="2"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
 						 <el-col :span="2"><div class="grid-content ">
                <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
-               <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-                 <el-form :model="form" >
-                   <el-form-item label="用户名:" :rules="[
+            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+              <el-form :model="form" >
+                <el-form-item label="照片" >
+                  <el-upload
+                    class="avatar-uploader"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+                <el-form-item label="用户名:" :rules="[
 							  { required: true },]">
                      <el-input v-model="form.id" placeholder="登录账号"></el-input>
                    </el-form-item>
                    <el-form-item label="密码:" :rules="[
 							  { required: true },]">
-                     <el-input v-model="form.password" placeholder="密码"></el-input>
-                   </el-form-item>
-                   <el-form-item label="邮箱:">
-                     <el-input v-model="form.email" placeholder="邮箱"></el-input>
-                   </el-form-item>
-                   <el-form-item label="手机号:" :rules="[
+                  <el-input v-model="form.password" placeholder="密码"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱:">
+                  <el-input v-model="form.email" placeholder="邮箱"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号:" :rules="[
 											  { required: true },]">
-                     <el-input v-model="form.phoneNum" placeholder="手机号"></el-input>
-                   </el-form-item>
-                   <el-form-item label="角色:">
-                     <div class="roles"><el-checkbox-group
-                       v-model="checkedRoles"
-                       :min="1"
-                       :max="2">
-                       <el-checkbox v-for="role in roles" :label="role" :key="role">{{role}}</el-checkbox>
-                     </el-checkbox-group></div>
-                   </el-form-item>
+                  <el-input v-model="form.phoneNum" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="父分类:" >
+                  <div class="left"> <el-select v-model="value" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select></div>
+                </el-form-item>
+                <el-form-item label="子分类:" >
+                  <div class="left"><el-select v-model="value" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select></div>
+                </el-form-item>
+                <el-form-item label="角色:">
+                  <div class="roles"><el-checkbox-group
+                    v-model="checkedRoles"
+                    :min="1"
+                    :max="2">
+                    <el-checkbox v-for="role in roles" :label="role" :key="role">{{role}}</el-checkbox>
+                  </el-checkbox-group></div>
+                </el-form-item>
 
                  </el-form>
                  <div slot="footer" class="dialog-footer">
@@ -66,69 +111,61 @@
    </template>
 </el-table-column> 
 
-    <el-table-column
-      prop="username"
-      label="用户名"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="email"
-      label="邮箱"
-      width="230">
-    </el-table-column>
-    <el-table-column
-      prop="phoneNum"
-      label="手机号"
-	  width="180">
-    </el-table-column>
-	<el-table-column
-	  prop="status"
-	  label="状态"
-	  width="165">
-	   <template slot-scope="scope">
-	  	<span v-if="scope.row.status=='1'" style="color: green">启用</span>
-	  	<span v-else style="color: red">禁用</span>
-	  </template>
-	</el-table-column>
-	<!-- <el-table-column label="状态" width="180">
-	  <template slot-scope="scope">
-	    <el-button
-	      size="mini"
-	      type="success"
-	      @click="handleEdit(scope.$index, scope.row)">启用</el-button>
-	  </template>
-	</el-table-column> -->
-	<el-table-column label="操作" width="180">
-      <template slot-scope="scope">
-		  <el-button
-		    size="mini"
-		    type="danger" v-if="scope.row.status == '1'"
-		    @click="profit(scope.row)" >禁用</el-button>
-		    <el-button
-		      size="mini"
-		      type="success"
-		      v-else @click="enable(scope.row)">启用</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-						
-						
-  <div class="page">
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[5, 10, 15]"
-      :page-size="50"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
-  </div>
-  </div>
-  
-  </el-main>
+            <el-table-column
+              prop="username"
+              label="用户名"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="email"
+              label="邮箱"
+              width="230">
+            </el-table-column>
+            <el-table-column
+              prop="phoneNum"
+              label="手机号"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              label="状态"
+              width="165">
+              <template slot-scope="scope">
+                <span v-show="scope.row.status==1" style="color: green">启用</span>
+                <span v-show="scope.row.status!=1" style="color: red">禁用</span>
+              </template>
+            </el-table-column>
+            <!-- <el-table-column label="状态" width="180">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="success"
+                    @click="handleEdit(scope.$index, scope.row)">启用</el-button>
+                </template>
+              </el-table-column> -->
+            <el-table-column label="操作" width="180">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" v-show="scope.row.status == 1"  @click="changeStatus(scope.row)">禁用</el-button>
+                <el-button size="mini" type="success" v-show="scope.row.status != 1" @click="changeStatus(scope.row)">启用</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="page">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[5, 10, 15, 20]"
+              :page-size="5"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="totalItem">
+            </el-pagination>
+          </div>
+        </div>
+
+      </el-main>
+    </el-container>
   </el-container>
-</el-container>
 </template>
 
 <script>
@@ -244,6 +281,48 @@ export default {
 	this.selected=row;
 },
 handleEdit(index, row) {
+        dialogFormVisible: false,
+        form: {
+          id: '',
+          password: '',
+          email: '',
+          phoneNum: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+
+        formLabelWidth: '120px',
+        tableData: [],
+        multipleSelection: [],
+        radio: '',
+        selected: {},
+        input1: '',
+        currentPage: 1,
+        row: 5,
+        totalItem:20,
+        name:"",
+        page:"",
+        rows:"",
+        imageUrl:""
+      };
+    },
+    created(){
+      this.loadData();
+    },
+
+
+    methods: {
+      showRow(row) {
+        //赋值给radio
+        this.radio = this.tableData.indexOf(row);
+        this.selected = row;
+      },
+      handleEdit(index, row) {
         console.log(index, row);
       },
       handleDelete(index, row) {
@@ -252,16 +331,77 @@ handleEdit(index, row) {
       handleClick(row) {
         console.log(row);
       },
-	  handleSizeChange(val) {
-      this.rows=val;
-        console.log(`每页 ${val} 条`);
+      handleSizeChange(val) {
+        this.rows = (val);
+        this.loadData();
       },
       handleCurrentChange(val) {
-      this.page=val;
-        console.log(`当前页: ${val}`);
+        this.currentPage = (val);
+        this.loadData();
+
+      },
+      loadData(){
+        //加载用户信息
+        this.$http.get("/sysmanage/userauth/usermanage/page" , {
+          params: {
+            name:this.name,
+            page: this.currentPage,
+            rows: this.rows,
+          }
+        }).then(resp => {
+          //成功
+          console.log(resp);
+          this.totalItem = resp.data.total;
+          var tables = [];
+          resp.data.items.forEach(userItem => {
+            var table = {};
+            table.id = userItem.id;
+            table.username = userItem.username;
+            table.email = userItem.email;
+            table.phoneNum = userItem.mobile;
+            table.status= userItem.valid;
+
+
+            tables.push(table);
+          });
+          this.tableData = tables;
+        }).catch(error =>{
+          alert(error.message);
+        });
+      },
+      changeStatus(table) {
+        this.$http.put("/sysmanage/userauth/usermanage/valid/" + table.id).then(resp => {
+          this.tableData.filter(data =>{
+            return data.id == table.id;
+          })[0].status = !table.status
+        }).catch(error => {
+        })
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 1;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 1MB!');
+        }
+        return isJPG && isLt2M;
       }
-    },
-};
+    }
+
+  };
+
+
+
+
+
+
+
 </script>
 
 <style>
@@ -309,19 +449,19 @@ handleEdit(index, row) {
 	  padding: 10px 0 30px;
   }
 
-  
+
   .el-main {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-	height:700px;
-	margin-top: -60px;
+    height:700px;
+    margin-top: -60px;
   }
-  
+
   body > .el-container {
     margin-bottom: 40px;
   }
-  
+
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
@@ -329,5 +469,29 @@ handleEdit(index, row) {
   
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
+  }
+  /*照片上传*/
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>
