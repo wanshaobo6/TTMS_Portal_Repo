@@ -68,7 +68,7 @@
                 </el-form-item>
                 <el-form-item label="角色:">
                   <div class="roles">
-                      <el-radio v-model="selectedRole" v-for=" role in roles" :key="role.value"  :label="role.value" >{{role.label}}</el-radio>
+                    <el-radio v-model="selectedRole" v-for=" role in roles" :key="role.value"  :label="role.value" >{{role.label}}</el-radio>
                   </div>
                 </el-form-item>
 
