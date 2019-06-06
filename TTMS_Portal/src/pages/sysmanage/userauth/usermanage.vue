@@ -18,7 +18,7 @@
           <el-col :span="2"><div class="grid-content ">
             <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
 
-            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+            <el-dialog title="编辑用户" :visible.sync="dialogFormVisible">
               <el-form :model="form" >
                 <el-form-item label="照片" >
                   <el-upload

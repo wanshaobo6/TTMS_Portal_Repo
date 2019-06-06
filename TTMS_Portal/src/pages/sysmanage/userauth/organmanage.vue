@@ -15,10 +15,34 @@
       :value="item.value">
     </el-option>
   </el-select></div></el-col>
-						<el-col :span="4"><div class="grid-content "></div></el-col>
-						<el-col :span="2"><div class="grid-content "><el-button type="primary" @click="loadData()">查询</el-button></div></el-col>
-						<el-col :span="2"><div class="grid-content "><el-button type="primary">新增</el-button></div></el-col>
-		
+						<el-col :span="2"><el-button type="primary" @click="loadData()">查询</el-button></el-col>
+						<el-col :span="2"><el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
+
+              <el-dialog title="新增组织机构信息" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="机构编码:" :label-width="formLabelWidth" :rules="[
+							  { required: true },]">
+                    <el-input v-model="form.csbn" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="机构名称:" :label-width="formLabelWidth" :rules="[
+							  { required: true },]">
+                   <div class="left"> <el-select v-model="form.name" placeholder="请选择机构名称">
+                      <el-option label="华东部" value="shanghai"></el-option>
+                      <el-option label="华南部" value="beijing"></el-option>
+                      <el-option label="欧美部" value="beijing"></el-option>
+                    </el-select></div>
+                  </el-form-item>
+                  <el-form-item label="备注:" :label-width="formLabelWidth">
+                    <el-input type="textarea" v-model="form.desc"></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+              </el-dialog>
+            </el-col>
+
 					</el-row></div>
 					<div class="body">
 						<el-table
@@ -94,6 +118,18 @@ export default {
 	name: 'OrganManage',
 	data() {
 		return {
+      dialogFormVisible: false,
+      form: {
+        name: '',
+        csbn: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '120px',
 			 tableData: [],
 			input1: '',
 			options: [{
@@ -211,6 +247,9 @@ export default {
   	width: -webkit-max-content;
   	margin-bottom: 20px;
 
+  }
+  .left{
+    float: left;
   }
  .page{
 	 position: relative;
