@@ -6,7 +6,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Tedu Travel Manage System
+                <v-toolbar-title> Travel Manage System
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -81,3 +81,4 @@ export default {
   }
 };
 </script>
+

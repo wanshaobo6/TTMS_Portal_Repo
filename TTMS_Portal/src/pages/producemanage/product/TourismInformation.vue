@@ -3,19 +3,19 @@
     <el-container>
       <el-main>
         <div class="top"><p class="title" style="color:#B3C0D1">库存分销</p>
-          <div class="path"><el-breadcrumb separator-class="el-icon-arrow-right">
+         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
             <el-breadcrumb-item>产品</el-breadcrumb-item>
             <el-breadcrumb-item>产品分类</el-breadcrumb-item>
-            <el-breadcrumb-item>产品分销</el-breadcrumb-item>
+            <el-breadcrumb-item>导游信息</el-breadcrumb-item>
           </el-breadcrumb>
           </div>
-        </div>
+
         <div class="body" style="width:100%;height:100%">
           <div class="body-upside" style="width:100%;height:30%">
             <el-row :gutter="24">
               <el-col :span="10">
-                <div class="grid-content bg-purple"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
+                <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
                   <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;王毅</span></div>
                   <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;5555￥</span></div>
                 </div>
@@ -88,6 +88,7 @@
               <el-table-column prop="Contact" label="联系方式" width="150">
               </el-table-column>
               <el-table-column prop="Remarks" label="备注" width="120">
+              </el-table-column>
               </el-table-column>
               <el-table-column label="操作" align="center" min-width="70">
                 　　　　<template slot-scope="scope">

@@ -3,25 +3,25 @@
     <el-container>
       <el-main>
         <div class="top"><p class="title" style="color:#B3C0D1">库存分销</p>
-          <div class="path"><el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
             <el-breadcrumb-item>产品</el-breadcrumb-item>
-            <el-breadcrumb-item>产品分类</el-breadcrumb-item>
-            <el-breadcrumb-item>产品分销</el-breadcrumb-item>
+            <el-breadcrumb-item>产品列表</el-breadcrumb-item>
+            <el-breadcrumb-item>价格政策</el-breadcrumb-item>
           </el-breadcrumb>
           </div>
-        </div>
+
         <div class="body" style="width:100%;height:100%">
           <div class="body-upside" style="width:100%;height:30%">
             <el-row :gutter="24">
               <el-col :span="10">
-                <div class="grid-content bg-purple"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
+                <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
                   <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;王毅</span></div>
                   <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;5555￥</span></div>
                 </div>
               </el-col>
               <el-col :span="14">
-                <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;兵马俑制作+大明宫游+拓片体验亲子文化游3晚4天</span></div>
+                <div class="grid-content "><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;兵马俑制作+大明宫游+拓片体验亲子文化游3晚4天</span></div>
                   <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;2019-05-28~2019-6-29</span></div>
                   <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品上架</span></div>
                 </div>
@@ -111,7 +111,7 @@
               </el-table-column>
               <el-table-column label="操作" align="center" min-width="100">
                 　　　　<template slot-scope="scope">
-                　　　　　　<el-button type="info" @click="deleteUser(scope.row.phone)">删除</el-button>
+                　　　　　　<el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
                 　　　　</template>
                 　　</el-table-column>
             </el-table>
@@ -216,17 +216,7 @@
 
   }
 
-  .path {
-    text-align: left;
-    font-size: 17px;
-    line-height: 25px;
-    height: 25px;
-    text-align: center;
-    width: -webkit-max-content;
-    margin-bottom: 10px ;
-    background:#E9EEF3;
-    padding:10px 10px 20px 10px;
-  }
+
   .page{
     position: relative;
     padding-top: 20px;
@@ -236,7 +226,7 @@
     padding: 10px 10px 10px 10px;
     font-size: 20px;
     margin-bottom: 20px;
-    font-family: stXinkai;
+    font-family: normal;
     font-style: normal;
   }
   .title02{
@@ -255,9 +245,9 @@
   .title01{
     text-align: left;
     padding:10px 50px 20px 100px;
-    font-family: Arial;
+    font-family: normal;
     font-style: normal;
-    font-size:16px;
+    font-size:12px;
 
   }
   .el-aside {

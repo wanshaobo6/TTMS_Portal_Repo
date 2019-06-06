@@ -3,14 +3,14 @@
     <el-container>
       <el-main>
         <div class="top"><p class="title" style="color:#B3C0D1">行程设置</p>
-          <div class="path"><el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
             <el-breadcrumb-item>产品</el-breadcrumb-item>
             <el-breadcrumb-item>产品列表</el-breadcrumb-item>
             <el-breadcrumb-item>行程设置</el-breadcrumb-item>
           </el-breadcrumb>
           </div>
-        </div>
+
         <div class="body" style="margin-top: 30px;height: 700px ">
             <el-tabs type="border-card">
               <el-tab-pane label="第1天">
@@ -100,16 +100,7 @@
 
 
 
-  .path {
-    text-align: left;
-    font-size: 17px;
-    line-height: 25px;
-    height: 25px;
-    text-align: center;
-    width: -webkit-max-content;
-    margin-bottom: 10px ;
-    padding:10px 10px 20px 10px;
-  }
+
   .page{
     position: relative;
     padding-top: 20px;
