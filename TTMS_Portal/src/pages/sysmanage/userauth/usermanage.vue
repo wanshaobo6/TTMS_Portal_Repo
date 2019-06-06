@@ -16,9 +16,9 @@
           </div></el-col>
           <el-col :span="2"><el-button type="primary" @click="loadData()">查询</el-button><div class="grid-content "></div></el-col>
           <el-col :span="2"><div class="grid-content ">
-            <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
+            <el-button type="primary" @click="showDialog(false)">新增</el-button>
 
-            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+            <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
               <el-form :model="form" >
                 <el-form-item label="照片" >
                   <el-upload
@@ -33,7 +33,7 @@
                 </el-form-item>
                 <el-form-item label="用户名:" :rules="[
 							  { required: true },]">
-                  <el-input v-model="form.id" placeholder="登录账号"></el-input>
+                  <el-input v-model="form.usename" placeholder="登录账号"></el-input>
                 </el-form-item>
                 <el-form-item label="密码:" :rules="[
 							  { required: true },]">
@@ -46,20 +46,20 @@
 											  { required: true },]">
                   <el-input v-model="form.phoneNum" placeholder="手机号"></el-input>
                 </el-form-item>
-                <el-form-item label="父分类:" >
-                  <div class="left"> <el-select v-model="value" placeholder="请选择">
+                <el-form-item label="父部门:" >
+                  <div class="left"> <el-select v-model="selectedParentDepartId" @change="loadChildDepartByPid(selectedParentDepartId)" placeholder="请选择">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in parentDepartOptions"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
                     </el-option>
                   </el-select></div>
                 </el-form-item>
-                <el-form-item label="子分类:" >
-                  <div class="left"><el-select v-model="value" placeholder="请选择">
+                <el-form-item label="子部门:" >
+                  <div class="left"><el-select v-model="selectedChildDepartId" @change="loadRolesBySubDepartId(selectedChildDepartId)" placeholder="请选择">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in childDepartOptions"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
@@ -67,12 +67,9 @@
                   </el-select></div>
                 </el-form-item>
                 <el-form-item label="角色:">
-                  <div class="roles"><el-checkbox-group
-                    v-model="checkedRoles"
-                    :min="1"
-                    :max="2">
-                    <el-checkbox v-for="role in roles" :label="role" :key="role">{{role}}</el-checkbox>
-                  </el-checkbox-group></div>
+                  <div class="roles">
+                      <el-radio v-model="selectedRole" v-for=" role in roles" :key="role.value"  :label="role.value" >{{role.label}}</el-radio>
+                  </div>
                 </el-form-item>
 
               </el-form>
@@ -95,7 +92,11 @@
                 <el-radio class="radio"  v-model="radio"  :label="scope.$index">&nbsp;</el-radio>
               </template>
             </el-table-column>
-
+            <el-table-column
+              prop="image"
+              label="照片"
+              width="150">
+            </el-table-column>
             <el-table-column
               prop="username"
               label="用户名"
@@ -120,15 +121,7 @@
                 <span v-show="scope.row.status!=1" style="color: red">禁用</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="状态" width="180">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    type="success"
-                    @click="handleEdit(scope.$index, scope.row)">启用</el-button>
-                </template>
-              </el-table-column> -->
-            <el-table-column label="操作" width="180">
+            <el-table-column label="操作" width="120">
               <template slot-scope="scope">
                 <el-button size="mini" type="danger" v-show="scope.row.status == 1"  @click="changeStatus(scope.row)">禁用</el-button>
                 <el-button size="mini" type="success" v-show="scope.row.status != 1" @click="changeStatus(scope.row)">启用</el-button>
@@ -154,41 +147,40 @@
 </template>
 
 <script>
-  const roleOptions = ['系统管理员', '产品经理', '团负责人'];
   export default {
     name: 'UserManage',
     data() {
       return {
-        checkedRoles: ['系统管理员', '产品经理'],
-        roles: roleOptions,
+        roles: [],
         dialogFormVisible: false,
         form: {
-          id: '',
+          usename: '',
           password: '',
           email: '',
           phoneNum: '',
           region: '',
-          date1: '',
-          date2: '',
           delivery: false,
           type: [],
-          resource: '',
-          desc: ''
+          resource: ''
         },
-
         formLabelWidth: '120px',
         tableData: [],
         multipleSelection: [],
         radio: '',
         selected: {},
-        input1: '',
         currentPage: 1,
         row: 5,
         totalItem:20,
         name:"",
         page:"",
         rows:"",
-        imageUrl:""
+        imageUrl:"",//图片地址
+        isEdit:false,  //是否是编辑
+        selectedChildDepartId:"",  //被选中父部门id
+        selectedParentDepartId:"",   //被选中子部门id
+        parentDepartOptions:[],  //父部门
+        childDepartOptions:[],     //子部门
+        selectedRole:"",  // 选中的角色
       };
     },
     created(){
@@ -271,16 +263,63 @@
           this.$message.error('上传头像图片大小不能超过 1MB!');
         }
         return isJPG && isLt2M;
+      },
+      //显示创建用户的dialog
+      showDialog(edit){
+        this.dialogFormVisible = true;
+        this.isEdit = edit;
+        //加载父部门和子部门
+        this.loadDepartment(0,1);
+      },
+      //加载父部门和子部门
+      loadDepartment(pid,level){
+        this.$http.get("/sysmanage/userauth/usermanage/getDepartmentBypid",{
+          params:{
+            pid:pid,
+          }
+        }).then(resp=>{
+          var tempDeparts=[];
+          resp.data.forEach(depart=>{
+            var tempDepart = {};
+            tempDepart.label = depart.departmentname;
+            tempDepart.value = depart.id;
+            tempDeparts.push(tempDepart);
+          });
+          if(level == 1){
+            this.parentDepartOptions = tempDeparts;
+          }else{
+            this.childDepartOptions = tempDeparts;
+          }
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
+      //更具pid记载子部门
+      loadChildDepartByPid(pid){
+        this.selectedChildDepartId ="";
+        //加载二级
+        this.loadDepartment(pid,2);
+      },
+      loadRolesBySubDepartId(pid){
+        this.$http.get("/sysmanage/userauth/usermanage/getRolesByDepartmentId",{
+          params:{
+            departmentId:pid,
+          }
+        }).then(resp=>{
+          this.roles = [];
+          resp.data.forEach(item=>{
+            var tempRole = {};
+            tempRole.label = item.name;
+            tempRole.value = item.id;
+            this.roles.push(tempRole);
+          });
+        }).catch(error=>{
+          this.$message.error(error.message);
+        });
       }
     }
 
   };
-
-
-
-
-
-
 
 </script>
 

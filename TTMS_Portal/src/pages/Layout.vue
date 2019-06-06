@@ -14,7 +14,7 @@
         <v-list class="pa-0">
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img src="#">
+              <img src="../assets/brand.jpg">
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title><v-toolbar-title v-text="title"/></v-list-tile-title>
@@ -66,12 +66,19 @@
       <!--模块名称-->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="module in modules"  :key="module.moduleName" v-text="module.moduleName" @click="updateMenus(module)"></v-btn>
-        <!--用户头像-->
       </v-toolbar-items>
       <!-- 顶部导航标题 -->
-      <v-flex xs3></v-flex>
+      <v-spacer></v-spacer>
+      <!--用户头像-->
 
-      <v-spacer/>
+      <v-list-tile avatar>
+        <v-list-tile-avatar>
+          <img src="https://randomuser.me/api/portraits/men/85.jpg">
+        </v-list-tile-avatar>
+        <v-list-tile-content>
+          <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-toolbar>
     <!--中间内容主体-->
     <v-content >
