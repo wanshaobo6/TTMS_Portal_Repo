@@ -72,12 +72,7 @@ export default {
         localStorage.setItem("Modules",JSON.stringify("[]"));
       });
 
-      console.log(this.username + " ... " + this.password);
     }
-  },
-  created(){
-	  //登录前先发送一个预检请求获得请求方式的权限
-    this.$http.post("/getCuruser");
   }
 };
 </script>
