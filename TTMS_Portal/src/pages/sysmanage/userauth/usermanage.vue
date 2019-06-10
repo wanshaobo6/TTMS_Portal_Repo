@@ -335,6 +335,7 @@
         // 判断表单数据
         if(!this.form.usename || !this.imageUrl ||!this.form.password||!this.form.email||!this.form.phoneNum||!this.selectedRole){
           this.$message.info("表单数据不能为空");
+          return;
         }
         if(!this.isEdit){
           //新增
