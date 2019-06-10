@@ -59,44 +59,44 @@
                 <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="结束时间"></el-date-picker></div>
               </div></el-col>
             <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
-            <el-col :span="2"><el-button type="primary" @click="dialogFormVisible = true">修改</el-button>
+            <el-col :span="2"><el-button type="primary"  @click="dialogFormVisible = true" >修改</el-button>
               <el-dialog title="产品列表" :visible.sync="dialogFormVisible"  >
                 <el-form :model="form">
                   <el-form-item label="状态：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.status" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="类别：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.classify" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="所属项目：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.project" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="团名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.Tname" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品编号：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.ProductID" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.Pname" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="服务开始时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.start" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="服务结束时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.end" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="预：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.pre" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="已：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.already" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="余：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.remain" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品价格：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.price" autocomplete="off"></el-input>
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -297,6 +297,7 @@
         this.currentPage = (val);
         this.loadData();
       },
+
       //根据父id和级别加载对应的分类
       loadCats(pid, level) {
         this.$http.get("/producemanage/product/productlist/queryCatById", {
@@ -386,7 +387,6 @@
       }
     }
   }
-
 </script>
 <style>
   html,body {
