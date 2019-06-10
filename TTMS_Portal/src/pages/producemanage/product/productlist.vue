@@ -111,13 +111,12 @@
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning">库存分销</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="warning" >库存分销</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">附件</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info" @click="goSubPage('appendix')">附件</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
           </el-row>
-        </div>
         </div>
         </div>
         <div class="body">
@@ -355,6 +354,7 @@
           var tables = [];
           resp.data.items.forEach(listItem => {
             var table = {};
+            table.id = listItem.id;
             table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
@@ -373,6 +373,16 @@
         }).catch(error =>{
           alert(error.message);
         });
+      },
+      goSubPage(pageName){
+        if(this.multipleSelection.length != 1){
+          this.$message.info("只能选择一个产品进行操作");
+          return;
+        }
+        //保存数据
+        localStorage.setItem("curProduct",JSON.stringify(this.multipleSelection[0]));
+        //页面转跳
+        this.$router.push("/producemanage/product/productlist/"+pageName);
       }
     }
   }
@@ -465,9 +475,6 @@
   }
   .el-table{
     font-size:12px;
-  }
-  .el-dialog__body{
-    width:500px;
   }
   .block{
     display: flex;

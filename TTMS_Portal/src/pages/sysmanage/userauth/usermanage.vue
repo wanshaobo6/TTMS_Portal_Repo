@@ -93,7 +93,7 @@
               </div>
             </el-col>
             <el-col :span="2">
-              <el-button type="primary">
+              <el-button type="primary" @click="showDialog(true)">
                 修改
               </el-button>
               <div class="grid-content "></div>
@@ -104,7 +104,7 @@
           <el-table :data="tableData" @row-click="showRow" border="" style="width: 100%">
             <el-table-column label="选择" width="80" align="center">
               <template slot-scope="scope">
-                <el-radio class="radio" v-model="radio" :label="scope.$index">
+                <el-radio class="radio" v-model="selectedRow" :label="scope.$index">
                   &nbsp;
                 </el-radio>
               </template>
@@ -155,6 +155,7 @@
         roles: [],
         dialogFormVisible: false,
         form: {
+          id:"",
           usename: '',
           password: '',
           email: '',
@@ -167,7 +168,7 @@
         formLabelWidth: '120px',
         tableData: [],
         multipleSelection: [],
-        radio: '',
+        selectedRow: '',   //ratio中选择的
         selected: {},
         currentPage: 1,
         row: 5,
@@ -267,6 +268,16 @@
       },
       //显示创建用户的dialog
       showDialog(edit){
+        //清理所有表单数据
+        this.clearFormData();
+        if(edit){
+          //将选中的数据填充表格
+          if(Object.keys(this.selected).length==0){
+            this.$message.error("请选中一行数据");
+            return;
+          }
+          this.fillDialogForm();
+        }
         this.dialogFormVisible = true;
         this.isEdit = edit;
         //加载父部门和子部门
@@ -321,7 +332,10 @@
       },
       //提交按钮
       submitForm(){
-        //todo 判断表单数据
+        // 判断表单数据
+        if(!this.form.usename || !this.imageUrl ||!this.form.password||!this.form.email||!this.form.phoneNum||!this.selectedRole){
+          this.$message.info("表单数据不能为空");
+        }
         if(!this.isEdit){
           //新增
           this.$http.post("/sysmanage/userauth/usermanage",this.$qs.stringify({
@@ -331,8 +345,47 @@
             mail:this.form.email,
             phonenumber:this.form.phoneNum,
             roleId:this.selectedRole
-          }))
+          })).then(resp=>{
+            this.$message.error("新增加成功");
+            this.loadData();
+            this.dialogFormVisible = false;
+          }).catch(error=>{
+            this.$message.error(error.message);
+          })
+        }else{
+          //修改
+          this.$http.put("/sysmanage/userauth/usermanage/"+this.form.id,this.$qs.stringify({
+              username:this.form.usename,
+              image:this.imageUrl,
+              password:this.form.password,
+              mail:this.form.email,
+              phonenumber:this.form.phoneNum,
+              roleId:this.selectedRole
+          })).then(resp=>{
+            this.$message.error("新修改成功");
+            this.loadData();
+            this.dialogFormVisible = false;
+          }).catch(error=>{
+            this.$message.error(error.message);
+          })
         }
+      },
+      clearFormData(){
+        this.form.usename = "";
+        this.imageUrl = "";
+        this.form.password = "";
+        this.form.email = "";
+        this.form.phoneNum = "";
+        this.selectedRole = "";
+      },
+      fillDialogForm(){
+        var data = this.tableData[this.selectedRow];
+        this.form.id = data.id;
+        this.form.usename = data.username;
+        this.imageUrl = data.image;
+        this.form.email = data.email;
+        this.form.phoneNum = data.phoneNum;
+        this.selectedRole = data.id;
       }
     }
 

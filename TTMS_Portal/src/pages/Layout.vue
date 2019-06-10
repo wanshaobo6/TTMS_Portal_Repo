@@ -73,7 +73,7 @@
 
       <v-list-tile avatar>
         <v-list-tile-avatar>
-          <img src="https://randomuser.me/api/portraits/men/85.jpg">
+          <img :src="curUser.image">
         </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
