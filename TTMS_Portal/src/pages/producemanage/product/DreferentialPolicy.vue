@@ -30,15 +30,15 @@
           </div>
           <div class="body-bottom" style="width:100%;height:70%;">
             <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
-              <el-button type="primary" @click="dialogTableVisible = true">添加优惠政策</el-button>
+              <el-button type="primary" @click="showPricePolicyDialog()">添加优惠政策</el-button>
               <el-dialog title="添加优惠政策" :visible.sync="dialogTableVisible" style="width: 120%">
                 <div class="title02">
-                  <div class="title03"><el-input placeholder="政策名称"></el-input></div>
-                  <div class="title03"><el-input placeholder="开始日期"></el-input></div>
-                  <div class="title03"><el-input placeholder="结束日期"></el-input></div>
+                  <div class="title03"><el-input v-model="policyName" placeholder="政策名称"></el-input></div>
+                  <div class="title03"><el-date-picker v-model="startTime" type="date" placeholder="开始时间"></el-date-picker></div>
+                  <div class="title03"><el-date-picker v-model="endTime" type="date" placeholder="结束时间"></el-date-picker></div>
                   <div class="title03"><el-button type="primary">查询</el-button></div>
                 </div>
-                <el-table :data="gridData" border>
+                <el-table :data="gridData" @selection-change="handleSelectionChange" border>
                   <el-table-column type="selection" width="30"></el-table-column>
                   <el-table-column property="PolicyName" label="政策名称" width="80"></el-table-column>
                   <el-table-column property="PreferentialPolicy" label="政策优惠" width="80"></el-table-column>
@@ -54,21 +54,21 @@
                     <el-pagination
                       @size-change="handleSizeChange"
                       @current-change="handleCurrentChange"
-                      :current-page.sync="currentPage3"
-                      :page-size="1"
+                      :current-page.sync="currentPage"
+                      :page-size="rows"
                       layout="prev, pager, next, jumper"
-                      :total="10">
+                      :total="totalItems">
                     </el-pagination>
                   </div>
                 </div>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>
+                  <el-button type="primary" @click="addProductPolicy">确 定</el-button>
                 </div>
               </el-dialog>
             </div>
 
-            <div class="kk"><el-table :data="tableData" border style="width:100%">
+            <div class="kk"><el-table :data="tableData"   border style="width:100%">
               <el-table-column
                 prop="PolicyName"
                 label="政策名称"
@@ -107,11 +107,11 @@
               <el-table-column
                 prop="PolicyCaption"
                 label="政策说明"
-                width="200">
+                width="240">
               </el-table-column>
-              <el-table-column label="操作" align="center" min-width="100">
+              <el-table-column label="操作" align="center" width="200">
                 　　　　<template slot-scope="scope">
-                　　　　　　<el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
+                　　　　　　<el-button type="danger" @click="deletePolicy(scope.row)">删除</el-button>
                 　　　　</template>
                 　　</el-table-column>
             </el-table>
@@ -129,29 +129,11 @@
     name: 'TourismInformation',
     data() {
       return {
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
+        currentPage: 1,
         value1: '',
         value2: '',
-
-
-
-        gridData: [{
-          PolicyName: "限时优惠",
-          PreferentialPolicy: "-1000",
-          DiscountPrice: "4500￥",
-          MaximumNumber: "无上限",
-          MinimumNumber: "1",
-          StartTime: "2019-5-29",
-          EndTime: "2019-6-30",
-          PolicyCaption: "现在报名即可享受7折优惠",
-        }
-        ],
+        gridData: [],
         dialogTableVisible: false,
-        dialogFormVisible: false,
-        dialogFormVisible: false,
         form: {
           name: '',
           region: '',
@@ -163,30 +145,112 @@
           desc: ''
         },
         formLabelWidth: '120px',
-
-
-        tableData:[{
-          PolicyName: "限时优惠",
-          PreferentialPolicy: "-1000",
-          DiscountPrice: "4500￥",
-          MaximumNumber: "无上限",
-          MinimumNumber: "1",
-          StartTime: "2019-5-29",
-          EndTime: "2019-6-30",
-          PolicyCaption: "现在报名即可享受7折优惠",
-        }],
-
+        tableData:[],   //表格中的数据
+        totalItems:0 , //总数据
+        rows:5 , //一页数据的大小
+        currentPage:1, //当前页
+        //查询条件
+        policyName:"",
+       startTime:"",
+        endTime: "",
+        multipleSelection:[],  //多选
       }
     },
     methods:{
-
-      deleteUser(val){
-        console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+      deletePolicy(val){
+        this.$http.delete("/producemanage/product/productlist/privilege/pricepolicy",{
+          params:{
+            productId:"1",
+            pricePolicyId: val.id
+          }
+        }).then(resp=>{
+          this.$message.success("该价格政策删除成功");
+          this.loadPricePolicyByPid();
+        })
       },
+      handleCurrentChange(){
 
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      handleSizeChange(){
 
+      },
+      loadPricePolicyByPid(){
+        this.$http.get("/producemanage/product/productlist/pricepolicy/1").then(resp=>{
+          this.tableData = [];
+          resp.data.forEach(item=>{
+            var data = {};
+            data.id = item.id;
+            data.PolicyName = item.policyname;
+            data.PreferentialPolicy = item.policydiscount;
+            data.DiscountPrice = item.priceafterdiscount;
+            data.MaximumNumber = item.maxnum;
+            data.StartTime = item.starttime;
+            data.EndTime = item.starttime;
+            data.PolicyCaption = item.policynote;
+            this.tableData.push(data);
+          })
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
+      showPricePolicyDialog(){
+        this.dialogTableVisible = true;
+        this.loadPricePolicyInDialog();
+      },
+      //加载dialog中的数据
+      loadPricePolicyInDialog(){
+        this.$http.get("/producemanage/product/productlist/pricepolicy/page",{
+         params:{
+           productId:1,
+           pricePolicyName:this.policyName,
+           startTime : this.startTime,
+           endTime: this.endTime,
+           page:this.currentPage,
+           rows:this.size
+         }
+        }).then(resp=>{
+          this.gridData = [];
+          this.totalItemss = resp.data.total;
+          resp.data.items.forEach(item=>{
+            var data = {};
+            data.id = item.id;
+            data.PolicyName = item.policyname;
+            data.PreferentialPolicy = item.policydiscount;
+            data.DiscountPrice = item.priceafterdiscount;
+            data.MaximumNumber = item.maxnum;
+            data.StartTime = item.starttime;
+            data.EndTime = item.starttime;
+            data.PolicyCaption = item.policynote;
+            this.gridData.push(data);
+          })
+        }).catch()
+
+      },
+      //为产品添加价格政策
+      addProductPolicy(){
+        var selectedGuPolicyIds = [];
+        this.multipleSelection.map(item=>selectedGuPolicyIds.push(item.id));
+        if(selectedGuPolicyIds == null || selectedGuPolicyIds.length == 0){
+          this.$message.error("请选择需要添加的价格政策");
+        }
+        //发送添加请求
+        this.$http.post("/producemanage/product/productlist/privilege/pricepolicy",this.$qs.stringify({
+          productId:"1",
+          pricespolicyIds:selectedGuPolicyIds.join(",")
+        })).then(resp=>{
+          this.$message.success("价格政策添加成功");
+          this.loadPricePolicyByPid();
+          this.dialogTableVisible = false;
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      }
+    },
+    created(){
+      this.loadPricePolicyByPid();
     }
 
   }

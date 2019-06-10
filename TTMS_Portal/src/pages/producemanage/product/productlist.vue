@@ -1,19 +1,17 @@
 <template>
   <el-container>
-
     <el-container>
-
       <el-main><div class="top">
-        <p class="title" style="color:#B3C0D1">产品列表</p>
-        <div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-
-          <el-breadcrumb-item>产品</el-breadcrumb-item>
-          <el-breadcrumb-item>产品列表</el-breadcrumb-item>
-        </el-breadcrumb></div>
+         <p class="title" style="color:#B3C0D1">产品列表</p>
+         <div class="path" >
+           <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
+              <el-breadcrumb-item>产品</el-breadcrumb-item>
+              <el-breadcrumb-item>产品列表</el-breadcrumb-item>
+           </el-breadcrumb></div>
         <div class="firstRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="状态">
+            <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -21,7 +19,7 @@
                 :value="item.value">
               </el-option>
             </el-select></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="一级分类">
+            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedFirstCatId" @change="loadCats(selectedFirstCatId,2)" placeholder="一级分类">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -29,7 +27,7 @@
                 :value="item.value">
               </el-option>
             </el-select></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="二级分类">
+            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedSecondCatId"  @change="loadCats(selectedSecondCatId,3)"placeholder="二级分类">
               <el-option
                 v-for="item in options2"
                 :key="item.value"
@@ -37,7 +35,7 @@
                 :value="item.value">
               </el-option>
             </el-select></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-select v-model="value" placeholder="三级分类">
+            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedThirdCatId"  placeholder="三级分类">
               <el-option
                 v-for="item in options3"
                 :key="item.value"
@@ -46,52 +44,83 @@
               </el-option>
             </el-select></div></el-col>
             <el-col :span="4"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
-
             <el-col :span="4"><div class="grid-content "><el-input v-model="input3" placeholder="产品编号"></el-input></div></el-col>
           </el-row>
         </div>
-
         <div class="secondRow">
-          <el-row :gutter="6">
-            <el-col :span="4"><div class="grid-content"><el-input placeholder="产品名称"></el-input></div></el-col>
-            <el-col :span="4"><div class="grid-content "> <div class="block">
-              <el-date-picker
-                v-model="value1"
-                type="date"
-                placeholder="服务开始日期">
-              </el-date-picker>
-            </div></div></el-col>
-            <el-col :span="4"><div class="grid-content "><div class="block">
-
-              <el-date-picker
-                v-model="value2"
-                type="date"
-                placeholder="服务结束日期">
-              </el-date-picker>
-            </div></div></el-col>
+          <el-row :gutter="2">
+            <el-col :span="4"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
+            <el-col :span="5"><div class="grid-content ">
+              <div class="block">
+                <el-date-picker v-model="StartTime" type="datetime" placeholder="开始时间"></el-date-picker></div>
+            </div></el-col>
+            <el-col :span="5"><div class="grid-content ">
+              <div class="block">
+                <el-date-picker v-model="EndTime" type="datetime" placeholder="结束时间"></el-date-picker></div>
+              </div></el-col>
             <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
-            <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
-            <el-col :span="2"><el-button type="success">修改</el-button></el-col>
+            <el-col :span="2"><el-button type="primary" @click="dialogFormVisible = true">修改</el-button>
+              <el-dialog title="产品列表" :visible.sync="dialogFormVisible"  >
+                <el-form :model="form">
+                  <el-form-item label="状态：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="类别：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="所属项目：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="团名称：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="产品编号：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="产品名称：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="服务开始时间：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="服务结束时间：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="预：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="已：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="余：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="产品价格：" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+              </el-dialog>
+            </el-col>
             <el-col :span="2"><el-button >待售</el-button></el-col>
             <el-col :span="2"><el-button >上架</el-button></el-col>
             <el-col :span="2"><el-button >下架</el-button></el-col>
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning" @click="signUp1">库存分销</el-button>
-
-            </div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp2">价格政策</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info" @click="signUp3">附件</el-button>
-            </div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp4" >导游信息</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="signUp5">行程设置</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="warning">库存分销</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info">附件</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
           </el-row>
         </div>
-      </div>
-
+        </div>
+        </div>
         <div class="body">
-          <router-view></router-view>
           <el-table
             ref="multipleTable"
             :data="tableData"
@@ -167,15 +196,14 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page="currentPage4"
-              :page-sizes="[50, 70, 90, 110]"
-              :page-size="50"
+              :current-page="currentPage"
+              :page-sizes="[5, 10, 15, 20]"
+              :page-size="5"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="110">
+              :total="totalItem">
             </el-pagination>
           </div>
         </div>
-
       </el-main>
     </el-container>
   </el-container>
@@ -191,291 +219,158 @@
         form: {
           name: '',
           region: '',
-          date1: '',
-          date2: '',
+          StartTime: '',
+          EndData: '',
           delivery: false,
           type: [],
           resource: '',
           desc: ''
         },
         formLabelWidth: '120px',
-
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: '',
-        options: [{
-          value: '选项1',
-          label: '待售'
-        }, {
-          value: '选项2',
-          label: '上架'
-        }, {
-          value: '选项3',
-          label: '下架'
-        },  ],
-        options1: [{
-          value: '选项1',
-          label: '公司'
-        }, {
-          value: '选项2',
-          label: '公司的符合'
-        }, {
-          value: '选项3',
-          label: '图集推荐'
-        },  ],
-        options2: [{
-          value: '选项1',
-          label: '嗯嗯好'
-        }, {
-          value: '选项2',
-          label: '计划公开'
-        }, {
-          value: '选项3',
-          label: '二维表'
-        },  ],
-        options3: [{
-          value: '选项1',
-          label: '双方的'
-        }, {
-          value: '选项2',
-          label: '发挥好'
-        }, {
-          value: '选项3',
-          label: '不方便'
-        },  ],
-        value: '',
+        StartTime: [
+          {
+            required: true,
+            message: "请选择时间"
+          }
+        ],
+        EndTime: [
+          {
+            required: true,
+            message: "请选择时间"
+          }
+        ],
+        options: [],
+        options1: [],
+        options2: [],
+        options3: [],
+        status:'',
+        selectedFirstCatId:'',
+        selectedSecondCatId:'',
+        selectedThirdCatId:'',
         input1: '',
         input2: '',
         input3: '',
-
-
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
-        tableData: [{
-          status:'待售',
-          classify:'国内游-东北部-哈尔滨',
-          project:'哈尔滨灯节冬季项目',
-          Tname:'杭州五日游团',
-          ProductID:'TPCN-CHN-2017207-HBR-10-001',
-          Pname:'20171216哈尔滨灯节豪华游',
-          start:'2019-5-26',
-          end:'2019-5-31',
-          pre:'30',
-          already:'0',
-          remain:'30',
-          price:'3000',
-
-        }, {
-          status:'待售',
-          classify:'国内游-东北部-哈尔滨',
-          project:'哈尔滨灯节冬季项目',
-          Tname:'杭州五日游团',
-          ProductID:'TPCN-CHN-2017207-HBR-10-001',
-          Pname:'20171216哈尔滨灯节豪华游',
-          start:'2019-5-26',
-          end:'2019-5-31',
-          pre:'30',
-          already:'0',
-          remain:'30',
-          price:'3000',
-        }, {
-          status:'待售',
-          classify:'国内游-东北部-哈尔滨',
-          project:'哈尔滨灯节冬季项目',
-          Tname:'杭州五日游团',
-          ProductID:'TPCN-CHN-2017207-HBR-10-001',
-          Pname:'20171216哈尔滨灯节豪华游',
-          start:'2019-5-26',
-          end:'2019-5-31',
-          pre:'30',
-          already:'0',
-          remain:'30',
-          price:'3000',
-        }
-          , {
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          }, {
-
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          },
-          {
-
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          },
-          {
-
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          },
-          {
-
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          },
-          {
-
-            status:'待售',
-            classify:'国内游-东北部-哈尔滨',
-            project:'哈尔滨灯节冬季项目',
-            Tname:'杭州五日游团',
-            ProductID:'TPCN-CHN-2017207-HBR-10-001',
-            Pname:'20171216哈尔滨灯节豪华游',
-            start:'2019-5-26',
-            end:'2019-5-31',
-            pre:'30',
-            already:'0',
-            remain:'30',
-            price:'3000',
-          },],
-
-
-        multipleSelection: []
+        input4:'',
+        StartTime:'',
+        EndTime:'',
+        currentPage: 1,  //当前页
+        rows: 5,    //每页大小
+        totalItem: 20,   //总条数
+        tableData: [],
+        gridData:[],
+        value:'',
+        multipleSelection: [],
       };
     },
+    created() {
+      this.loadData();
+      this.loadCats(0,1);
+    },
     methods: {
-      handleClick(row) {
-        console.log(row);
+      handleClick(tab, event) {
+        console.log(tab, event);
       },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      },
+
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-      signUp1(){
-        this.$router.push({
-          path:'/producemanage/product/InventoryDistribution'
+      handleSizeChange(val) {
+        this.rows = (val);
+        this.loadData();
+      },
+      handleCurrentChange(val) {
+        this.currentPage = (val);
+        this.loadData();
+      },
+      //根据父id和级别加载对应的分类
+      loadCats(pid,level){
+        this.$http.get("/producemanage/product/productlist/queryCatById",{
+          params:{
+            catId : pid
+          }
+        }).then(resp=>{
+          var listCats = [];
+          resp.data.forEach(item=>{
+            var listCat = {};
+            listCat.label = item.productcatname;
+            listCat.value =  item.id;
+            listCats.push(listCat);
+          });
+          switch(level) {
+            case 1:
+              this.options1 = listCats;
+              break;
+            case 2:
+              this.options2 = listCats;
+              break;
+            case 3:
+              this.options3 = listCats;
+              break;
+            default:
+              break;
+          }
+        }).catch(error=>{
+          this.$message.error(error.message);
         })
       },
-      signUp2(){
-        this.$router.push({
-          path:'/producemanage/product/DreferentialPolicy'
-        })
-      },
-      signUp3(){
-        this.$router.push({
-          path:'/producemanage/product/appendix'
-        })
-      },
-      signUp4(){
-        this.$router.push({
-          path:'/producemanage/product/TourismInformation'
-        })
-      },
-      signUp5(){
-        this.$router.push({
-          path:'/producemanage/product/RouteSetting'
-        })
-      },
-
-    },
-  };
+      loadData() {
+        //加载产品列表信息
+        this.$http.get("/producemanage/product/productlist/page", {
+          params: {
+            status:this.status,
+            productCatId1:this.selectedFirstCatId,
+            productCatId2:this. selectedFirstCatId,
+            productCatId3:this.selectedFirstCatId,
+            projectName:this.input2,
+            productNumber:this.input3,
+            productName:this.name,
+            serverStartTime:this.StartTime,
+            serverEndtTime:this.EndTime,
+            page:this.currentPage,
+            size:this.row,
+          }
+        }).then(resp => {
+          //成功
+          console.log(resp);
+          this.totalItem = resp.data.total;
+           var tables = [];
+        resp.data.items.forEach(listItem => {
+          var table = {};
+         table.status = listItem.productstatus;
+          table.classify = listItem.productcatnames;
+          table.project = listItem.projectname;
+          table.Tname= listItem.productcatnames;
+          table.ProductID = listItem.productnumber;
+          table.Pname=listItem.productname;
+          table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
+          table.end= new Date(listItem.serverendtime).format("yyyy-MM-dd hh:mm:ss");
+          table.pre=listItem.presellnumber;
+          table.already=listItem.sellednumber;
+          table.remain=listItem.lowestnumber;
+          table.price=listItem.productprice;
+          tables.push(table);
+        });
+          this.tableData = tables;
+        }).catch(error =>{
+          alert(error.message);
+        });
+      }
+    }
+  }
 </script>
-
 <style>
   html,body {
-
     overflow:hidden;
-
     margin:0px;
-
     width:100%;
-
     height:100%;
-
   }
-
-
   .title {
     text-align: left;
     font-size: 30px;
     margin-bottom: 15px;
     font-family: "Helvetica Neue";
     font-style: normal;
-
-
   }
   .path {
     text-align: left;
@@ -499,16 +394,6 @@
     margin-bottom: 100px;
     padding: 10px 0 30px;
   }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    height:700px;
-
-    position: fixed;
-  }
-
   .el-main {
     background-color: #E9EEF3;
     color: #333;
@@ -554,9 +439,19 @@
     background-color: #f9fafc;
   }
   .el-date-editor.el-input{
-    width:160px;
+    width:200px;
+  }
+  .el-form.el-input{
+    width: 200px;
   }
   .el-table{
     font-size:12px;
   }
+  .el-dialog__body{
+    width:500px;
+  }
+  .block{
+    display: flex;
+  }
+
 </style>
