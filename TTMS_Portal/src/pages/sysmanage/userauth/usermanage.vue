@@ -95,7 +95,6 @@
                 <el-radio class="radio"  v-model="radio"  :label="scope.$index">&nbsp;</el-radio>
               </template>
             </el-table-column>
-
             <el-table-column
               prop="username"
               label="用户名"
