@@ -30,16 +30,16 @@
           </div>
           <div class="body-bottom" style="width:100%;height:70%;">
             <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
-              <el-button type="primary" @click="dialogTableVisible = true">添加导游</el-button>
+              <el-button type="primary" @click="showAddGuideDialog()">添加导游</el-button>
               <el-dialog title="添加导游" :visible.sync="dialogTableVisible" style="width: 120%">
                 <div class="title02">
-                  <div class="title03"><el-input placeholder="导游姓名"></el-input></div>
-                  <div class="title03"><el-input placeholder="联系方式"></el-input></div>
-                  <div class="title03"><el-input placeholder="熟悉语言"></el-input></div>
-                  <div class="title03"><el-input placeholder="国籍"></el-input></div>
-                  <div class="title03"><el-button type="primary">查询</el-button></div>
+                  <div class="title03"><el-input v-model="guideName" placeholder="导游姓名"></el-input></div>
+                  <div class="title03"><el-input v-model="mobile" placeholder="联系方式"></el-input></div>
+                  <div class="title03"><el-input v-model="language" placeholder="熟悉语言"></el-input></div>
+                  <div class="title03"><el-input v-model="nationality" placeholder="国籍"></el-input></div>
+                  <div class="title03"><el-button type="primary" @click="loadGuidesInDialog()">查询</el-button></div>
                 </div>
-                <el-table :data="gridData" border>
+                <el-table :data="gridData"  @selection-change="handleSelectionChange" border>
                   <el-table-column type="selection" width="30"></el-table-column>
                   <el-table-column property="TourismNumber" label="导游编号" width="80"></el-table-column>
                   <el-table-column property="Name" label="姓名" width="60"></el-table-column>
@@ -54,18 +54,16 @@
                 <div class="hh" style="padding-top: 30px;">
                   <div class="block">
                     <el-pagination
-                      @size-change="handleSizeChange"
-                      @current-change="handleCurrentChange"
-                      :current-page.sync="currentPage3"
-                      :page-size="1"
+                      :current-page.sync="currentPage"
+                      :page-size="rows"
                       layout="prev, pager, next, jumper"
-                      :total="10">
+                      :total="totalItems">
                     </el-pagination>
                   </div>
                 </div>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>
+                  <el-button type="primary" @click="addProductGuide">确 定</el-button>
                 </div>
               </el-dialog>
             </div>
@@ -89,10 +87,9 @@
               </el-table-column>
               <el-table-column prop="Remarks" label="备注" width="120">
               </el-table-column>
-              </el-table-column>
               <el-table-column label="操作" align="center" min-width="70">
                 　　　　<template slot-scope="scope">
-                　　　　　<el-button type="info" @click="deleteUser(scope.row.phone)">删除</el-button>
+                　　　　　<el-button type="info" @click="deleteGuide(scope.row)">删除</el-button>
                 　　　　</template>
                 　　</el-table-column>
             </el-table>
@@ -110,39 +107,13 @@
     name: 'TourismInformation',
     data() {
       return {
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
         value1: '',
         value2: '',
 
 
 
-        gridData: [{
-          TourismNumber: "ct0001",
-          Name: "张鹏",
-          EnglishName: "lay",
-          Sex: "男",
-          Email: "zhang@qq.com",
-          Language: "中文，英文",
-          Nationality: "中国",
-          Contact: "13679805590",
-          Remarks: "年度十佳导演",
-        },
-          {TourismNumber: "ct0001",
-            Name: "张鹏",
-            EnglishName: "lay",
-            Sex: "男",
-            Email: "zhang@qq.com",
-            Language: "中文，英文",
-            Nationality: "中国",
-            Contact: "13679805590",
-            Remarks: "年度十佳导演",}
-
-        ],
+        gridData: [],  //弹出框中表格数据
         dialogTableVisible: false,
-        dialogFormVisible: false,
         dialogFormVisible: false,
         form: {
           name: '',
@@ -155,41 +126,120 @@
           desc: ''
         },
         formLabelWidth: '120px',
-
-
-        tableData: [{
-          TourismNumber: "ct0001",
-          Name: "张鹏",
-          EnglishName: "lay",
-          Sex: "男",
-          Email: "zhang@qq.com",
-          Language: "中文，英文",
-          Nationality: "中国",
-          Contact: "13679805590",
-          Remarks: "年度十佳导演",
-        },
-          {
-            TourismNumber: "ct0001",
-            Name: "张鹏",
-            EnglishName: "lay",
-            Sex: "男",
-            Email: "zhang@qq.com",
-            Language: "中文，英文",
-            Nationality: "中国",
-            Contact: "13679805590",
-            Remarks: "年度十佳导演",
-          }
-        ],
-
+        tableData: [], //导游数据
+        totalItems:0 , //总数据
+        rows:5 , //一页数据的大小
+        currentPage:1, //当前页
+        //查询条件
+        guideName:"",
+        mobile:"",
+        language:"",
+        nationality:"",
+        multipleSelection:[],//导游多选
       }
     },
     methods:{
-      deleteUser(val){
-        console.log(val)
-
-//这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
+      deleteGuide(val){
+        this.$http.delete("/producemanage/product/productlist/privilege/guide",{
+          params:{
+            productId:"1",
+            guideId: val.id
+          }
+        }).then(resp=>{
+          this.$message.success("该导游删除成功");
+          this.loadGuidesByPid();
+        })
       },
+      //初始化时加载导游
+      loadGuidesByPid(){
+        this.$http.get("/producemanage/product/productlist/guide/1").then(resp=>{
+          var tempGuiders = [];
+          resp.data.forEach(item=>{
+            var tempGuider ={};
+            tempGuider.id = item.id;
+            tempGuider.TourismNumber = item.guidenumber;
+            tempGuider.Name = item.name;
+            tempGuider.EnglishName = item.englishname;
+            tempGuider.Sex = item.sex;
+            tempGuider.Email = item.mail;
+            tempGuider.Language = item.language;
+            tempGuider.Nationality = item.nationality;
+            tempGuider.Contact = item.mobile;
+            tempGuider.Remarks = item.note;
+            tempGuiders.push(tempGuider);
+          })
+          this.tableData = tempGuiders;
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
+      showAddGuideDialog(){
+        this.dialogTableVisible = true;
+        //加载未添加的导游信息
+        this.loadGuidesInDialog()
+      },
+      loadGuidesInDialog(){
+        this.$http.get("/producemanage/product/productlist/guide/page",{
+          params:{
+            productId:1,
+            guideName:this.guideName,
+            mobile:this.mobile,
+            language:this.language,
+            nationality:this.nationality,
+            page:this.currentPage,
+            rows:this.rows
+          }
+        }).then(resp=>{
+          //设置参数
+          this.totalItem = resp.data.total;
+          var tempGuides = [];
+            resp.data.items.forEach(item=>{
+              var tempGuider ={};
+              tempGuider.id = item.id;
+              tempGuider.TourismNumber = item.guidenumber;
+              tempGuider.Name = item.name;
+              tempGuider.EnglishName = item.englishname;
+              tempGuider.Sex = item.sex;
+              tempGuider.Email = item.mail;
+              tempGuider.Language = item.language;
+              tempGuider.Nationality = item.nationality;
+              tempGuider.Contact = item.mobile;
+              tempGuider.Remarks = item.note;
+              console.log(tempGuider);
+              tempGuides.push(tempGuider);
+            });
+            console.log(tempGuides);
+            this.gridData = tempGuides;
+        }).catch(error=>{
 
+        })
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      //为产品添加导游
+      addProductGuide(){
+        var selectedGuideIds = [];
+        this.multipleSelection.map(item=>selectedGuideIds.push(item.id));
+        if(selectedGuideIds == null || selectedGuideIds.length == 0){
+          this.$message.error("请选择需要添加的id");
+        }
+        //发送添加请求
+        this.$http.post("/producemanage/product/productlist/privilege/guide",this.$qs.stringify({
+           productId:"1",
+           guideIds:selectedGuideIds.join(",")
+        })).then(resp=>{
+            this.$message.success("导游添加成功");
+            this.loadGuidesByPid();
+            this.dialogTableVisible = false;
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      }
+    },
+    created(){
+      //加载表单数据
+      this.loadGuidesByPid();
     }
 
   }
@@ -227,7 +277,7 @@
     text-align: center;
     width: -webkit-max-content;
     margin-bottom: 10px ;
-    background:#E9EEF3;
+
     padding:10px 10px 20px 10px;
   }
   .page{
@@ -281,7 +331,7 @@
   }
 
   .el-main {
-    background-color: #F5F7FA;
+
     color: #333;
     text-align: center;
     height:700px;

@@ -278,7 +278,7 @@
   }
 
   .el-main {
-    background-color: #F5F7FA;
+
     color: #333;
     text-align: center;
     height:700px;
