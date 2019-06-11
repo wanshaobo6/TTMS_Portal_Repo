@@ -27,11 +27,7 @@
                   </el-form-item>
                   <el-form-item label="机构名称:" :label-width="formLabelWidth" :rules="[
 							  { required: true },]">
-                   <div class="left"> <el-select v-model="form.name" placeholder="请选择机构名称">
-                      <el-option label="华东部" value="shanghai"></el-option>
-                      <el-option label="华南部" value="beijing"></el-option>
-                      <el-option label="欧美部" value="beijing"></el-option>
-                    </el-select></div>
+                    <el-input v-model="form.organName" placeholder="请输入内容"></el-input>
                   </el-form-item>
                   <el-form-item label="备注:" :label-width="formLabelWidth">
                     <el-input type="textarea" v-model="form.desc"></el-input>
@@ -39,7 +35,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                  <el-button type="primary" @click="addDepartment(0)">确 定</el-button>
                 </div>
               </el-dialog>
             </el-col>
@@ -121,10 +117,8 @@ export default {
 		return {
       dialogFormVisible: false,
       form: {
-        name: '',
         csbn: '',
-        date1: '',
-        date2: '',
+        organName:"",
         delivery: false,
         type: [],
         resource: '',
@@ -170,6 +164,7 @@ export default {
         this.loadData();
       },
     loadData(){
+      this.tableData =[];
       this.$http.get("/sysmanage/userauth/organmanage/page" , {
         params: {
           departmentname: this.departmentname,
@@ -190,7 +185,6 @@ export default {
           table.code=organItem.departmentcode,
           table.comment=organItem.note;
           tables.push(table);
-
         });
         this.tableData = tables;
       }).catch(error =>{
@@ -204,8 +198,34 @@ export default {
         })[0].status = !table.status
       }).catch(error => {
       })
-    }
     },
+    addDepartment(pid){
+		  var b = this.validateForm();
+		  if(!b)
+		    return;
+		  this.$http.post("/sysmanage/userauth/organmanage/add/dartment",this.$qs.stringify({
+       departmentName:this.form.organName,
+        departmentCode:this.form.csbn,
+        departmentNote:this.form.desc,
+        parentId:pid
+      })).then(resp=>{
+        this.$message.success("部门添加成功");
+        this.dialogFormVisible = false;
+        this.loadData();
+      }).catch(error=>{
+        this.$message.error(error.message);
+        this.dialogFormVisible = false;
+      })
+    },
+    // 验证弹出框中表单数据
+    validateForm(){
+      if(this.form.organName == "" || this.form.csbn == "" || this.form.desc== ""){
+        this.$message.info("请将数据填充完整");
+        return false;
+      }
+      return true;
+    }
+  },
 };
 </script>
 
