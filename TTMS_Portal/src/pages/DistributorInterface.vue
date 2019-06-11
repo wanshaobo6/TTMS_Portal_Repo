@@ -131,7 +131,7 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
-                  size="mini" type="primary" plain >查看详情</el-button>
+                  size="mini" type="primary" plain  @click="gotolink">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -150,7 +150,7 @@
 
           </el-row>
         </div>
-      </div>
+
       </el-main>
     </el-container>
   </el-container>
@@ -257,6 +257,15 @@
           this.showAddDialog();
         }
       },
+      gotolink(){
+
+        //点击跳转至上次浏览页面
+        // this.$router.go(-1)
+
+        //指定跳转地址
+        this.$router.replace('/Detail')
+      },
+
 
       //根据父id和级别加载对应的分类
       loadCats(pid, level) {

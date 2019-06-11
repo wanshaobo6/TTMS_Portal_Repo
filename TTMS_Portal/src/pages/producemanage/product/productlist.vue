@@ -409,7 +409,7 @@
     height: 25px;
     text-align: center;
     margin-bottom: 20px;
-    background:#E9EEF3;
+
   }
   .thirdRow{
     margin-left: -5px;
@@ -424,7 +424,7 @@
     padding: 10px 0 30px;
   }
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
     text-align: center;
     height:700px;
