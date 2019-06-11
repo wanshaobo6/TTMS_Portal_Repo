@@ -20,6 +20,7 @@
             </el-col>
           </el-row>
         </div>
+
         <div class="body-bottom" style="width:100%;height:70%;">
           <div class="menu" style="padding: 30px 0px 10px 50px;text-align:left;">
             <el-button type="primary" @click="dialogFormVisible = true">报名</el-button>
