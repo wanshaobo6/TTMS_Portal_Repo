@@ -1,7 +1,6 @@
 <template>
   <el-container>
     <el-main>
-
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%;padding:50px 20px 0px 20px">
           <el-row :gutter="15">
@@ -102,7 +101,6 @@
               　　　　　　<el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
               　　　　</template>
               　　</el-table-column>
-
           </el-table>
           </div>
         </div>

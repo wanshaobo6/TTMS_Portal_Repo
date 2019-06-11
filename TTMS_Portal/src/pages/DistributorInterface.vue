@@ -155,7 +155,7 @@
 
 <script>
   export default {
-    name: 'ProductList',
+    name: 'DistributorInterface',
     data() {
       return {
         dialogTableVisible: false,
