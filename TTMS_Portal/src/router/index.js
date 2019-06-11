@@ -42,8 +42,7 @@ export default new Router({
         route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
         route("/sysmanage/userauth/organmanage",'/sysmanage/userauth/organmanage',"OrganManage"),
-        route("/producemanage/product/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting"),
-        route("/DistributorInterface",'/DistributorInterface',"DistributorInterface"),
+        route("/producemanage/product/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
       ]
     }
   ]
