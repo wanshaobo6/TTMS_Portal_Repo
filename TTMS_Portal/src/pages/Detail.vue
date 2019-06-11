@@ -4,6 +4,7 @@
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%;padding:50px 20px 0px 20px">
           <el-row :gutter="15">
+
             <el-col :span="10">
               <div class=""><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
                 <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;王毅</span></div>

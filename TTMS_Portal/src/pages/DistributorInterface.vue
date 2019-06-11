@@ -126,7 +126,6 @@
               width="70">
             </el-table-column>
             <el-table-column label="操作">
-
               <template slot-scope="scope">
                 <el-button
                   size="mini" type="primary" plain >查看详情</el-button>
@@ -145,6 +144,7 @@
             </el-pagination>
           </div>
         </div>
+
           </el-row>
         </div>
       </div>
