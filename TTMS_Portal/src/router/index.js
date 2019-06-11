@@ -17,6 +17,8 @@ function route (path, file, name, children) {
 export default new Router({
   routes: [
     route("/Login",'/Login',"Login"),
+    route("/DistributorEntry/DistributorInterface",'/DistributorEntry/DistributorInterface',"DistributorInterface"),
+    route("/DistributorEntry/Detail",'/DistributorEntry/Detail',"Detail"),
     // /login路径，路由到登录组件
     {
       path:"/", // 根路径，路由到 Layout组件
@@ -31,16 +33,16 @@ export default new Router({
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
         route("/producemanage/product/productcat",'/producemanage/product/productcat',"Productcat"),
         route("/producemanage/product/TourismInformation",'/producemanage/product/TourismInformation',"TourismInformation"),
-        route("/producemanage/product/productlist/InventoryDistribution",'/producemanage/product/InventoryDistribution',"InventoryDistribution"),
-        route("/producemanage/product/productlist/appendix",'/producemanage/product/appendix',"appendix"),
-        route("/producemanage/product/productlist/DreferentialPolicy",'/producemanage/product/DreferentialPolicy',"DreferentialPolicy"),
+        route("/producemanage/product/InventoryDistribution",'/producemanage/product/InventoryDistribution',"InventoryDistribution"),
+        route("/producemanage/product/appendix",'/producemanage/product/appendix',"appendix"),
+        route("/producemanage/product/DreferentialPolicy",'/producemanage/product/DreferentialPolicy',"DreferentialPolicy"),
         route("/InfoPanel",'/InfoPanel',"InfoPanel"),
         route("/ProductClassify",'/ProductClassify',"ProductClassify"),
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
         route("/sysmanage/userauth/organmanage",'/sysmanage/userauth/organmanage',"OrganManage"),
-        route("/producemanage/product/productlist/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
+        route("/producemanage/product/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
       ]
     }
   ]

@@ -12,11 +12,10 @@
           </div>
         </div>
         <div class="body">
-          <el-row :gutter="20">
+          <el-row :gutter="10">
             <el-col :span="7" v-show="table1show">
-              <div class="grid-content bg-purple">
                 <div class="grid-content bg-purple">
-                  <div class="block" style="border:1px solid #B3C0D1">
+                  <div class="one" style="border:1px solid #B3C0D1">
                     <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf">主分类</div>
                     <div class="title1">
                       <el-link type="primary">添加</el-link>
@@ -24,22 +23,20 @@
                       <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
                     <div class="ff">
                       <el-table :data="tableData1"  style="width: 100%"  @row-click="handleFirstClick">
-                        <el-table-column prop="name" label="分类名称" width="200"  >
+                        <el-table-column prop="name" label="分类名称" width="150"  >
                             <template slot-scope="scope">
                               <span v-text="scope.row.name" ></span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                        <el-table-column prop="note" label="分类备注" width="140" ></el-table-column>
                       </el-table>
                     </div>
                   </div>
                 </div>
-              </div>
             </el-col>
             <el-col :span="7" v-show="table2show">
-              <div class="grid-content bg-purple-light">
                 <div class="grid-content bg-purple">
-                  <div class="block" style="border:1px solid #B3C0D1">
+                  <div class="second" style="border:1px solid #B3C0D1">
                     <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf" v-text="secondCatName">次分类</div>
                     <div class="title1">
                       <el-link type="primary">添加</el-link>
@@ -47,18 +44,17 @@
                       <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
                     <div class="ff">
                       <el-table :data="tableData2" @row-click="handleSecondClick" style="width: 100%">
-                        <el-table-column prop="name" label="名称" width="200"></el-table-column>
-                        <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                        <el-table-column prop="name" label="名称" width="150"></el-table-column>
+                        <el-table-column prop="note" label="分类备注" width="140" ></el-table-column>
                       </el-table>
                     </div>
                   </div>
                 </div>
-              </div>
+
             </el-col>
             <el-col :span="7" v-show="table3show">
-              <div class="grid-content bg-purple"></div>
               <div class="grid-content bg-purple">
-                <div class="block" style="border:1px solid #B3C0D1">
+                <div class="three" style="border:1px solid #B3C0D1">
                   <div class="title" style="border:1px solid #B3C0D1; background:#99a9bf" v-text="thirdCatName">子分类</div>
                   <div class="title1">
                     <el-link type="primary">添加</el-link>
@@ -66,8 +62,8 @@
                     <el-link type="primary">&nbsp;&nbsp;&nbsp;修改</el-link></div>
                   <div class="ff">
                     <el-table :data="tableData3" style="width: 100%">
-                      <el-table-column prop="name" label="名称" width="200"></el-table-column>
-                      <el-table-column prop="note" label="分类备注" width="200" ></el-table-column>
+                      <el-table-column prop="name" label="名称" width="150"></el-table-column>
+                      <el-table-column prop="note" label="分类备注" width="140" ></el-table-column>
                     </el-table>
                   </div>
                 </div>
@@ -180,15 +176,12 @@
 
 <style>
   html,body {
-
     overflow:hidden;
 
     margin:0px;
     width:100%;
     height:100%;
   }
-
-
   .title {
     text-align: left;
     padding: 10px 10px 10px 20px;
@@ -201,16 +194,13 @@
     text-align: left;
     padding:0px 0px 5px 10px
   }
-
   .path {
     text-align: left;
     font-size: 17px;
     line-height: 25px;
     height: 25px;
     text-align: center;
-    width: -webkit-max-content;
     margin-bottom: 20px;
-
   }
   .page{
     position: relative;
@@ -221,28 +211,22 @@
     margin-bottom: 100px;
     padding: 10px 0 30px;
   }
-
-
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
     text-align: center;
     height:700px;
     margin-top: -60px;
   }
-
   body > .el-container {
     margin-bottom: 40px;
   }
-
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
   }
-
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
-
 </style>
 

@@ -7,10 +7,10 @@
           <div class="path">
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/' }">
-                信息管理
+                系统管理
               </el-breadcrumb-item>
               <el-breadcrumb-item>
-                角色
+                用户权限
               </el-breadcrumb-item>
               <el-breadcrumb-item>
                 角色信息管理
@@ -31,10 +31,10 @@
             </el-col>
             <el-col :span="2">
               <div class="grid-content ">
-                <el-button type="primary" @click="dialogFormVisible = true">
+                <el-button type="primary" @click="showDialog(false)">
                   新增
                 </el-button>
-                <el-dialog title="添加角色" :visible.sync="dialogFormVisible">
+                <el-dialog :title="dialogName" :visible.sync="dialogFormVisible">
                   <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="角色名称">
                       <el-input v-model="form.name"></el-input>
@@ -59,7 +59,7 @@
                       </div>
                     </el-form-item>
                     <el-form-item label="权限菜单">
-                      <el-tree :data="menuDate" show-checkbox="" ref="tree" node-key="id" :default-expanded-keys="[]" :default-checked-keys="[]">
+                      <el-tree :data="menuDate" show-checkbox="" ref="tree" node-key="id" :default-expanded-keys="[]" :default-checked-keys="defaultCheckedKeys">
                       </el-tree>
                     </el-form-item>
                   </el-form>
@@ -67,7 +67,7 @@
                     <el-button @click="dialogFormVisible = false">
                       取 消
                     </el-button>
-                    <el-button type="primary" @click="createRole()">
+                    <el-button type="primary" @click="submitForm()">
                       确 定
                     </el-button>
                   </div>
@@ -75,14 +75,8 @@
               </div>
             </el-col>
             <el-col :span="2">
-              <el-button type="primary">
+              <el-button type="primary" @click="showDialog(true)">
                 修改
-              </el-button>
-              <div class="grid-content "></div>
-            </el-col>
-            <el-col :span="2">
-              <el-button type="primary" @click="deleteRow(radio)">
-                删除
               </el-button>
               <div class="grid-content "></div>
             </el-col>
@@ -131,7 +125,6 @@
         },
         checkedRoles: ['系统管理员', '产品经理'],
         roles: roleOptions,
-        dialogFormVisible: false,
         formLabelWidth: '120px',
         tableData: [],  //表格数据
         multipleSelection: [],
@@ -148,6 +141,9 @@
         rows:5,    //每页大小
         totalItem : 20,   //总条数
         name:"",
+        selectedRow:{},//被选中的行数据
+        dialogFormVisible: false,
+        defaultCheckedKeys:[] , //默认选中的权限菜单
       };
     },
     created(){
@@ -156,13 +152,12 @@
       //加载菜单树
       this.loadMenuTree();
       //加载一级部门
-      this.loadParentByPidInOptions(0,1);
     },
     methods: {
       showRow(row){
         //赋值给radio
         this.radio = this.tableData.indexOf(row);
-        this.selected=row;
+        this.selectedRow=row;
       },
       handleEdit(index, row) {
         console.log(index, row);
@@ -216,17 +211,6 @@
         });
         //赋值给extractIdMenus
         this.extractIdMenus = availableIds;
-      },
-      deleteRow(index){
-        this.tableData.splice(index,1)
-        var id = null
-        this.tableData.some((item,i)=>{
-
-          if(i === index){
-            id = item.roleID
-            return true
-          }
-        })
       },
       loadData(){
         //加载团信息
@@ -314,10 +298,33 @@
         this.selectedChildDepartId = "";
         this.loadParentByPidInOptions(pid,2);
       },
-      //创建角色
-      createRole(){
+      //验证表单数据
+      validateForm(){
+        if(this.form.name == "" || this.form.comment=="" || this.extractIdMenus == [] || this.selectedChildDepartId ==""){
+          this.$message.info("请将表单填充完整")
+          return false;
+        }
+        return true;
+      },
+      submitForm(){
+        var b = this.validateForm();
+        if(!b){
+          return ;
+        }
         //获取选中的有效菜单id
         this.getCheckedKeys();
+        if(this.isEdit){
+          this.updateRole();
+        }else{
+          this.createRole();
+        }
+        //关闭弹窗
+        this.dialogFormVisible = false;
+        //清空原来数据
+        this.clearDialogFormData();
+      },
+      //创建角色
+      createRole(){
         this.$http.post("/sysmanage/userauth/rolemanage",this.$qs.stringify(
           {
             name:this.form.name,
@@ -326,9 +333,62 @@
             departmentId:this.selectedChildDepartId
           }
         )).then(resp=>{
-            this.$message.error("添加成功");
+            this.$message.success("创建成功");
         }).catch(error=>{
-
+          this.$message.error("创建失败");
+        })
+      },
+      //更新角色
+      updateRole(){
+        this.$http.put("/sysmanage/userauth/rolemanage/"+this.selectedRow.roleID,this.$qs.stringify(
+          {
+            name:this.form.name,
+            note:this.form.comment,
+            menuIds:this.extractIdMenus.join(","),
+            departmentId:this.selectedChildDepartId
+          }
+        )).then(resp=>{
+          this.$message.success("更新成功");
+        }).catch(error=>{
+          this.$message.error("更新失败");
+        })
+      },
+      clearDialogFormData(){
+        //清空表单中数据
+        this.form.comment = "";
+        this.form.name = "";
+        this.selectedParentDepartId="";
+        this.selectedChildDepartId="";
+        this.defaultCheckedKeys=[];
+      },
+      //显示Dialog
+      showDialog(isEdit){
+        this.isEdit = isEdit;
+        this.dialogFormVisible = true;
+        //加载一级部门
+        this.loadParentByPidInOptions(0,1);
+        //确保树组件初始化完成
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys([]);
+        });
+        if(isEdit){
+          //判断是否选中了
+          if(Object.keys(this.selectedRow).length == 0){
+            this.$message.error("请选中一行");
+            return;
+          }
+          //加载当前选中角色的数据
+          this.fillDialogForm();
+        }
+      },
+      fillDialogForm(){
+        this.form.comment = this.selectedRow.comment;
+        this.form.name = this.selectedRow.roleName;
+        //加载默认选中的菜单
+        this.$http.get("/sysmanage/userauth/rolemanage/getMenusIdByRoleId/"+this.selectedRow.roleID).then(resp=>{
+         this.defaultCheckedKeys = resp.data;
+        }).catch(error=>{
+          this.$message.error(error.message);
         })
       }
     },
@@ -385,7 +445,7 @@
 
 
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
     text-align: center;
     height:700px;

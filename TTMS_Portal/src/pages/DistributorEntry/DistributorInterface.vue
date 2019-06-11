@@ -1,15 +1,11 @@
 <template>
   <el-container>
     <el-container>
-      <el-main><div class="top">
-         <p class="title" style="color:#B3C0D1">产品列表</p>
-         <div class="path" >
-           <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-              <el-breadcrumb-item>产品</el-breadcrumb-item>
-              <el-breadcrumb-item>产品列表</el-breadcrumb-item>
-           </el-breadcrumb></div>
-        <div class="firstRow">
+      <el-main>
+        <div class="enroll">
+          <span> <h2>分销商报名入口</h2></span>
+        </div>
+        <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
             <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
               <el-option
@@ -48,77 +44,19 @@
           </el-row>
         </div>
         <div class="secondRow">
-          <el-row :gutter="2">
-            <el-col :span="4"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
-            <el-col :span="5"><div class="grid-content ">
+          <el-row :gutter="4">
+            <el-col :span="3"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
+            <el-col :span="3"><div class="grid-content ">
               <div class="block">
-                <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="开始时间"></el-date-picker></div>
+                <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="开始时间"></el-date-picker></div>
             </div></el-col>
-            <el-col :span="5"><div class="grid-content ">
+            <el-col :span="3"><div class="grid-content ">
               <div class="block">
-                <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="结束时间"></el-date-picker></div>
-              </div></el-col>
+                <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="结束时间"></el-date-picker></div>
+            </div></el-col>
             <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
-            <el-col :span="2"><el-button type="primary"  @click="dialogFormVisible = true" >修改</el-button>
-              <el-dialog title="产品列表" :visible.sync="dialogFormVisible"  >
-                <el-form :model="form">
-                  <el-form-item label="状态：" :label-width="formLabelWidth">
-                    <el-input v-model="form.status" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="类别：" :label-width="formLabelWidth">
-                    <el-input v-model="form.classify" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="所属项目：" :label-width="formLabelWidth">
-                    <el-input v-model="form.project" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="团名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.Tname" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="产品编号：" :label-width="formLabelWidth">
-                    <el-input v-model="form.ProductID" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="产品名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.Pname" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="服务开始时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.start" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="服务结束时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.end" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="预：" :label-width="formLabelWidth">
-                    <el-input v-model="form.pre" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="已：" :label-width="formLabelWidth">
-                    <el-input v-model="form.already" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="余：" :label-width="formLabelWidth">
-                    <el-input v-model="form.remain" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <el-form-item label="产品价格：" :label-width="formLabelWidth">
-                    <el-input v-model="form.price" autocomplete="off"></el-input>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                </div>
-              </el-dialog>
-            </el-col>
-            <el-col :span="2"><el-button >待售</el-button></el-col>
-            <el-col :span="2"><el-button >上架</el-button></el-col>
-            <el-col :span="2"><el-button >下架</el-button></el-col>
-          </el-row></div>
-        <div class="thirdRow">
-          <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning" >库存分销</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info" @click="goSubPage('appendix')">附件</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
-          </el-row>
-        </div>
-        </div>
+            <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
         <div class="body">
           <el-table
             ref="multipleTable"
@@ -128,67 +66,73 @@
             @selection-change="handleSelectionChange">
             <el-table-column
               type="selection"
-              width="40">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="status"
               label="状态"
-              width="25">
+              width="35">
             </el-table-column>
             <el-table-column
               prop="classify"
               label="类别"
-              width="100">
+              width="110">
             </el-table-column>
             <el-table-column
               prop="project"
               label="所属项目"
-              width="100">
+              width="110">
             </el-table-column>
             <el-table-column
               prop="Tname"
               label="团名称"
-              width="100">
+              width="110">
             </el-table-column>
             <el-table-column
               prop="ProductID"
               label="产品编号"
-              width="130">
+              width="150">
             </el-table-column>
             <el-table-column
               prop="Pname"
               label="产品名称"
-              width="110">
+              width="120">
             </el-table-column>
             <el-table-column
               prop="start"
               label="服务开始时间"
-              width="100">
+              width="130">
             </el-table-column>
             <el-table-column
               prop="end"
               label="服务结束时间"
-              width="100">
+              width="130">
             </el-table-column>
             <el-table-column
               prop="pre"
               label="预"
-              width="40">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="already"
               label="已"
-              width="40">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="remain"
               label="余"
-              width="40">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="price"
               label="产品价格"
-              width="60">
+              width="70">
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini" type="primary" plain  @click="gotolink">查看详情</el-button>
+              </template>
             </el-table-column>
           </el-table>
           <div class="page">
@@ -203,6 +147,10 @@
             </el-pagination>
           </div>
         </div>
+
+          </el-row>
+        </div>
+
       </el-main>
     </el-container>
   </el-container>
@@ -210,7 +158,7 @@
 
 <script>
   export default {
-    name: 'ProductList',
+    name: 'DistributorInterface',
     data() {
       return {
         dialogTableVisible: false,
@@ -282,6 +230,9 @@
 
     },
     methods: {
+      handleEdit(index, row) {
+        this.showDialog(true, row);
+      },
       handleClick(tab, event) {
         console.log(tab, event);
       },
@@ -297,6 +248,24 @@
         this.currentPage = (val);
         this.loadData();
       },
+      showDialog(isEdit, row) {
+        this.isEdit = isEdit;
+        this.dialogFormVisible = true;
+        if (isEdit) {
+          this.showEditDialog(row);
+        } else {
+          this.showAddDialog();
+        }
+      },
+      gotolink(){
+
+        //点击跳转至上次浏览页面
+        // this.$router.go(-1)
+
+        //指定跳转地址
+        this.$router.replace('/DistributorEntry/Detail')
+      },
+
 
       //根据父id和级别加载对应的分类
       loadCats(pid, level) {
@@ -355,38 +324,31 @@
           var tables = [];
           resp.data.items.forEach(listItem => {
             var table = {};
-            table.id = listItem.id;
             table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
-            table.Tname= listItem.productcatnames;
+            table.Tname = listItem.productcatnames;
             table.ProductID = listItem.productnumber;
-            table.Pname=listItem.productname;
-            table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
-            table.end= new Date(listItem.serverendtime).format("yyyy-MM-dd hh:mm:ss");
-            table.pre=listItem.presellnumber;
-            table.already=listItem.sellednumber;
-            table.remain=listItem.lowestnumber;
-            table.price=listItem.productprice;
+            table.Pname = listItem.productname;
+            table.start = new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
+            table.end = new Date(listItem.serverendtime).format("yyyy-MM-dd hh:mm:ss");
+            table.pre = listItem.presellnumber;
+            table.already = listItem.sellednumber;
+            table.remain = listItem.lowestnumber;
+            table.price = listItem.productprice;
             tables.push(table);
           });
           this.tableData = tables;
-        }).catch(error =>{
+        }).catch(error => {
           alert(error.message);
         });
       },
-      goSubPage(pageName){
-        if(this.multipleSelection.length != 1){
-          this.$message.info("只能选择一个产品进行操作");
-          return;
-        }
-        //保存数据
-        localStorage.setItem("curProduct",JSON.stringify(this.multipleSelection[0]));
-        //页面转跳
-        this.$router.push("/producemanage/product/productlist/"+pageName);
-      }
+
+
+
     }
   }
+
 </script>
 <style>
   html,body {
@@ -409,7 +371,7 @@
     height: 25px;
     text-align: center;
     margin-bottom: 20px;
-
+    background:#E9EEF3;
   }
   .thirdRow{
     margin-left: -5px;
@@ -424,12 +386,13 @@
     padding: 10px 0 30px;
   }
   .el-main {
-
+    background-color: #E9EEF3;
     color: #333;
     text-align: center;
     height:700px;
     margin-top: -60px;
   }
+
 
   body > .el-container {
     margin-bottom: 40px;
@@ -467,17 +430,22 @@
 
     background-color: #f9fafc;
   }
-  .el-date-editor.el-input{
-    width:200px;
-  }
+
   .el-form.el-input{
     width: 200px;
   }
   .el-table{
     font-size:12px;
   }
+
   .block{
     display: flex;
+  }
+  .body{
+    padding:50px 0px 0px 0px;
+  }
+  .enroll{
+    margin-top: 20px;
   }
 
 </style>
