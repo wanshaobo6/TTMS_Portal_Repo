@@ -2,6 +2,9 @@
   <el-container>
     <el-container>
       <el-main>
+        <div class="enroll">
+          <span> <h2>分销商报名入口</h2></span>
+        </div>
         <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
             <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
@@ -128,7 +131,7 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
-                  size="mini" type="primary" plain >查看详情</el-button>
+                  size="mini" type="primary" plain  @click="gotolink">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -147,7 +150,7 @@
 
           </el-row>
         </div>
-      </div>
+
       </el-main>
     </el-container>
   </el-container>
@@ -254,6 +257,15 @@
           this.showAddDialog();
         }
       },
+      gotolink(){
+
+        //点击跳转至上次浏览页面
+        // this.$router.go(-1)
+
+        //指定跳转地址
+        this.$router.replace('/Detail')
+      },
+
 
       //根据父id和级别加载对应的分类
       loadCats(pid, level) {
@@ -381,6 +393,7 @@
     margin-top: -60px;
   }
 
+
   body > .el-container {
     margin-bottom: 40px;
   }
@@ -430,6 +443,9 @@
   }
   .body{
     padding:50px 0px 0px 0px;
+  }
+  .enroll{
+    margin-top: 20px;
   }
 
 </style>

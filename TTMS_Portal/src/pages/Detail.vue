@@ -1,6 +1,7 @@
 <template>
   <el-container>
     <el-main>
+      <div class="topic"><h1>产品详情</h1></div>
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%;padding:50px 20px 0px 20px">
           <el-row :gutter="15">
@@ -19,11 +20,12 @@
             </el-col>
           </el-row>
         </div>
+
         <div class="body-bottom" style="width:100%;height:70%;">
           <div class="menu" style="padding: 30px 0px 10px 50px;text-align:left;">
             <el-button type="primary" @click="dialogFormVisible = true">报名</el-button>
             <div class="ff">报名人信息</div>
-            <el-dialog title="报名人信息" :visible.sync="dialogFormVisible">
+            <el-dialog title="填写报名人信息" :visible.sync="dialogFormVisible">
               <el-form :model="form">
                 <el-form-item label="游客编号" :label-width="formLabelWidth">
                   <el-input v-model="form.Number" autocomplete="off"></el-input>
@@ -51,7 +53,7 @@
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">报名</el-button>
               </div>
             </el-dialog>
           </div>
@@ -225,8 +227,10 @@
     font-family: "Eras Bold ITC";
     font-size:18px;
     padding:10px 0px 0px 50px;
-
-
+  }
+  .topic{
+    text-align: left;
+    margin-top: 30px;
   }
 
 </style>

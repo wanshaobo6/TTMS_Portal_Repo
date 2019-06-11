@@ -7,10 +7,10 @@
           <div class="path">
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/' }">
-                信息管理
+                系统管理
               </el-breadcrumb-item>
               <el-breadcrumb-item>
-                用户
+                用户权限
               </el-breadcrumb-item>
               <el-breadcrumb-item>
                 用户信息管理
@@ -450,7 +450,7 @@
 
 
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
     text-align: center;
     height:700px;

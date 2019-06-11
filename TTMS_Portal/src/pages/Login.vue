@@ -1,7 +1,8 @@
 <template>
-  <v-app>
-    <v-content>
-      <v-container fluid fill-height>
+  <v-app >
+    <v-content >
+      <div class="img">
+      <v-container fluid fill-height >
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
@@ -32,12 +33,14 @@
           </v-flex>
         </v-layout>
       </v-container>
+      </div>
     </v-content>
     <v-dialog v-model="dialog" width="300px">
       <v-alert icon="warning" color="error" :value="true" v-text="errorTip">
       </v-alert>
     </v-dialog>
   </v-app>
+
 </template>
 
 <script>
@@ -77,3 +80,23 @@ export default {
 };
 </script>
 
+<style>
+  html,body {
+
+    overflow:hidden;
+
+    margin:0px;
+
+    width:100%;
+
+    height:100%;
+
+  }
+  .img{
+    background-image: url("../assets/Login.jpg");
+    margin-top: -60px;
+    height: 100%;
+    width: 100%;
+    background-size:100% 100%;
+  }
+</style>

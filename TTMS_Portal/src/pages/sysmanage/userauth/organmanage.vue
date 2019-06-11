@@ -2,8 +2,9 @@
 	<el-container>
     <el-main><div class="top"><p class="title" style="color:#B3C0D1">组织结构管理</p>
 					<div class="path" ><el-breadcrumb separator-class="el-icon-arrow-right">
-  <el-breadcrumb-item :to="{ path: '/' }">机构管理</el-breadcrumb-item>
-  <el-breadcrumb-item>组织机构信息管理</el-breadcrumb-item>
+  <el-breadcrumb-item :to="{ path: '/' }">系统管理</el-breadcrumb-item>
+            <el-breadcrumb-item>用户权限</el-breadcrumb-item>
+  <el-breadcrumb-item>组织机构管理</el-breadcrumb-item>
 </el-breadcrumb></div>
 					<el-row :gutter="20">
 						<el-col :span="4"><div class="grid-content "><el-input v-model="departmentname" placeholder="机构名称"></el-input></div></el-col>
@@ -283,7 +284,7 @@ export default {
   }
 
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
 	  height:700px;
 

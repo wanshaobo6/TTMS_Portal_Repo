@@ -277,7 +277,7 @@
     text-align: center;
     width: -webkit-max-content;
     margin-bottom: 10px ;
-    background:#E9EEF3;
+
     padding:10px 10px 20px 10px;
   }
   .page{
@@ -331,7 +331,7 @@
   }
 
   .el-main {
-    background-color: #F5F7FA;
+
     color: #333;
     text-align: center;
     height:700px;
