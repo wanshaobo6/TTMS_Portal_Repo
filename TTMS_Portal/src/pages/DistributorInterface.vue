@@ -2,6 +2,9 @@
   <el-container>
     <el-container>
       <el-main>
+        <div class="enroll">
+          <span> <h2>分销商报名入口</h2></span>
+        </div>
         <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
             <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
@@ -430,6 +433,9 @@
   }
   .body{
     padding:50px 0px 0px 0px;
+  }
+  .enroll{
+    margin-top: 20px;
   }
 
 </style>
