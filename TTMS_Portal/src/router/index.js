@@ -17,6 +17,7 @@ function route (path, file, name, children) {
 export default new Router({
   routes: [
     route("/Login",'/Login',"Login"),
+    route("/main",'/main',"main"),
     // /login路径，路由到登录组件
     {
       path:"/", // 根路径，路由到 Layout组件
