@@ -52,51 +52,51 @@
             <el-col :span="4"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
             <el-col :span="5"><div class="grid-content ">
               <div class="block">
-                <el-date-picker v-model="StartTime" type="datetime" placeholder="开始时间"></el-date-picker></div>
+                <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="开始时间"></el-date-picker></div>
             </div></el-col>
             <el-col :span="5"><div class="grid-content ">
               <div class="block">
-                <el-date-picker v-model="EndTime" type="datetime" placeholder="结束时间"></el-date-picker></div>
+                <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="结束时间"></el-date-picker></div>
               </div></el-col>
-            <el-col :span="2"><el-button type="primary">查询</el-button></el-col>
-            <el-col :span="2"><el-button type="primary" @click="dialogFormVisible = true">修改</el-button>
+            <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
+            <el-col :span="2"><el-button type="primary"  @click="dialogFormVisible = true" >修改</el-button>
               <el-dialog title="产品列表" :visible.sync="dialogFormVisible"  >
                 <el-form :model="form">
                   <el-form-item label="状态：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.status" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="类别：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.classify" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="所属项目：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.project" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="团名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.Tname" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品编号：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.ProductID" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品名称：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.Pname" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="服务开始时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.start" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="服务结束时间：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.end" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="预：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.pre" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="已：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.already" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="余：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.remain" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="产品价格：" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.price" autocomplete="off"></el-input>
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -111,13 +111,12 @@
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning">库存分销</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="warning" >库存分销</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">附件</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info" @click="goSubPage('appendix')">附件</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
             <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
           </el-row>
-        </div>
         </div>
         </div>
         <div class="body">
@@ -225,6 +224,7 @@
           type: [],
           resource: '',
           desc: ''
+
         },
         formLabelWidth: '120px',
         StartTime: [
@@ -239,32 +239,47 @@
             message: "请选择时间"
           }
         ],
-        options: [],
+        options: [
+          {
+            label: '待售',
+            value: 0,
+          },
+          {
+            label: '上架',
+            value: 1,
+          },
+          {
+            label: '下架',
+            value: 2,
+          },
+        ],
         options1: [],
         options2: [],
         options3: [],
-        status:'',
-        selectedFirstCatId:'',
-        selectedSecondCatId:'',
-        selectedThirdCatId:'',
+        status: '',
+        selectedFirstCatId: '',
+        selectedSecondCatId: '',
+        selectedThirdCatId: '',
+
         input1: '',
         input2: '',
         input3: '',
-        input4:'',
-        StartTime:'',
-        EndTime:'',
+        input4: '',
+        StartTime: '',
+        EndTime: '',
         currentPage: 1,  //当前页
         rows: 5,    //每页大小
         totalItem: 20,   //总条数
         tableData: [],
-        gridData:[],
-        value:'',
+        gridData: [],
+        value: '',
         multipleSelection: [],
       };
     },
     created() {
       this.loadData();
-      this.loadCats(0,1);
+      this.loadCats(0, 1);
+
     },
     methods: {
       handleClick(tab, event) {
@@ -282,21 +297,22 @@
         this.currentPage = (val);
         this.loadData();
       },
+
       //根据父id和级别加载对应的分类
-      loadCats(pid,level){
-        this.$http.get("/producemanage/product/productlist/queryCatById",{
-          params:{
-            catId : pid
+      loadCats(pid, level) {
+        this.$http.get("/producemanage/product/productlist/queryCatById", {
+          params: {
+            catId: pid
           }
-        }).then(resp=>{
+        }).then(resp => {
           var listCats = [];
-          resp.data.forEach(item=>{
+          resp.data.forEach(item => {
             var listCat = {};
             listCat.label = item.productcatname;
-            listCat.value =  item.id;
+            listCat.value = item.id;
             listCats.push(listCat);
           });
-          switch(level) {
+          switch (level) {
             case 1:
               this.options1 = listCats;
               break;
@@ -309,51 +325,65 @@
             default:
               break;
           }
-        }).catch(error=>{
+        }).catch(error => {
           this.$message.error(error.message);
         })
       },
       loadData() {
+        this.tableData = [];
         //加载产品列表信息
+
         this.$http.get("/producemanage/product/productlist/page", {
           params: {
-            status:this.status,
-            productCatId1:this.selectedFirstCatId,
-            productCatId2:this. selectedFirstCatId,
-            productCatId3:this.selectedFirstCatId,
-            projectName:this.input2,
-            productNumber:this.input3,
-            productName:this.name,
-            serverStartTime:this.StartTime,
-            serverEndtTime:this.EndTime,
-            page:this.currentPage,
-            size:this.row,
+            status: this.status,
+            productCatId1: this.selectedFirstCatId,
+            productCatId2: this.selectedSecondCatId,
+            productCatId3: this.selectedThirdCatId,
+            projectName: this.input2,
+            productNumber: this.input3,
+            productName: this.name,
+            serverStartTime: this.StartTime,
+            serverEndTime: this.EndTime,
+            page: this.currentPage,
+            size: this.row
           }
         }).then(resp => {
+
           //成功
           console.log(resp);
           this.totalItem = resp.data.total;
-           var tables = [];
-        resp.data.items.forEach(listItem => {
-          var table = {};
-         table.status = listItem.productstatus;
-          table.classify = listItem.productcatnames;
-          table.project = listItem.projectname;
-          table.Tname= listItem.productcatnames;
-          table.ProductID = listItem.productnumber;
-          table.Pname=listItem.productname;
-          table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
-          table.end= new Date(listItem.serverendtime).format("yyyy-MM-dd hh:mm:ss");
-          table.pre=listItem.presellnumber;
-          table.already=listItem.sellednumber;
-          table.remain=listItem.lowestnumber;
-          table.price=listItem.productprice;
-          tables.push(table);
-        });
+          var tables = [];
+          resp.data.items.forEach(listItem => {
+            var table = {};
+            table.id = listItem.id;
+            table.status = listItem.productstatus;
+            table.classify = listItem.productcatnames;
+            table.project = listItem.projectname;
+            table.Tname= listItem.productcatnames;
+            table.ProductID = listItem.productnumber;
+            table.Pname=listItem.productname;
+            table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
+            table.end= new Date(listItem.serverendtime).format("yyyy-MM-dd hh:mm:ss");
+            table.pre=listItem.presellnumber;
+            table.already=listItem.sellednumber;
+            table.remain=listItem.lowestnumber;
+            table.price=listItem.productprice;
+            tables.push(table);
+          });
           this.tableData = tables;
         }).catch(error =>{
           alert(error.message);
         });
+      },
+      goSubPage(pageName){
+        if(this.multipleSelection.length != 1){
+          this.$message.info("只能选择一个产品进行操作");
+          return;
+        }
+        //保存数据
+        localStorage.setItem("curProduct",JSON.stringify(this.multipleSelection[0]));
+        //页面转跳
+        this.$router.push("/producemanage/product/productlist/"+pageName);
       }
     }
   }
@@ -378,7 +408,6 @@
     line-height: 25px;
     height: 25px;
     text-align: center;
-    width: -webkit-max-content;
     margin-bottom: 20px;
     background:#E9EEF3;
   }
@@ -446,9 +475,6 @@
   }
   .el-table{
     font-size:12px;
-  }
-  .el-dialog__body{
-    width:500px;
   }
   .block{
     display: flex;
