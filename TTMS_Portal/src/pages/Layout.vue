@@ -85,27 +85,28 @@
     <!--中间内容主体-->
     <v-content >
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="width:90%">
-        <el-form :model="form">
-          <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="输入密码" :label-width="formLabelWidth">
-            <el-input v-model="form.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码" :label-width="formLabelWidth">
-            <el-input v-model="form.password" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">修改成功</el-button>
-        </div>
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="原密码" prop="oldPassword">
+              <el-input placeholder="请输入原密码" type="password" v-model="ruleForm.oldPassword" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" prop="pass">
+              <el-input placeholder="请输入新密码" type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input  placeholder="请输入确认密码" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
       </el-dialog>
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
           <router-view :user="curUser"/>
       </div>
     </v-content>
+
   </v-app>
 </template>
 
@@ -113,16 +114,52 @@
 
   export default {
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm.checkPass !== '') {
+            this.$refs.ruleForm.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      var validateOldPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入原密码'));
+        } else {
+          callback();
+        }
+      };
       return {
         dialogFormVisible: false,
-        form: {
-          name: '',
-          password:'',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+        ruleForm: {
+          oldPassword: '',
+          pass: '',
+          checkPass: '',
         },
+        rules: {
+          pass: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ],
+          oldPassword: [
+            { validator: validateOldPass, trigger: 'blur' }
+          ],
+        },
+
+
         formLabelWidth: '120px',
         dark: false,// 是否暗黑主题
         drawer: true,// 左侧导航是否隐藏
@@ -133,7 +170,7 @@
         items:[],
         modules:[],
         curUser:{}
-      }
+      };
 
     },
     computed: {
@@ -151,6 +188,45 @@
       updateMenus(module){
         this.items = module.menus;
         this.baseUrl = module.path;
+      },
+      open(msg) {
+        this.$alert(msg, '提示', {
+          confirmButtonText: '确定',
+         /* callback: action => {
+            this.$message({
+              type: 'info',
+             // message: `action: ${ action }`
+            });
+          }*/
+        });
+      },
+      /**
+       * 表单提交
+       * @param formName
+       */
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http.post("/account/pwd", this.$qs.stringify({
+              oldPassword: this.ruleForm.oldPassword,
+              newPassword: this.ruleForm.checkPass
+            })).then((resp)=>{
+              console.log(resp);
+              this.$message.success("修改密码成功,请重新登录!");
+              setTimeout(()=>{
+                this.$router.push("/Login");
+              },1000)
+            }).catch((error)=>{
+              this.$message.error(error.message);
+            });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     },
     watch: {},

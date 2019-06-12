@@ -17,7 +17,7 @@
               <el-row>
                 <el-col :span="6">
                   <el-form-item label="产品编号" class="left">
-                    <el-input v-model="form.productNumber" placeholder=""></el-input>
+                    <el-input v-model="form.productNumber" placeholder="产品编号自动生成"  :disabled="true" ></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
@@ -64,7 +64,7 @@
                 <el-tab-pane label="基本信息" name="first">
                   <el-form ref="form" :model="form" label-width="150px">
                     <el-row>
-                      <el-col :span="6">
+                      <el-col :span="7">
                         <el-form-item label="服务开始时间" class="left" :rules="[ { required: true },]">
                             <el-date-picker
                               v-model="form.serverStartTime"
@@ -166,6 +166,7 @@
         selectedThirdCatId: '',
         selectedGroupId:"",
         chargerName:"",
+
         form: {
           productNumber: '', //产品编号
           productChargerId:"",//产品负责人Id
