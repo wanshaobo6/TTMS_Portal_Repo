@@ -345,7 +345,7 @@
             serverStartTime: this.StartTime,
             serverEndTime: this.EndTime,
             page: this.currentPage,
-            size: this.row
+            size: this.rows
           }
         }).then(resp => {
 
