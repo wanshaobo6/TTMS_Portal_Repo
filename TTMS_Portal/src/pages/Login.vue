@@ -33,7 +33,7 @@
               <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" v-show="isEmp" @click="empDoLogin">职工登录</v-btn>
-                  <v-btn color="primary"  v-show="!isEmp" @click="distributorDoLogin">供销商登录</v-btn>
+                  <v-btn color="primary"  v-show="!isEmp" @click="distributorDoLogin">分销商登录</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
