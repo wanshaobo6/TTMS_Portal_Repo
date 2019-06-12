@@ -74,7 +74,7 @@ export default {
         console.log(resp)
         this.$router.push("/");
         //保存
-        localStorage.setItem("Modules",JSON.stringify(resp.data));
+       localStorage.setItem("Modules",JSON.stringify(resp.data));
       }).catch((error)=>{
         console.log(error.message);
         this.errorTip = error.message;
