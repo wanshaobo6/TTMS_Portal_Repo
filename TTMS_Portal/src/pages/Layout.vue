@@ -70,8 +70,8 @@
       <!-- 顶部导航标题 -->
       <v-spacer></v-spacer>
       <!--用户头像-->
-
       <v-list-tile avatar>
+        <el-button type="primary" @click="dialogFormVisible = true" >修改密码</el-button>
         <v-list-tile-avatar>
           <img :src="curUser.image">
         </v-list-tile-avatar>
@@ -82,6 +82,23 @@
     </v-toolbar>
     <!--中间内容主体-->
     <v-content >
+      <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="width:90%">
+        <el-form :model="form">
+          <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="输入密码" :label-width="formLabelWidth">
+            <el-input v-model="form.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" :label-width="formLabelWidth">
+            <el-input v-model="form.password" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">修改成功</el-button>
+        </div>
+      </el-dialog>
       <div>
         <!--定义一个路由锚点，Layout的子组件内容将在这里展示-->
           <router-view :user="curUser"/>
@@ -95,6 +112,16 @@
   export default {
     data() {
       return {
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          password:'',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '120px',
         dark: false,// 是否暗黑主题
         drawer: true,// 左侧导航是否隐藏
         miniVariant: false,// 左侧导航是否收起
@@ -105,6 +132,7 @@
         modules:[],
         curUser:{}
       }
+
     },
     computed: {
       // item1() {
@@ -153,5 +181,8 @@
 <style scoped>
   .box {
     width: 90%;
+  }
+  .el-button{
+    margin-right: 20px;
   }
 </style>
