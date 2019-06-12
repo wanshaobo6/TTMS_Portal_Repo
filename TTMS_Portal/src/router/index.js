@@ -32,17 +32,17 @@ export default new Router({
         route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
         route("/producemanage/product/productcat",'/producemanage/product/productcat',"Productcat"),
-        route("/producemanage/product/TourismInformation",'/producemanage/product/TourismInformation',"TourismInformation"),
-        route("/producemanage/product/InventoryDistribution",'/producemanage/product/InventoryDistribution',"InventoryDistribution"),
-        route("/producemanage/product/appendix",'/producemanage/product/appendix',"appendix"),
-        route("/producemanage/product/DreferentialPolicy",'/producemanage/product/DreferentialPolicy',"DreferentialPolicy"),
+        route("/producemanage/product/productList/TourismInformation",'/producemanage/product/TourismInformation',"TourismInformation"),
+        route("/producemanage/product/productList/InventoryDistribution",'/producemanage/product/InventoryDistribution',"InventoryDistribution"),
+        route("/producemanage/product/productList/appendix",'/producemanage/product/appendix',"appendix"),
+        route("/producemanage/product/productList/DreferentialPolicy",'/producemanage/product/DreferentialPolicy',"DreferentialPolicy"),
         route("/InfoPanel",'/InfoPanel',"InfoPanel"),
         route("/ProductClassify",'/ProductClassify',"ProductClassify"),
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
         route("/sysmanage/userauth/organmanage",'/sysmanage/userauth/organmanage',"OrganManage"),
-        route("/producemanage/product/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
+        route("/producemanage/product/productList/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
       ]
     }
   ]

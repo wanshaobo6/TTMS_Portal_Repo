@@ -111,11 +111,11 @@
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-button type="warning" >库存分销</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">价格政策</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="warning" @click="goSubPage('InventoryDistribution')" >库存分销</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="goSubPage('DreferentialPolicy')" >价格政策</el-button></div></el-col>
             <el-col :span="2"><div class="grid-content "><el-button type="info" @click="goSubPage('appendix')">附件</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="goSubPage('TourismInformation')">导游信息</el-button></div></el-col>
+            <el-col :span="3"><div class="grid-content "><el-button type="info" @click="goSubPage('RouteSetting')">行程设置</el-button></div></el-col>
           </el-row>
         </div>
         </div>
