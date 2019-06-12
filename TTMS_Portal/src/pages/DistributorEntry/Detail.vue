@@ -254,6 +254,9 @@
           return false;
         }
         return true;
+      },
+      goback(){
+        this.$router.push("/DistributorEntry/DistributorInterface");
       }
     },
     created(){
