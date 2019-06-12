@@ -1,7 +1,7 @@
 <template>
   <v-app >
     <v-content >
-      <div class="img">
+      <div :class="{'distributorImg':!isEmp ,'empImg':isEmp}">
       <v-container fluid fill-height >
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
@@ -116,11 +116,20 @@ export default {
     height:100%;
 
   }
-  .img{
-    background-image: url("../assets/Login.jpg");
+  .distributorImg{
+    background-image: url("../assets/DistributorLogin.jpg");
     margin-top: -60px;
     height: 100%;
     width: 100%;
     background-size:100% 100%;
+    transition: background-position .5s;
+  }
+  .empImg{
+    background-image: url("../assets/EmpLogin.jpg");
+    margin-top: -60px;
+    height: 100%;
+    width: 100%;
+    background-size:100% 100%;
+    transition: background-position .5s;
   }
 </style>
