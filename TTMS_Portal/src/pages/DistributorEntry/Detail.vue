@@ -1,7 +1,14 @@
 <template>
   <el-container>
     <el-main>
-      <div class="topic"><h1>报名详情</h1></div>
+      <div class="topic">
+        <el-row :gutter="10">
+          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"> <el-button class="primary" icon="el-icon-caret-left" @click="goback">返回上一级</el-button></el-col>
+          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
+          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">报名详情</h1></el-col>
+          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+        </el-row>
+      </div>
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%;padding:50px 20px 0px 20px">
           <el-row :gutter="15">
@@ -57,7 +64,7 @@
               </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <span style="float: left">实付金额:{{acutalPayInDialog}}</span>
+                <span style="float: left">实付金额:<s  class=".title" style="font-size: 25px;text-decoration: none;color:red">¥{{acutalPayInDialog}}</s></span>
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="signUp">报名</el-button>
               </div>
@@ -185,6 +192,7 @@
             tempData.actualPay = item.acutalpay;
             tempData.signupTime = new Date(item.signuptime).format("yyyy-MM-dd hh:mm:ss");
             tempData.Remarks = item.tnote;
+            tempData.pricePolicyName =  item.pricePolicyName == null ? "无" : item.pricePolicyName  ;
             tempDatas.push(tempData);
           });
           this.tableData = tempDatas;
