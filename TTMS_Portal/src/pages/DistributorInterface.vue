@@ -1,7 +1,35 @@
 <template>
-  <el-container>
     <el-container>
       <el-main>
+        <el-header>
+          <div class="left" style="color:#ffffff;">
+          你好，欢迎来到旅游官方网站
+          </div>
+          <div class="right">
+            <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
+          </div>
+        </el-header>
+        <div class="link">
+          <span style="color:goldenrod;">Travel</span>
+          <el-link type="info">首页</el-link>
+          <el-link type="info">关于我们</el-link>
+          <el-link type="info">旅行预约</el-link>
+          <el-link type="info">精选路线</el-link>
+          <el-link type="info">新闻中心</el-link>
+          <el-link type="info">联系我们</el-link>
+        </div>
+        <el-carousel trigger="click"
+                     :autoplay="false"
+                     height="300px"
+                     @change="handChange" ref="carousel">
+          <el-carousel-item v-for="item in bigScreen.images"
+                            :key="item.name" :name="item.name">
+            <img style="width:100%;height:100%;" :src="item.url"/>
+          </el-carousel-item>
+        </el-carousel>
+
         <div class="enroll">
           <span> <h2>分销商报名入口</h2></span>
         </div>
@@ -153,7 +181,6 @@
 
       </el-main>
     </el-container>
-  </el-container>
 </template>
 
 <script>
@@ -161,6 +188,25 @@
     name: 'DistributorInterface',
     data() {
       return {
+        bigScreen: {
+          images: [
+            {
+              name: 'bigScreen01',
+              url: ('@/assert/Login.jpg')
+            },
+            {
+              name: 'bigScreen02',
+              url: ('../assert/Login.jpg')
+            },
+            {
+              name: 'bigScreen03',
+              url: ('../assert/Login.jpg')
+            },
+
+          ]
+        },
+
+
         dialogTableVisible: false,
         dialogFormVisible: false,
         form: {
@@ -230,6 +276,9 @@
 
     },
     methods: {
+      handChange (index) {
+        console.log(index)
+      },
       handleEdit(index, row) {
         this.showDialog(true, row);
       },
@@ -352,7 +401,6 @@
 </script>
 <style>
   html,body {
-    overflow:hidden;
     margin:0px;
     width:100%;
     height:100%;
@@ -385,15 +433,30 @@
     margin-bottom: 100px;
     padding: 10px 0 30px;
   }
+  .el-header{
+    width: 100%;
+    height: 50px;
+    background-color: goldenrod;
+  }
   .el-main {
-    background-color: #E9EEF3;
+
     color: #333;
     text-align: center;
-    height:700px;
     margin-top: -60px;
   }
+.left{
+  float: left;
 
+}
+.right{
+  float: right;
+  margin-right: 40px;
+  margin-top: 15px;
+}
+.link{
+  font-size: 120px;
 
+}
   body > .el-container {
     margin-bottom: 40px;
   }
