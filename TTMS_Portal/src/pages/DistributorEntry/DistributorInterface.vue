@@ -124,14 +124,14 @@
               width="50">
             </el-table-column>
             <el-table-column
-              prop="price"
-              label="产品价格"
-              width="70">
-            </el-table-column>
+            prop="price"
+            label="产品价格"
+            width="70">
+          </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
-                  size="mini" type="primary" plain  @click="gotolink">查看详情</el-button>
+                  size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -226,7 +226,7 @@
     },
     created() {
       this.loadData();
-      this.loadCats(0, 1);
+      //this.loadCats(0, 1);
 
     },
     methods: {
@@ -257,12 +257,9 @@
           this.showAddDialog();
         }
       },
-      gotolink(){
-
-        //点击跳转至上次浏览页面
-        // this.$router.go(-1)
-
+      gotolink(row){
         //指定跳转地址
+        localStorage.setItem("signItem",JSON.stringify(row));
         this.$router.replace('/DistributorEntry/Detail')
       },
 
@@ -302,7 +299,7 @@
         this.tableData = [];
         //加载产品列表信息
 
-        this.$http.get("/producemanage/product/productlist/page", {
+        this.$http.get("/distributorEntry/auth/getAvailableProducts", {
           params: {
             status: this.status,
             productCatId1: this.selectedFirstCatId,
@@ -324,10 +321,11 @@
           var tables = [];
           resp.data.items.forEach(listItem => {
             var table = {};
+            table.id = listItem.id;
             table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
-            table.Tname = listItem.productcatnames;
+            table.Tname = listItem.groupname;
             table.ProductID = listItem.productnumber;
             table.Pname = listItem.productname;
             table.start = new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
