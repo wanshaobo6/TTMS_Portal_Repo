@@ -83,9 +83,24 @@ export default {
       });
     },
     distributorDoLogin(){
-      this.$router.push("/DistributorEntry/DistributorInterface");
+      if (!this.username || !this.password) {
+        this.errorTip = "用户名和密码不能为空";
+        this.dialog = true;
+        return false;
+      }
+      this.$http.post("/distributorEntry/login", this.$qs.stringify({
+        distributorname: this.username,
+        password: this.password
+      })).then((resp)=>{
+        console.log(resp)
+        this.$router.push("/DistributorEntry/DistributorInterface");
+      }).catch((error)=>{
+        console.log(error.message);
+        this.errorTip = error.message;
+        this.dialog = true;
+      });
+    },
     }
-  }
 };
 </script>
 
