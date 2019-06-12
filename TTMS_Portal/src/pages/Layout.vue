@@ -80,6 +80,7 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-toolbar>
+
     <!--中间内容主体-->
     <v-content >
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="width:90%">
