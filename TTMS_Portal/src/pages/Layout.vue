@@ -8,6 +8,7 @@
       v-model="drawer"
       enable-resize-watcher
       fixed
+
       app
     >
       <v-toolbar flat class="transparent">

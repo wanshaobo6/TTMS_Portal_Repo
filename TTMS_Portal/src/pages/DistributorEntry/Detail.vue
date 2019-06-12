@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main>
-      <div class="topic"><h1>产品详情</h1></div>
+      <div class="topic"><h1>报名详情</h1></div>
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%;padding:50px 20px 0px 20px">
           <el-row :gutter="15">

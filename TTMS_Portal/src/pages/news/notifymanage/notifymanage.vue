@@ -232,7 +232,33 @@ export default {
         currentPage4: 4
 		};
 	},
+  created(){
+	  this.loadData();
+  },
 	methods: {
+    loadData(){
+      this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page").then(
+        resp=>{
+          console.log(resp);
+          this.totalItem = resp.data.total;
+          var tables = [];
+          resp.data.items.forEach(msg => {
+            var table = {};
+            table.number = msg.id;
+            table.username = msg.messageclassname;
+            table.title = msg.messagetitle;
+            table.name = msg.senderid;
+            table.date= msg.sendtime;
+            table.public = msg.valid
+            tables.push(table);
+          });
+          this.tableData = tables;
+
+        }
+      ).catch(error=>{
+        alert(error.message);
+      });
+    },
       handleClick(row) {
         console.log(row);
       },

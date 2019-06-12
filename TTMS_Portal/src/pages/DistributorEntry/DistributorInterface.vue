@@ -263,7 +263,7 @@
         // this.$router.go(-1)
 
         //指定跳转地址
-        this.$router.replace('/Detail')
+        this.$router.replace('/DistributorEntry/Detail')
       },
 
 
