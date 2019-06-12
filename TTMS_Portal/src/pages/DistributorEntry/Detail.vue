@@ -229,9 +229,13 @@
           desc:this.form.note,
           productId:this.curProduct.id,
         })).then(resp=>{
+          //加载当前产品
+          this.loadCurProduct();
           this.$message.success("报名成功");
+          this.dialogFormVisible = false;
         }).catch(error=>{
           this.$message.error(error.message);
+          this.dialogFormVisible = false;
         })
       },
       checkForm(){

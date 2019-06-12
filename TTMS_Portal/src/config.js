@@ -1,6 +1,6 @@
 
 const config ={
-  url: "http://192.168.43.139:8080",
+  url: "http://localhost:8080",
   theme:{
     primary: "#2196F3",
     secondary: "#455A64",
