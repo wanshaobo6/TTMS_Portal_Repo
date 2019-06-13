@@ -241,7 +241,7 @@
           });
           this.tableData = tables;
         }).catch(error =>{
-          alert(error.message);
+          this.$message.error(error.message);
         });
       },
       //加载权限菜单树
@@ -275,7 +275,7 @@
           });
           this.menuDate= modules;
         }).catch(error=>{
-
+          this.$message.error(error.message);
         })
       },
       //加载部门信息到opt中
@@ -328,8 +328,6 @@
         }
         //关闭弹窗
         this.dialogFormVisible = false;
-        //清空原来数据
-        this.clearDialogFormData();
       },
       //创建角色
       createRole(){
@@ -372,6 +370,20 @@
       //显示Dialog
       showDialog(isEdit){
         this.isEdit = isEdit;
+        //清空原来数据
+        this.clearDialogFormData();
+        if(isEdit){
+          //判断是否选中了
+          if(Object.keys(this.selectedRow).length == 0){
+            this.$message.error("请选中一行");
+            return false;
+          }
+          //加载当前选中角色的数据
+          this.fillDialogForm();
+          this.dialogName = "修改角色";
+        }else{
+          this.dialogName = "新增角色";
+        }
         this.dialogFormVisible = true;
         //加载一级部门
         this.loadParentByPidInOptions(0,1);
@@ -379,25 +391,20 @@
         this.$nextTick(() => {
           this.$refs.tree.setCheckedKeys([]);
         });
-        if(isEdit){
-          //判断是否选中了
-          if(Object.keys(this.selectedRow).length == 0){
-            this.$message.error("请选中一行");
-            return;
-          }
-          //加载当前选中角色的数据
-          this.fillDialogForm();
-        }
       },
       fillDialogForm(){
         this.form.comment = this.selectedRow.comment;
         this.form.name = this.selectedRow.roleName;
+        this.selectedParentDepartId = this.selectedRow.pdepartmentid;
+        this.selectedChildDepartId = this.selectedRow.cdepartmentid;
         //加载默认选中的菜单
         this.$http.get("/sysmanage/userauth/rolemanage/getMenusIdByRoleId/"+this.selectedRow.roleID).then(resp=>{
          this.defaultCheckedKeys = resp.data;
         }).catch(error=>{
           this.$message.error(error.message);
         })
+        //加载二级部门
+        this.loadParentByPidInOptions(this.selectedRow.pdepartmentid,2);
       }
     },
   };
