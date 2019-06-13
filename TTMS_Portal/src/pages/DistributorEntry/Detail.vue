@@ -166,7 +166,7 @@
             }
           }).then(resp=>{
           this.$message.success("取消成功!");
-          loadSignUpInThisDistributor();
+          this.loadSignUpInThisDistributor();
         }).catch(error=>{
           this.$message.error(error.message);
         })
@@ -250,6 +250,7 @@
           this.loadCurProduct();
           this.$message.success("报名成功");
           this.dialogFormVisible = false;
+          this.loadSignUpInThisDistributor();
         }).catch(error=>{
           this.$message.error(error.message);
           this.dialogFormVisible = false;
