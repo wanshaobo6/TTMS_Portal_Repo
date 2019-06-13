@@ -1,16 +1,17 @@
 <template>
     <el-container>
-      <el-main>
-        <el-header>
-          <div class="left" style="color:#ffffff;">
+      <el-header>
+        <div class="left" style="color:#ffffff;">
           你好，欢迎来到旅游官方网站
-          </div>
-          <div class="right">
-            <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
-            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
-          </div>
-        </el-header>
+        </div>
+        <div class="right">
+          <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
+          &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
+        </div>
+      </el-header>
+      <el-main>
+
         <div class="link">
           <span style="color:goldenrod;">Travel</span>
           <el-link type="info">首页</el-link>
@@ -20,16 +21,29 @@
           <el-link type="info">新闻中心</el-link>
           <el-link type="info">联系我们</el-link>
         </div>
-        <el-carousel trigger="click"
-                     :autoplay="false"
-                     height="300px"
-                     @change="handChange" ref="carousel">
-          <el-carousel-item v-for="item in bigScreen.images"
-                            :key="item.name" :name="item.name">
-            <img style="width:100%;height:100%;" :src="item.url"/>
-          </el-carousel-item>
-        </el-carousel>
+        <div class="block">
+          <el-carousel height="600px">
+            <el-carousel-item v-for="item in list" :key="list.id">
+             <!-- <img src="../assets/1.jpg">-->
+              <img :src="item.url">
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+        <div class="image">
+          <h2>select route</h2>
+          <i class="el-icon-star-on"></i>  <i class="el-icon-star-on"></i> <i class="el-icon-star-on"></i>
+          <h2>精选路线</h2>
 
+        <el-row :gutter="20">
+          <el-col :span="2"><div class="grid-content "> </div></el-col>
+          <el-col :span="4"><div class="grid-content route1"><h3>推荐路线</h3> <h3>Recommanded Route</h3></div></el-col>
+          <el-col :span="4"><div class="grid-content route2"><h3>较热路线</h3> <h3>Latest Route</h3></div></el-col>
+          <el-col :span="4"><div class="grid-content route3"><h3>国内路线</h3> <h3>Domestic Route</h3></div></el-col>
+          <el-col :span="4"><div class="grid-content route4"><h3>国外路线</h3> <h3>Foreignc Route</h3></div></el-col>
+          <el-col :span="4"><div class="grid-content route5"><h3>自由行</h3> <h3>Independent travel</h3></div></el-col>
+          <el-col :span="2"><div class="grid-content "> </div></el-col>
+        </el-row>
+        </div>
         <div class="enroll">
           <span> <h2>分销商报名入口</h2></span>
         </div>
@@ -51,6 +65,7 @@
                 :value="item.value">
               </el-option>
             </el-select></div></el-col>
+
             <el-col :span="3"><div class="grid-content "><el-select v-model="selectedSecondCatId"  @change="loadCats(selectedSecondCatId,3)"placeholder="二级分类">
               <el-option
                 v-for="item in options2"
@@ -180,6 +195,10 @@
         </div>
 
       </el-main>
+      <el-footer><h5>关于我们 | 新闻资讯 | 推荐路线 | 联系我们</h5>
+      <h5>Copyright @ 2019 萍乡旅游公司</h5>
+
+      </el-footer>
     </el-container>
 </template>
 
@@ -188,24 +207,12 @@
     name: 'DistributorInterface',
     data() {
       return {
-        bigScreen: {
-          images: [
-            {
-              name: 'bigScreen01',
-              url: ('@/assert/Login.jpg')
-            },
-            {
-              name: 'bigScreen02',
-              url: ('../assert/Login.jpg')
-            },
-            {
-              name: 'bigScreen03',
-              url: ('../assert/Login.jpg')
-            },
+        list:[
+          { id : 1 , url :require( '../assets/1.jpg') },
+          { id : 2 , url : require('../assets/2.jpg')},
 
-          ]
-        },
 
+        ],
 
         dialogTableVisible: false,
         dialogFormVisible: false,
@@ -276,9 +283,7 @@
 
     },
     methods: {
-      handChange (index) {
-        console.log(index)
-      },
+
       handleEdit(index, row) {
         this.showDialog(true, row);
       },
@@ -412,6 +417,32 @@
     font-family: "Helvetica Neue";
     font-style: normal;
   }
+  .route1{
+    width: 218px;height: 385px;
+    color: #ffffff;
+    background-image: url("../assets/a.jpg");
+  }
+  .route2{
+    color: #ffffff;
+    width: 218px;height: 385px;
+    background-image: url("../assets/b.jpg");
+  }
+  .route3{
+    color: #ffffff;
+    width: 218px;height: 385px;
+    background-image: url("../assets/c.jpg");
+  }
+  .route4{
+    color: #ffffff;
+     width: 218px;height: 385px;
+     background-image: url("../assets/d.jpg");
+   }.route5{
+        color: #ffffff;
+      width: 218px;height: 385px;
+      background-image: url("../assets/e.jpg");
+    }
+
+
   .path {
     text-align: left;
     font-size: 17px;
@@ -434,9 +465,17 @@
     padding: 10px 0 30px;
   }
   .el-header{
+    margin-top: -60px;
+    margin-bottom: 25px;
     width: 100%;
     height: 50px;
     background-color: goldenrod;
+  }
+   .el-footer {
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-align: center;
+    height: 360px;
   }
   .el-main {
 
@@ -456,6 +495,9 @@
 .link{
   font-size: 120px;
 
+}
+.image{
+  margin-top: 20px;
 }
   body > .el-container {
     margin-bottom: 40px;
@@ -510,5 +552,48 @@
   .enroll{
     margin-top: 20px;
   }
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
 
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  .block .el-carousel{
+    width:100%;
+  }
+  .el-row {
+    margin-bottom: 20px;
+  &:last-child {
+     margin-bottom: 0;
+   }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>
