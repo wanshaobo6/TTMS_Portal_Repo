@@ -1,38 +1,38 @@
 <template>
-    <el-container>
-      <el-header>
-        <div class="left" style="color:#ffffff;">
-          你好，欢迎来到旅游官方网站
-        </div>
-        <div class="right">
-          <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
-          &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-          <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
-        </div>
-      </el-header>
-      <el-main>
+  <el-container>
+    <el-header>
+      <div class="left" style="color:#ffffff;">
+        你好，欢迎来到旅游官方网站
+      </div>
+      <div class="right">
+        <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
+      </div>
+    </el-header>
+    <el-main>
 
-        <div class="link">
-          <span style="color:goldenrod;">Travel</span>
-          <el-link type="info">首页</el-link>
-          <el-link type="info">关于我们</el-link>
-          <el-link type="info">旅行预约</el-link>
-          <el-link type="info">精选路线</el-link>
-          <el-link type="info">新闻中心</el-link>
-          <el-link type="info">联系我们</el-link>
-        </div>
-        <div class="block">
-          <el-carousel height="600px">
-            <el-carousel-item v-for="item in list" :key="list.id">
-             <!-- <img src="../assets/1.jpg">-->
-              <img :src="item.url">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-        <div class="image">
-          <h2>select route</h2>
-          <i class="el-icon-star-on"></i>  <i class="el-icon-star-on"></i> <i class="el-icon-star-on"></i>
-          <h2>精选路线</h2>
+      <div class="link">
+        <span style="color:goldenrod;">Travel</span>
+        <el-link type="info">首页</el-link>
+        <el-link type="info">关于我们</el-link>
+        <el-link type="info">旅行预约</el-link>
+        <el-link type="info">精选路线</el-link>
+        <el-link type="info">新闻中心</el-link>
+        <el-link type="info">联系我们</el-link>
+      </div>
+      <div class="block">
+        <el-carousel height="600px">
+          <el-carousel-item v-for="item in list" :key="list.id">
+            <!-- <img src="../assets/1.jpg">-->
+            <img :src="item.url">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <div class="image">
+        <h2>select route</h2>
+        <i class="el-icon-star-on"></i>  <i class="el-icon-star-on"></i> <i class="el-icon-star-on"></i>
+        <h2>精选路线</h2>
 
         <el-row :gutter="20">
           <el-col :span="2"><div class="grid-content "> </div></el-col>
@@ -43,163 +43,163 @@
           <el-col :span="4"><div class="grid-content route5"><h3>自由行</h3> <h3>Independent travel</h3></div></el-col>
           <el-col :span="2"><div class="grid-content "> </div></el-col>
         </el-row>
-        </div>
-        <div class="enroll">
-          <span> <h2>分销商报名入口</h2></span>
-        </div>
-        <div class="firstRow" style="margin-top: 60px">
-          <el-row :gutter="20">
-            <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedFirstCatId" @change="loadCats(selectedFirstCatId,2)" placeholder="一级分类">
-              <el-option
-                v-for="item in options1"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select></div></el-col>
+      </div>
+      <div class="enroll">
+        <span> <h2>分销商报名入口</h2></span>
+      </div>
+      <div class="firstRow" style="margin-top: 60px">
+        <el-row :gutter="20">
+          <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select></div></el-col>
+          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedFirstCatId" @change="loadCats(selectedFirstCatId,2)" placeholder="一级分类">
+            <el-option
+              v-for="item in options1"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select></div></el-col>
 
-            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedSecondCatId"  @change="loadCats(selectedSecondCatId,3)"placeholder="二级分类">
-              <el-option
-                v-for="item in options2"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select></div></el-col>
-            <el-col :span="3"><div class="grid-content "><el-select v-model="selectedThirdCatId"  placeholder="三级分类">
-              <el-option
-                v-for="item in options3"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select></div></el-col>
-            <el-col :span="4"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
-            <el-col :span="4"><div class="grid-content "><el-input v-model="input3" placeholder="产品编号"></el-input></div></el-col>
-          </el-row>
-        </div>
-        <div class="secondRow">
-          <el-row :gutter="4">
-            <el-col :span="3"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
-            <el-col :span="3"><div class="grid-content ">
-              <div class="block">
-                <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="开始时间"></el-date-picker></div>
-            </div></el-col>
-            <el-col :span="3"><div class="grid-content ">
-              <div class="block">
-                <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="结束时间"></el-date-picker></div>
-            </div></el-col>
-            <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
-        <div class="body">
-          <el-table
-            ref="multipleTable"
-            :data="tableData"
-            tooltip-effect="dark"
-            style="width: 100%"
-            @selection-change="handleSelectionChange">
-            <el-table-column
-              type="selection"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              prop="status"
-              label="状态"
-              width="35">
-            </el-table-column>
-            <el-table-column
-              prop="classify"
-              label="类别"
-              width="110">
-            </el-table-column>
-            <el-table-column
-              prop="project"
-              label="所属项目"
-              width="110">
-            </el-table-column>
-            <el-table-column
-              prop="Tname"
-              label="团名称"
-              width="110">
-            </el-table-column>
-            <el-table-column
-              prop="ProductID"
-              label="产品编号"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              prop="Pname"
-              label="产品名称"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="start"
-              label="服务开始时间"
-              width="130">
-            </el-table-column>
-            <el-table-column
-              prop="end"
-              label="服务结束时间"
-              width="130">
-            </el-table-column>
-            <el-table-column
-              prop="pre"
-              label="预"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              prop="already"
-              label="已"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              prop="remain"
-              label="余"
-              width="50">
-            </el-table-column>
-            <el-table-column
-            prop="price"
-            label="产品价格"
-            width="70">
-          </el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <el-button
-                  size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div class="page">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="currentPage"
-              :page-sizes="[5, 10, 15, 20]"
-              :page-size="5"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="totalItem">
-            </el-pagination>
+          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedSecondCatId"  @change="loadCats(selectedSecondCatId,3)"placeholder="二级分类">
+            <el-option
+              v-for="item in options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select></div></el-col>
+          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedThirdCatId"  placeholder="三级分类">
+            <el-option
+              v-for="item in options3"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select></div></el-col>
+          <el-col :span="4"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
+          <el-col :span="4"><div class="grid-content "><el-input v-model="input3" placeholder="产品编号"></el-input></div></el-col>
+        </el-row>
+      </div>
+      <div class="secondRow">
+        <el-row :gutter="4">
+          <el-col :span="3"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
+          <el-col :span="3"><div class="grid-content ">
+            <div class="block">
+              <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="开始时间"></el-date-picker></div>
+          </div></el-col>
+          <el-col :span="3"><div class="grid-content ">
+            <div class="block">
+              <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="结束时间"></el-date-picker></div>
+          </div></el-col>
+          <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
+          <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
+          <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
+          <div class="body">
+            <el-table
+              ref="multipleTable"
+              :data="tableData"
+              tooltip-effect="dark"
+              style="width: 100%"
+              @selection-change="handleSelectionChange">
+              <el-table-column
+                type="selection"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                prop="status"
+                label="状态"
+                width="35">
+              </el-table-column>
+              <el-table-column
+                prop="classify"
+                label="类别"
+                width="110">
+              </el-table-column>
+              <el-table-column
+                prop="project"
+                label="所属项目"
+                width="110">
+              </el-table-column>
+              <el-table-column
+                prop="Tname"
+                label="团名称"
+                width="110">
+              </el-table-column>
+              <el-table-column
+                prop="ProductID"
+                label="产品编号"
+                width="150">
+              </el-table-column>
+              <el-table-column
+                prop="Pname"
+                label="产品名称"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="start"
+                label="服务开始时间"
+                width="130">
+              </el-table-column>
+              <el-table-column
+                prop="end"
+                label="服务结束时间"
+                width="130">
+              </el-table-column>
+              <el-table-column
+                prop="pre"
+                label="预"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                prop="already"
+                label="已"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                prop="remain"
+                label="余"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                prop="price"
+                label="产品价格"
+                width="70">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div class="page">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[5, 10, 15, 20]"
+                :page-size="5"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalItem">
+              </el-pagination>
+            </div>
           </div>
-        </div>
 
-          </el-row>
-        </div>
+        </el-row>
+      </div>
 
-      </el-main>
-      <el-footer><h5>关于我们 | 新闻资讯 | 推荐路线 | 联系我们</h5>
+    </el-main>
+    <el-footer><h5>关于我们 | 新闻资讯 | 推荐路线 | 联系我们</h5>
       <h5>Copyright @ 2019 萍乡旅游公司</h5>
 
-      </el-footer>
-    </el-container>
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
@@ -432,13 +432,13 @@
   }
   .route4{
     color: #ffffff;
+    width: 218px;height: 385px;
+    background-image: url("../assets/d.jpg");
+  }.route5{
+     color: #ffffff;
      width: 218px;height: 385px;
-     background-image: url("../assets/d.jpg");
-   }.route5{
-        color: #ffffff;
-      width: 218px;height: 385px;
-      background-image: url("../assets/e.jpg");
-    }
+     background-image: url("../assets/e.jpg");
+   }
 
 
   .path {
@@ -469,7 +469,7 @@
     height: 50px;
     background-color: goldenrod;
   }
-   .el-footer {
+  .el-footer {
     background-color: #2c3e50;
     color: #ffffff;
     text-align: center;
@@ -481,22 +481,22 @@
     text-align: center;
     margin-top: -60px;
   }
-.left{
-  float: left;
+  .left{
+    float: left;
 
-}
-.right{
-  float: right;
-  margin-right: 40px;
-  margin-top: 15px;
-}
-.link{
-  font-size: 120px;
+  }
+  .right{
+    float: right;
+    margin-right: 40px;
+    margin-top: 15px;
+  }
+  .link{
+    font-size: 120px;
 
-}
-.image{
-  margin-top: 20px;
-}
+  }
+  .image{
+    margin-top: 20px;
+  }
   body > .el-container {
     margin-bottom: 40px;
   }
