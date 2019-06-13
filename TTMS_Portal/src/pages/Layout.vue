@@ -71,14 +71,18 @@
       <!-- 顶部导航标题 -->
       <v-spacer></v-spacer>
       <!--用户头像-->
-      <v-list-tile avatar>
+
+      <v-list-tile avatar close>
         <el-button type="primary" @click="dialogFormVisible = true" >修改密码</el-button>
-        <v-list-tile-avatar>
-          <img :src="curUser.image">
-        </v-list-tile-avatar>
-        <v-list-tile-content>
-          <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
-        </v-list-tile-content>
+          <v-list-tile-avatar>
+            <img :src="curUser.image">
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
+          </v-list-tile-content>
+        <v-btn flat icon color="red" @click="logout" >
+          <v-icon >close</v-icon>
+        </v-btn>
       </v-list-tile>
     </v-toolbar>
 
@@ -227,7 +231,29 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      logout(){
+        //退出登录
+        this.$confirm('此操作将安全退出当前用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http.get("/logout").then(resp=>{
+            this.$message.success("安全退出成功");
+            setTimeout(()=>{
+              this.$router.push("/login");
+            },1000)
+          }).catch(eror=>{
+            this.$message.success("退出失败");
+            setTimeout(()=>{
+              this.$router.push("/login");
+            },1000)
+          });
+        }).catch(() => {
+        });
       }
+
     },
     watch: {},
     created(){
