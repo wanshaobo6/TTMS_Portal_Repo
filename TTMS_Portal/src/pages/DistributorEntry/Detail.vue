@@ -14,7 +14,7 @@
           <el-row :gutter="15">
             <el-col :span="10">
               <div class=""><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
-                <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;王毅</span></div>
+                <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.createuser}}</span></div>
                 <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;￥{{curProduct.price}}</span></div>
               </div>
             </el-col>
@@ -50,8 +50,8 @@
                   <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" :label-width="formLabelWidth">
-                  <el-radio v-model="form.sex" label="0">男</el-radio>
-                  <el-radio v-model="form.sex" label="1">女</el-radio>
+                  <el-radio v-model="form.sex" label="0" >男</el-radio>
+                  <el-radio v-model="form.sex" label="1" >女</el-radio>
                 </el-form-item>
                 <el-form-item label="身份证号码" :label-width="formLabelWidth">
                   <el-input v-model="form.idcard" autocomplete="off"></el-input>
@@ -194,7 +194,7 @@
             var tempData = {};
             tempData.Number = item.id;
             tempData.Name = item.tname;
-            tempData.Sex = item.tsex;
+            tempData.Sex = item.tsex==1 ? "女":"男";
             tempData.IDNumber = item.tidcard;
             tempData.Phone = item.tphone;
             tempData.formalPrice = this.curProduct.price;
@@ -257,7 +257,8 @@
         })
       },
       checkForm(){
-        if(this.selectedPricePolicy == ""||this.form.name == ""||
+        //this.selectedPricePolicy == ""||
+        if(this.form.name == ""||
           this.form.sex == ""||this.form.idcard == ""||this.form.phone == ""||
           this.form.note == ""||this.curProduct.id == ""){
           this.$message.info("请将表单填充完整")
