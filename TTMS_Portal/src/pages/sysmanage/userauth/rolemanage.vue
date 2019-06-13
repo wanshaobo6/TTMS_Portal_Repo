@@ -84,14 +84,18 @@
         </div>
         <div class="body">
           <el-table :data="tableData" @row-click="showRow" style="width: 100%">
-            <el-table-column label="选择" width="180" align="center">
+            <el-table-column label="选择" width="80" align="center">
               <template slot-scope="scope">
                 <el-radio class="radio" v-model="radio" :label="scope.$index">
                   &nbsp;
                 </el-radio>
               </template>
             </el-table-column>
-            <el-table-column prop="roleID" label="角色ID" width="270">
+            <el-table-column prop="roleID" label="角色ID" align="center" width="120">
+            </el-table-column>
+            <el-table-column prop="pdepartmentname" label="一级部门名称" width="160">
+            </el-table-column>
+            <el-table-column prop="cdepartmentname" label="二级部门名称" width="160">
             </el-table-column>
             <el-table-column prop="roleName" label="角色名称" width="270">
             </el-table-column>
@@ -229,6 +233,10 @@
             table.roleID=roleItem.id;
             table.roleName=roleItem.name;
             table.comment=roleItem.note;
+            table.pdepartmentname = roleItem.tempRole.parentdepartmentname;
+            table.cdepartmentname = roleItem.tempRole.childdepartmentname;
+            table.pdepartmentid = roleItem.tempRole.pdepartmentid;
+            table.cdepartmentid = roleItem.tempRole.cdepartmentid;
             tables.push(table);
           });
           this.tableData = tables;
