@@ -274,6 +274,7 @@
         gridData: [],
         value: '',
         multipleSelection: [],
+        createproname:"",
       };
     },
     created() {
@@ -368,6 +369,7 @@
             table.already=listItem.sellednumber;
             table.remain=listItem.lowestnumber;
             table.price=listItem.productprice;
+            table.createproname=listItem.productcatnames;
             tables.push(table);
           });
           this.tableData = tables;

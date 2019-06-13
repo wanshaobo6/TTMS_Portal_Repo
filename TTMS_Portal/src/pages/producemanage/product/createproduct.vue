@@ -272,9 +272,10 @@
           productIntroduction:this.form.desc,
 
         })).then(resp=>{
+          this.$message.success("创建产品成功");
             console.log(resp.data);
         }).catch(error=>{
-
+            this.$message.error(error.message);
         })
       }
     },
