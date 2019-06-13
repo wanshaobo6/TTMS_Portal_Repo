@@ -102,23 +102,27 @@
         </div>
         <div class="body">
           <el-table :data="tableData" @row-click="showRow" border="" style="width: 100%">
-            <el-table-column label="选择" width="80" align="center">
+            <el-table-column label="选择" width="60" align="center">
               <template slot-scope="scope">
                 <el-radio class="radio" v-model="selectedRow" :label="scope.$index">
                   &nbsp;
                 </el-radio>
               </template>
             </el-table-column>
-            <el-table-column prop="image" label="照片" width="150">
+            <el-table-column prop="image" label="照片" width="120">
                 <template slot-scope="scope">
-                  <img :src="scope.row.image" width="100px" height="50px" style="margin-left:15px;line-height: 50px "></img>
+                  <img :src="scope.row.image" width="100px" height="50px" style="line-height: 50px "></img>
                 </template>
             </el-table-column>
-            <el-table-column prop="username" label="用户名" width="180">
+            <el-table-column prop="username" label="用户名" width="120">
             </el-table-column>
-            <el-table-column prop="email" label="邮箱" width="230">
+            <el-table-column prop="email" label="邮箱" width="150">
             </el-table-column>
-            <el-table-column prop="phoneNum" label="手机号" width="180">
+            <el-table-column prop="phoneNum" label="手机号" width="140">
+            </el-table-column>
+            <el-table-column prop="departmentnames" label="部门" width="150">
+            </el-table-column>
+            <el-table-column prop="rolename" label="角色" width="120">
             </el-table-column>
             <el-table-column prop="status" label="状态" width="165">
               <template slot-scope="scope">
@@ -235,7 +239,13 @@
             table.phoneNum = userItem.mobile;
             table.status= userItem.valid;
             table.image = userItem.image
-
+            table.childDepartmentId = userItem.tempRole.cdepartmentid;
+            table.parentDepartmentId = userItem.tempRole.pdepartmentid;
+            table.childdepartmentname = userItem.tempRole.childdepartmentname;
+            table.parentdepartmentname = userItem.tempRole.parentdepartmentname;
+            table.departmentnames = table.parentdepartmentname+"-"+ table.childdepartmentname;
+            table.rolename = userItem.tempRole.name;
+            table.roleid = userItem.tempRole.id;
             tables.push(table);
           });
           this.tableData = tables;
@@ -277,11 +287,19 @@
             return;
           }
           this.fillDialogForm();
+          //加载父部门
+          this.loadDepartment(0,1);
+          //加载子部门
+          this.loadChildDepartByPid(this.selectedParentDepartId);
+          //加载角色
+          this.loadRolesBySubDepartId(this.selectedChildDepartId);
+        }else{
+          //加载父部门和子部门
+          this.loadDepartment(0,1);
         }
         this.dialogFormVisible = true;
         this.isEdit = edit;
-        //加载父部门和子部门
-        this.loadDepartment(0,1);
+
       },
       //加载父部门和子部门
       loadDepartment(pid,level){
@@ -308,7 +326,6 @@
       },
       //更具pid记载子部门
       loadChildDepartByPid(pid){
-        this.selectedChildDepartId ="";
         //加载二级
         this.loadDepartment(pid,2);
       },
@@ -363,7 +380,7 @@
               phonenumber:this.form.phoneNum,
               roleId:this.selectedRole
           })).then(resp=>{
-            this.$message.error("新修改成功");
+            this.$message.success("修改员工信息成功");
             this.loadData();
             this.dialogFormVisible = false;
           }).catch(error=>{
@@ -378,6 +395,10 @@
         this.form.email = "";
         this.form.phoneNum = "";
         this.selectedRole = "";
+        this.selectedChildDepartId="";
+        this.selectedParentDepartId="";
+        this.roles = [];
+        this.childDepartOptions=[]
       },
       fillDialogForm(){
         var data = this.tableData[this.selectedRow];
@@ -387,6 +408,9 @@
         this.form.email = data.email;
         this.form.phoneNum = data.phoneNum;
         this.selectedRole = data.id;
+        this.selectedChildDepartId = data.childDepartmentId;
+        this.selectedParentDepartId = data.parentDepartmentId;
+        this.selectedRole = data.roleid;
       }
     }
 
