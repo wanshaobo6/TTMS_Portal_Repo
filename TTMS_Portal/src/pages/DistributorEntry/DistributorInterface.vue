@@ -208,9 +208,8 @@
     data() {
       return {
         list:[
-          { id : 1 , url :require( '../assets/1.jpg') },
-          { id : 2 , url : require('../assets/2.jpg')},
-
+          { id : 1 , url :require( '../../assets/1.jpg') },
+          { id : 2 , url : require('../../assets/2.jpg')},
 
         ],
 
@@ -418,26 +417,26 @@
   .route1{
     width: 218px;height: 385px;
     color: #ffffff;
-    background-image: url("../assets/a.jpg");
+    background-image: url("../../assets/a.jpg");
   }
   .route2{
     color: #ffffff;
     width: 218px;height: 385px;
-    background-image: url("../assets/b.jpg");
+    background-image: url("../../assets/b.jpg");
   }
   .route3{
     color: #ffffff;
     width: 218px;height: 385px;
-    background-image: url("../assets/c.jpg");
+    background-image: url("../../assets/c.jpg");
   }
   .route4{
     color: #ffffff;
     width: 218px;height: 385px;
-    background-image: url("../assets/d.jpg");
+    background-image: url("../../assets/d.jpg");
   }.route5{
      color: #ffffff;
      width: 218px;height: 385px;
-     background-image: url("../assets/e.jpg");
+     background-image: url("../../assets/e.jpg");
    }
 
 
