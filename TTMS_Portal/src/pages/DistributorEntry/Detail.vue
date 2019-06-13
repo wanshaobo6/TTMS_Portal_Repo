@@ -256,7 +256,7 @@
         })
       },
       checkForm(){
-        if(this.selectedPricePolicy == ""||this.form.name == ""||
+        if(this.form.name == ""||
           this.form.sex == ""||this.form.idcard == ""||this.form.phone == ""||
           this.form.note == ""||this.curProduct.id == ""){
           this.$message.info("请将表单填充完整")
