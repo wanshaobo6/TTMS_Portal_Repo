@@ -36,18 +36,18 @@
             </el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="primary" @click="dialogFormVisible = true">
+            <el-button type="primary" @click="showDialog(false,0)">
               新增
             </el-button>
-            <el-dialog title="新增组织机构信息" :visible.sync="dialogFormVisible">
+            <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
               <el-form :model="form">
-                <el-form-item label="机构编码:" :label-width="formLabelWidth" :rules="[
-							  { required: true },]">
-                  <el-input v-model="form.csbn" autocomplete="off"></el-input>
-                </el-form-item>
                 <el-form-item label="机构名称:" :label-width="formLabelWidth" :rules="[
 							  { required: true },]">
                   <el-input v-model="form.organName" placeholder="请输入内容"></el-input>
+                </el-form-item>
+                <el-form-item label="机构编码:" :label-width="formLabelWidth" :rules="[
+							  { required: true },]">
+                  <el-input v-model="form.csbn" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="备注:" :label-width="formLabelWidth">
                   <el-input type="textarea" v-model="form.desc"></el-input>
@@ -57,7 +57,7 @@
                 <el-button @click="dialogFormVisible = false">
                   取 消
                 </el-button>
-                <el-button type="primary" @click="addDepartment(0)">
+                <el-button type="primary" @click="confirm()">
                   确 定
                 </el-button>
               </div>
@@ -89,10 +89,10 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+              <el-button size="mini" @click="showDialog(true,scope.row.parentid,scope.row)">
                 修改
               </el-button>
-              <el-button  size="mini"  v-show="scope.row.parentid == 0" @click="handleAdd(scope.$index, scope.row)">
+              <el-button  size="mini"  v-show="scope.row.parentid == 0" @click="showDialog(false,scope.row.id)">
                添加部门
               </el-button>
               <el-button size="mini" type="danger" v-show="scope.row.status==1" @click="changeStatus(scope.row)">
@@ -120,11 +120,11 @@ export default {
 		return {
       dialogFormVisible: false,
       form: {
+        id:"",
         csbn: '',
         organName:"",
         delivery: false,
-        type: [],
-        resource: '',
+        parentId: "",
         desc: ''
       },
       formLabelWidth: '120px',
@@ -143,18 +143,14 @@ export default {
       currentPage: 1,  //当前页
       rows:5,    //每页大小
       totalItem : 20,
+      isEdit:false, //是否是编辑模式
+      dialogTitle:"",  //会话框标题
 		};
 	},
   created(){
     this.loadData();
   },
 	methods: {
-		handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleAdd(){
-        index, row
-      },
       handleDelete(index, row) {
         console.log(index, row);
       },
@@ -208,10 +204,8 @@ export default {
       }).catch(error => {
       })
     },
+    //添加部门
     addDepartment(pid){
-		  var b = this.validateForm();
-		  if(!b)
-		    return;
 		  this.$http.post("/sysmanage/userauth/organmanage/add/dartment",this.$qs.stringify({
        departmentName:this.form.organName,
         departmentCode:this.form.csbn,
@@ -219,6 +213,21 @@ export default {
         parentId:pid
       })).then(resp=>{
         this.$message.success("部门添加成功");
+        this.dialogFormVisible = false;
+        this.loadData();
+      }).catch(error=>{
+        this.$message.error(error.message);
+        this.dialogFormVisible = false;
+      })
+    },
+    editDepartment(){
+      this.$http.put("/sysmanage/userauth/organmanage/update/dartment",this.$qs.stringify({
+        id:this.form.id,
+        departmentName:this.form.organName,
+        departmentCode:this.form.csbn,
+        departmentNote:this.form.desc,
+      })).then(resp=>{
+        this.$message.success("部门信息更新成功");
         this.dialogFormVisible = false;
         this.loadData();
       }).catch(error=>{
@@ -264,6 +273,64 @@ export default {
         }).catch(error =>{
          this.$message.error(error.message);
         });
+    },
+    //显示编辑框
+    showDialog(isEdit,parentId,row){
+      this.clearForm();
+      this.dialogFormVisible = true;
+      this.isEdit = isEdit;
+      if(this.isEdit){
+        if(parentId == 0){
+          this.dialogTitle="修改一级部门";
+        }else{
+          this.dialogTitle="修改二级部门";
+        }
+        this.fillForm(row);
+      }else{
+        this.form.parentId=parentId;
+        if(parentId == 0){
+          this.dialogTitle="新增一级部门";
+        }else{
+          this.dialogTitle="新增二级部门";
+        }
+      }
+    },
+    //清空会话框表单
+    clearForm(){
+      this.form.id ="";
+      this.form.organName ="";
+      this.form.csbn ="";
+      this.form.desc ="";
+      this.form.parentId ="";
+    },
+    //填充会话框表单
+    fillForm(row){
+      this.form.id =row.id;
+      this.form.organName =row.name;
+      this.form.csbn =row.code;
+      this.form.desc =row.comment;
+      this.form.parentId =row.parentid;
+    },
+    checkForm(){
+        if( this.form.organName ==""||  this.form.csbn==""||
+           this.form.desc=="" ){
+          this.$message.info("请将表单填充完整");
+          return false;
+        }
+        return true;
+    },
+    //提交表单
+    confirm(){
+      //验证表单是否存在空
+      if(!this.checkForm())
+        return ;
+      if(this.isEdit){
+        //编辑部门
+        this.editDepartment();
+      }else{
+        //新增部们
+        this.addDepartment(this.form.parentId);
+      }
     }
   },
 };
