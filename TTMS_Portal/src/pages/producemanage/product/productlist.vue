@@ -105,9 +105,9 @@
                 </div>
               </el-dialog>
             </el-col>
-            <el-col :span="2"><el-button >待售</el-button></el-col>
-            <el-col :span="2"><el-button >上架</el-button></el-col>
-            <el-col :span="2"><el-button >下架</el-button></el-col>
+            <el-col :span="2"><el-button @click="changStatus(0)">待售</el-button></el-col>
+            <el-col :span="2"><el-button @click="upStatus(1)">上架</el-button></el-col>
+            <el-col :span="2"><el-button @click="downStatus(2)">下架</el-button></el-col>
           </el-row></div>
         <div class="thirdRow">
           <el-row :gutter="20">
@@ -357,7 +357,7 @@
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus;
+            table.status = listItem.productstatus==0 ?"待售":"待售" && listItem.productstatus==1 ?"上架":"下架" && listItem.productstatus==2 ?"下架":"下架";;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname= listItem.productcatnames;
@@ -386,7 +386,52 @@
         localStorage.setItem("curProduct",JSON.stringify(this.multipleSelection[0]));
         //页面转跳
         this.$router.push("/producemanage/product/productlist/"+pageName);
+      },
+      changStatus(status){
+        if (this.multipleSelection[0].status==='0'){
+          return;
+        }
+        this.$http.put("/producemanage/product/productlist/privilege/updateproductStatus",this.$qs.stringify({
+
+          productId: this.multipleSelection[0].id,
+          pstatus: status,
+
+         })).then(resp=>{
+          this.loadData();
+        }).catch(error=>{
+          this.$message.error(error.message);
+        });
+
+      },
+      upStatus(status){
+        if (this.multipleSelection[0].status==='1'){
+          return;
+        }
+        this.$http.put("/producemanage/product/productlist/privilege/updateproductStatus",this.$qs.stringify({
+
+          productId: this.multipleSelection[0].id,
+          pstatus: status,
+
+        })).then(resp=>{
+          this.loadData();
+        }).catch(error=>{
+          this.$message.error(error.message);
+        });
+      },
+      downStatus(status) {
+        if (this.multipleSelection[0].status === '2') {
+          return;
+        }
+        this.$http.put("/producemanage/product/productlist/privilege/updateproductStatus", this.$qs.stringify({
+          productId: this.multipleSelection[0].id,
+          pstatus: status,
+        })).then(resp => {
+          this.loadData();
+        }).catch(error => {
+          this.$message.error(error.message);
+        });
       }
+
     }
   }
 </script>
