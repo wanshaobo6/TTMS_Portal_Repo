@@ -49,7 +49,7 @@
       </div>
       <div class="firstRow" style="margin-top: 60px">
         <el-row :gutter="20">
-          <el-col :span="3"><div class="grid-content "><el-select v-model="status" placeholder="状态">
+          <el-col :span="3"><div class="grid-content "><el-select v-model="status"  placeholder="状态">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -376,7 +376,7 @@
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus;
+            table.status = listItem.productstatus==0 ?"待售":"待售" && listItem.productstatus==1 ?"上架":"下架" && listItem.productstatus==2 ?"下架":"下架";
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname = listItem.groupname;
