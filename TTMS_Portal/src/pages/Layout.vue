@@ -65,7 +65,7 @@
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/>
       </v-btn>
       <v-btn icon>
-        <i class="material-icons">
+        <i class="material-icons" @click="goIndex">
           home
         </i>
       </v-btn>
@@ -75,6 +75,12 @@
       </v-toolbar-items>
       <!-- 顶部导航标题 -->
       <v-spacer></v-spacer>
+      <v-switch
+        :label="dark ? '暗黑' : '明亮'"
+        v-model="dark"
+        color="dark"
+        hide-details
+      />
       <!--用户头像-->
       <el-dropdown placement="bottom">
         <v-list-tile avatar close>
@@ -261,8 +267,10 @@
           });
         }).catch(() => {
         });
+      },
+      goIndex(){
+        this.$router.push("/index/dashboard");
       }
-
     },
     watch: {},
     created(){
