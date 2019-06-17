@@ -17,16 +17,13 @@
               <el-col :span="10">
                 <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
                   <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.createusername}}</span></div>
-                  <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;￥{{curProduct.price}}</span></div>
+                  <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.price}}</span></div>
                 </div>
               </el-col>
               <el-col :span="14">
-                <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.Pname}}</span></div>
+                <div class="grid-content "><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.Pname}}</span></div>
                   <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.start}}~{{curProduct.end}}</span></div>
-                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品
-                    <span v-show="curProduct.status==0">待售</span>
-                    <span v-show="curProduct.status==1">上架</span>
-                    <span v-show="curProduct.status==2">下架</span></span></div>
+                  <div class="title01"><b>状态：</b><span>{{curProduct.status}}</span></div>
                 </div>
               </el-col>
             </el-row>
@@ -242,6 +239,7 @@
         this.multipleSelection.map(item=>selectedGuPolicyIds.push(item.id));
         if(selectedGuPolicyIds == null || selectedGuPolicyIds.length == 0){
           this.$message.error("请选择需要添加的价格政策");
+          return;
         }
         //发送添加请求
         this.$http.post("/producemanage/product/productlist/privilege/pricepolicy",this.$qs.stringify({
