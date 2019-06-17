@@ -43,32 +43,15 @@
           </el-row>
         </div>
         <div class="body-bottom" style="width:100%;height:70%;">
-          <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
-            <el-button type="primary" @click="dialogFormVisible = true">添加附件</el-button>
-            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-              <el-form :model="form">
-                <el-form-item label="标题" :label-width="formLabelWidth">
-                  <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="文件" :label-width="formLabelWidth">
-                  <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div></el-upload>
-                </el-form-item>
-              </el-form>
-              <div style="padding-left:120px">
-                <el-button type="primary">上传</el-button></div>
-            </el-dialog>
-          </div>
           <div class="kk">
             <el-table :data="tableData" border style="width:100%">
-              <el-table-column prop="Title" label="标题" width="150"></el-table-column>
+              <el-table-column prop="Title" label="标题" width="250"></el-table-column>
               <el-table-column prop="FileName" label="文件名" width="200"></el-table-column>
-              <el-table-column prop="UploadData" label="上传时间" width="150"></el-table-column>
-              <el-table-column prop="UploadUser" label="上传用户" width="150"></el-table-column>
+              <el-table-column prop="UploadData" label="上传时间" width="200"></el-table-column>
+              <el-table-column prop="UploadUser" label="上传用户" width="200"></el-table-column>
               <el-table-column label="操作" align="center" min-width="100">
                 <template slot-scope="scope">　　　　　　
-                  <el-button type="danger" @click="downloadfile(scope.row.phone)">下载</el-button>
+                  <el-button type="danger" @click="downloadfile(scope.row)">下载</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -137,6 +120,7 @@
         this.tableData = [];
         resp.data.forEach(item=>{
           var i = {};
+          i.id = item.id;
           i.Title = item.attachmenttitle;
           i.FileName = item.filename;
           i.UploadData = new Date(item.uploadtime).format("yyyy-MM-dd hh:mm:ss");
@@ -150,7 +134,17 @@
     },
      goback(){
        this.$router.push("/DistributorEntry/DistributorInterface");
-     }
+     },
+      downloadfile(row){
+        var downloadElement = document.createElement('a');
+        var href = this.$http.defaults.baseURL+"/download/" + row.id; //创建下载的链接
+        downloadElement.href = href;
+        downloadElement.download = row.filename; //下载后文件名
+        document.body.appendChild(downloadElement);
+        downloadElement.click(); //点击下载
+        document.body.removeChild(downloadElement); //下载完成移除元素
+        window.URL.revokeObjectURL(href); //释放掉blob对象
+      }
   },
     created(){
       //加载当前产品

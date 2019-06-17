@@ -138,7 +138,7 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
-                    <v-icon class ="material-icons" @click="downloadfile(scope.row)">
+                    <v-icon class ="material-icons" @click="godownloadfile(scope.row)">
                     cloud_download
                     </v-icon>
                   </template>
@@ -350,7 +350,7 @@
           alert(error.message);
         });
       },
-      downloadfile(row) {
+      godownloadfile(row) {
         //方式1:window.open(this.$http.defaults.baseURL+"/download/" + row.id);
         //Access-Control-Allow-Origin
         localStorage.setItem("signItem", JSON.stringify(row));
@@ -361,15 +361,6 @@
         // }).catch(error => {
         //   this.$message.error(error.message);
         // });
-        // var downloadElement = document.createElement('a');
-        // var href = this.$http.defaults.baseURL+"/download/" + row.id; //创建下载的链接
-        // downloadElement.href = href;
-        // downloadElement.download = '运营报告.txt'; //下载后文件名
-        // document.body.appendChild(downloadElement);
-        // downloadElement.click(); //点击下载
-        // document.body.removeChild(downloadElement); //下载完成移除元素
-        // window.URL.revokeObjectURL(href); //释放掉blob对象
-
       },
     }
   }
