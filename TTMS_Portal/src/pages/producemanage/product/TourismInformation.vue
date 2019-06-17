@@ -23,10 +23,10 @@
               <el-col :span="14">
                 <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.Pname}}</span></div>
                   <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.start}}~{{curProduct.end}}</span></div>
-                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品
-                    <span v-show="curProduct.status==0">待售</span>
+                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;<span>{{curProduct.status}}</span>
+                    <!--<span v-show="curProduct.status==0">待售</span>
                     <span v-show="curProduct.status==1">上架</span>
-                    <span v-show="curProduct.status==2">下架</span></span></div>
+                    <span v-show="curProduct.status==2">下架</span>--></span></div>
                 </div>
               </el-col>
             </el-row>
@@ -226,7 +226,8 @@
         var selectedGuideIds = [];
         this.multipleSelection.map(item=>selectedGuideIds.push(item.id));
         if(selectedGuideIds == null || selectedGuideIds.length == 0){
-          this.$message.error("请选择需要添加的id");
+          this.$message.error("请选择需要添加的导游");
+          return;
         }
         //发送添加请求
         this.$http.post("/producemanage/product/productlist/privilege/guide",this.$qs.stringify({

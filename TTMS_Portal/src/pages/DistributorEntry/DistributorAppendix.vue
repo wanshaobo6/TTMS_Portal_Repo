@@ -35,9 +35,10 @@
                   <span>&nbsp;&nbsp;&nbsp;{{new Date(curProduct.start).format("yyyy-MM-dd")}}~{{new Date(curProduct.end).format("yyyy-MM-dd")}}</span></div>
                 <div class="title01">
                   <b>状态：</b>
-                  <span v-if="curProduct.status == 0">&nbsp;&nbsp;&nbsp;待售</span>
+                  <span>{{curProduct.status}}</span>
+                 <!-- <span v-if="curProduct.status == 0">&nbsp;&nbsp;&nbsp;待售</span>
                   <span v-if="curProduct.status == 1">&nbsp;&nbsp;&nbsp;上架</span>
-                  <span v-if="curProduct.status == 2">&nbsp;&nbsp;&nbsp;下架</span></div>
+                  <span v-if="curProduct.status == 2">&nbsp;&nbsp;&nbsp;下架</span>--></div>
               </div>
             </el-col>
           </el-row>
