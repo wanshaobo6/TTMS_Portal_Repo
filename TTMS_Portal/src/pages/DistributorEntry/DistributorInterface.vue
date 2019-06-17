@@ -138,6 +138,9 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
+                    <v-icon class ="material-icons" @click="downloadfile(scope.row)">
+                    cloud_download
+                    </v-icon>
                   </template>
                 </el-table-column>
               </el-table>
