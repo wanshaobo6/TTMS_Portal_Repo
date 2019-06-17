@@ -359,17 +359,7 @@
       },
     }
   }
-        /*
-        /!*axios.defaults.headers('Access-Control-Allow-Origin:*'); // 远程访问权限允许所有（该项必须设置）
-//注：如果 Access-control-Allow-Credentials 为 true 则 Access-Control-Allow-Origin 必须 设置确定的域名 不能使用通配符。如下：
-axios.defaults.headers('Access-Control-Allow-Origin:http://127.0.0.1:8080');
 
-axios.defaults.headers('Access-control-Allow-Credentials:true');//默认 false  是否同意发送Cookie  如果前端请求 withCredentials:true 则该项须设置为true
-
-
-
-    }
-  }
 
 </script>
 <style>
