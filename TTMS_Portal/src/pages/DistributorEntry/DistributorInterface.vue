@@ -230,6 +230,7 @@
         multipleSelection: [],
         curDistributor:{} , //当前分销商
         signal:true,
+        createuser:"",
       };
     },
     created() {
@@ -345,7 +346,7 @@
             table.already = listItem.sellednumber;
             table.remain = listItem.lowestnumber;
             table.price = listItem.productprice;
-            table.createuser = listItem.createproductname;
+            table.createuser = listItem.createusername;
             tables.push(table);
           });
           this.tableData = tables;
