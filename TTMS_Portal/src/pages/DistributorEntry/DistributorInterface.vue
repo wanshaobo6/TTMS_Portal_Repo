@@ -323,7 +323,6 @@
             size: this.rows
           }
         }).then(resp => {
-
           //成功
           this.totalItem = resp.data.total;
           var tables = [];

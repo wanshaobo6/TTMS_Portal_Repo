@@ -19,7 +19,7 @@
                   <span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
                 <div class="title01">
                   <b>产品负责人:</b>
-                  <span>&nbsp;&nbsp;&nbsp;王毅</span></div>
+                  <span>&nbsp;&nbsp;&nbsp;{{curProduct.createuser}}</span></div>
                 <div class="title01">
                   <b>价格信息：</b>
                   <span>&nbsp;&nbsp;&nbsp;{{curProduct.price}}</span></div>
@@ -120,9 +120,7 @@
       return this.$confirm('确定移除 ${ file.name }？');
     },
     loadCurrentProject(){
-      var localProduct = localStorage.getItem("curProduct");
-      if(localProduct == null ||  localProduct == '')
-        this.router.history.go(-1);
+      var localProduct = localStorage.getItem("signItem");
       this.curProduct = JSON.parse(localProduct);
     },
     loadAttachments(){
