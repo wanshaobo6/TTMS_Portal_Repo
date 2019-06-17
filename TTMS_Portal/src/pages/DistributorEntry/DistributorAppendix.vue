@@ -2,11 +2,10 @@
   <el-container>
     <el-main>
       <div class="enroll">
-        <el-row :gutter="10">
-          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" @click="goback">返回上一页</el-button></el-col>
-          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
-          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">附件下载页面</h1></el-col>
-          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+        <el-row>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"><el-button  class="primary" icon="el-icon-caret-left" @click="goback">返回上一页</el-button></el-col>
+          <el-col :xs="6" :sm="7" :md="7" :lg="7" :xl="7"><h1 style="float:right;font-size: 30px;">附件下载页面</h1></el-col>
+          <el-col :xs="12" :sm="11" :md="11" :lg="11" :xl="11">当前用户:{{this.curDistributor.distributorname}} {{this.curDistributor.loginname}}<a href="#">退出登录</a></el-col>
         </el-row>
       </div>
       <div class="body" style="width:100%;height:100%">
@@ -108,13 +107,6 @@
     },
     loadAttachments(){
       this.$http.get("/distributorEntry/allAttachment/"+this.curProduct.id).then(resp=>{
-        // {
-        //   Title: "附件1",
-        //     FileName: "sql.txt",
-        //   UploadData: "2019-6-31",
-        //   UploadUser: "王毅",
-        // }
-        //{id: 2, filename: "文件2", productId: 2, attachmenttitle: "附件2", invalid: 1}
         this.tableData = [];
         resp.data.forEach(item=>{
           var i = {};
@@ -142,6 +134,20 @@
         downloadElement.click(); //点击下载
         document.body.removeChild(downloadElement); //下载完成移除元素
         window.URL.revokeObjectURL(href); //释放掉blob对象
+      },
+      loadCurDistributor() {
+        this.$http.get("/distributorEntry/getCurDistributor").then(resp => {
+          if (resp.data.id != this.curDistributor.id) {
+            Promise.reject();
+            this.$router.push("/login");
+          }
+          this.curDistributor = resp.data;
+        }).catch(error => {
+          this.$message.error(error.message);
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 500)
+        })
       }
   },
     created(){

@@ -92,7 +92,7 @@ export default {
         distributorname: this.username,
         password: this.password
       })).then((resp)=>{
-        console.log(resp)
+        localStorage.setItem("curDistributor",JSON.stringify(resp.data));
         this.$router.push("/DistributorEntry/DistributorInterface");
       }).catch((error)=>{
         console.log(error.message);
