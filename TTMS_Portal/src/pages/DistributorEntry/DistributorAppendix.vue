@@ -1,13 +1,13 @@
 <template>
   <el-container>
     <el-main>
-      <div class="top">
-        <p class="title" style="color:#B3C0D1">通知管理</p>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">产品管理</el-breadcrumb-item>
-          <el-breadcrumb-item>产品</el-breadcrumb-item>
-          <el-breadcrumb-item>产品列表</el-breadcrumb-item>
-          <el-breadcrumb-item>添加附件</el-breadcrumb-item></el-breadcrumb>
+      <div class="enroll">
+        <el-row :gutter="10">
+          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" @click="goback">返回上一页</el-button></el-col>
+          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
+          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">附件下载页面</h1></el-col>
+          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+        </el-row>
       </div>
       <div class="body" style="width:100%;height:100%">
         <div class="body-upside" style="width:100%;height:30%">
@@ -45,19 +45,19 @@
         <div class="body-bottom" style="width:100%;height:70%;">
           <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
             <el-button type="primary" @click="dialogFormVisible = true">添加附件</el-button>
-            <el-dialog title="上传附件" :visible.sync="dialogFormVisible">
+            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
               <el-form :model="form">
                 <el-form-item label="标题" :label-width="formLabelWidth">
                   <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="文件" :label-width="formLabelWidth">
-                  <el-upload class="upload-demo" action="http://localhost:8080/upload" :on-success="handlesuccess" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
+                  <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div></el-upload>
                 </el-form-item>
               </el-form>
               <div style="padding-left:120px">
-                <el-button type="primary" @click="uplaod">上传</el-button></div>
+                <el-button type="primary">上传</el-button></div>
             </el-dialog>
           </div>
           <div class="kk">
@@ -101,28 +101,9 @@
         formLabelWidth: '120px',
         curProduct: {},   //当前产品
         fileList: [],
-        uploadfileresp:"",
       }
     },
     methods:{
-      uplaod(){
-        console.log("开始上传");
-        console.log(this.form.name);
-        console.log(this.uploadfileresp);
-        this.$http.post("/resourcemanage/attachment/attachmanage/add",this.$qs.stringify({
-            fileName:this.form.name,
-            productId:this.curProduct.id,
-            fileUrl:this.uploadfileresp,
-        })).then(
-          this.$message.success("文件上传成功"),
-          this.dialogFormVisible=false,
-          this.loadAttachments(),
-        ).catch(error=>{
-          this.$message.error(error.message);
-        })
-
-      },
-
     deleteUser(val){
       console.log(val)
     },
@@ -132,10 +113,6 @@
     handlePreview(file){
       console.log(file);
     },
-      //上传成功之后的结果
-      handlesuccess(response, file, fileList){
-        this.uploadfileresp=response;
-      },
     handleExceed(files, fileList){
       this.$message.warning('当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件');
     },

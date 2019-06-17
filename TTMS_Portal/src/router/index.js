@@ -19,6 +19,7 @@ export default new Router({
     route("/Login",'/Login',"Login"),
     route("/DistributorEntry/DistributorInterface",'/DistributorEntry/DistributorInterface',"DistributorInterface"),
     route("/DistributorEntry/Detail",'/DistributorEntry/Detail',"Detail"),
+    route("/DistributorEntry/DistributorAppendix",'/DistributorEntry/DistributorAppendix',"DistributorAppendix"),
     // /login路径，路由到登录组件
     {
       path:"/", // 根路径，路由到 Layout组件

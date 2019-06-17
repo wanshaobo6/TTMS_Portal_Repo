@@ -217,13 +217,18 @@
       //加载对话框中的价格政策
       loadPricePolicy(){
         this.hasPricePolicy = true;
+        var greastDiscount = -1;
         this.$http.get("/distributorEntry/auth/getPricePolicyByProductId/"+this.curProduct.id).then(resp=>{
           var tempOptions=[];
            resp.data.forEach(item=>{
               var tempOption= {};
               tempOption.value = item.id;
               tempOption.label = item.policyname;
-              tempOption.policydiscount = item.policydiscount;
+              tempOption.policydiscount = item.policydiscount;//selectedPricePolicy
+              if( item.policydiscount>greastDiscount){
+                this.selectedPricePolicy = item.id;
+                greastDiscount =item.policydiscount;
+              }
              tempOptions.push(tempOption);
            })
           this.pricePolicyOptions = tempOptions;

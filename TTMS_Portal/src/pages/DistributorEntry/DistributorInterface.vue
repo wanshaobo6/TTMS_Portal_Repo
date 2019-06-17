@@ -3,7 +3,13 @@
     <el-container>
       <el-main>
         <div class="enroll">
-          <span> <h2>分销商报名入口</h2></span>
+          <el-row :gutter="10">
+            <!--@click="goback"-->
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" ></el-button></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">分销商报名入口</h1></el-col>
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+          </el-row>
         </div>
         <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
@@ -132,6 +138,9 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
+                    <v-icon class ="material-icons" @click="downloadfile(scope.row)">
+                    cloud_download
+                    </v-icon>
                   </template>
                 </el-table-column>
               </el-table>
@@ -257,9 +266,9 @@
           this.showAddDialog();
         }
       },
-      gotolink(row){
+      gotolink(row) {
         //指定跳转地址
-        localStorage.setItem("signItem",JSON.stringify(row));
+        localStorage.setItem("signItem", JSON.stringify(row));
         this.$router.replace('/DistributorEntry/Detail')
       },
 
@@ -316,7 +325,6 @@
         }).then(resp => {
 
           //成功
-          console.log(resp);
           this.totalItem = resp.data.total;
           var tables = [];
           resp.data.items.forEach(listItem => {
@@ -334,6 +342,7 @@
             table.already = listItem.sellednumber;
             table.remain = listItem.lowestnumber;
             table.price = listItem.productprice;
+            table.createuser = listItem.createproductname;
             tables.push(table);
           });
           this.tableData = tables;
@@ -341,11 +350,20 @@
           alert(error.message);
         });
       },
-
-
-
+      downloadfile(row) {
+        //Access-Control-Allow-Origin
+        localStorage.setItem("signItem", JSON.stringify(row));
+        this.$router.replace('/DistributorEntry/DistributorAppendix');
+        // console.log(product.id);
+        // this.$http.get("/download/" + product.id).then(resp => {
+        //   this.$message.success("下载成功，请注意查看")
+        // }).catch(error => {
+        //   this.$message.error(error.message);
+        //});
+      },
     }
   }
+
 
 </script>
 <style>
