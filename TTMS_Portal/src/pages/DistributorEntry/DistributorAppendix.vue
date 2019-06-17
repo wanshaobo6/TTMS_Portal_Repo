@@ -68,7 +68,7 @@
               <el-table-column prop="UploadUser" label="上传用户" width="150"></el-table-column>
               <el-table-column label="操作" align="center" min-width="100">
                 <template slot-scope="scope">　　　　　　
-                  <el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
+                  <el-button type="danger" @click="downloadfile(scope.row.phone)">下载</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -126,7 +126,7 @@
       this.curProduct = JSON.parse(localProduct);
     },
     loadAttachments(){
-      this.$http.get("/producemanage/product/productlist/allAttachment/"+this.curProduct.id).then(resp=>{
+      this.$http.get("/distributorEntry/allAttachment/"+this.curProduct.id).then(resp=>{
         // {
         //   Title: "附件1",
         //     FileName: "sql.txt",
@@ -141,7 +141,7 @@
           i.FileName = item.filename;
           i.UploadData = new Date(item.uploadtime).format("yyyy-MM-dd hh:mm:ss");
           i.valid = item.invalid;
-          i.UploadUser = "王毅";
+          i.UploadUser = item.username;
           this.tableData.push(i);
         })
       }).catch(error=>{
