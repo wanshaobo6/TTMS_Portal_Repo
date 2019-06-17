@@ -3,12 +3,9 @@
     <el-container>
       <el-main>
         <div class="enroll">
-          <el-row :gutter="10">
-            <!--@click="goback"-->
-            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" ></el-button></el-col>
-            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
-            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">分销商报名入口</h1></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+          <el-row>
+            <el-col :xs="12" :sm="13" :md="13" :lg="13" :xl="13"><h1 style="float:right;font-size: 30px;">分销商入口</h1></el-col>
+            <el-col :xs="12" :sm="11" :md="11" :lg="11" :xl="11">当前用户:{{this.curDistributor.distributorname}} {{this.curDistributor.loginname}} <a href="javascriptvoid(0)" @click="logout">退出登录</a></el-col>
           </el-row>
         </div>
         <div class="firstRow" style="margin-top: 60px">
@@ -231,12 +228,18 @@
         gridData: [],
         value: '',
         multipleSelection: [],
+        curDistributor:{} , //当前分销商
+        signal:true,
       };
     },
     created() {
+      //获取当前登录者
+      var cdStr = localStorage.getItem("curDistributor");
+      if(cdStr == null || cdStr =="")
+        this.$router.push("/login");
+      this.curDistributor = JSON.parse(cdStr);
+      this.loadCurDistributor();
       this.loadData();
-      //this.loadCats(0, 1);
-
     },
     methods: {
       handleEdit(index, row) {
@@ -305,11 +308,12 @@
         })
       },
       loadData() {
+        //自旋等待数据
         this.tableData = [];
         //加载产品列表信息
-
         this.$http.get("/distributorEntry/auth/getAvailableProducts", {
           params: {
+            did:this.curDistributor.id,
             status: this.status,
             productCatId1: this.selectedFirstCatId,
             productCatId2: this.selectedSecondCatId,
@@ -346,7 +350,7 @@
           });
           this.tableData = tables;
         }).catch(error => {
-          alert(error.message);
+          this.$message.error(error.message);
         });
       },
       godownloadfile(row) {
@@ -361,6 +365,22 @@
         //   this.$message.error(error.message);
         // });
       },
+       loadCurDistributor(){
+         this.$http.get("/distributorEntry/getCurDistributor").then(resp=>{
+           if(resp.data.id != this.curDistributor.id){
+             Promise.reject();
+             this.$router.push("/login");
+           }
+          this.curDistributor = resp.data;
+        }).catch(error=>{
+          this.$message.error(error.message);
+           setTimeout(()=>{
+             this.$router.push("/login");
+           },500)
+         })
+      },
+      logout(){
+      }
     }
   }
 
