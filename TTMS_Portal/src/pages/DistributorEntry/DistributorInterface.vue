@@ -138,10 +138,6 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
-                   <v-icon class ="material-icons" @click="downloadfile(scope.row)">
-                      save_alt
-                    </v-icon>
-                    <el-button type="info" icon="el-icon-message" circle></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -165,6 +161,7 @@
     </el-container>
   </el-container>
 </template>
+
 <script>
   export default {
     name: 'DistributorInterface',
@@ -230,7 +227,6 @@
         tableData: [],
         gridData: [],
         value: '',
-        createuser:"",
         multipleSelection: [],
       };
     },
@@ -267,9 +263,9 @@
           this.showAddDialog();
         }
       },
-      gotolink(row){
+      gotolink(row) {
         //指定跳转地址
-        localStorage.setItem("signItem",JSON.stringify(row));
+        localStorage.setItem("signItem", JSON.stringify(row));
         this.$router.replace('/DistributorEntry/Detail')
       },
 
@@ -332,7 +328,7 @@
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus==0 ?"待售":"待售" && listItem.productstatus==1 ?"上架":"下架" && listItem.productstatus==2 ?"下架":"下架";
+            table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname = listItem.groupname;
@@ -344,7 +340,7 @@
             table.already = listItem.sellednumber;
             table.remain = listItem.lowestnumber;
             table.price = listItem.productprice;
-            table.createuser=listItem.createproductname;
+            table.createuser = listItem.createproductname;
             tables.push(table);
           });
           this.tableData = tables;
@@ -360,6 +356,9 @@
         }).catch(error => {
           this.$message.error(error.message);
         });
+      },
+    }
+  }
         /*
         /!*axios.defaults.headers('Access-Control-Allow-Origin:*'); // 远程访问权限允许所有（该项必须设置）
 //注：如果 Access-control-Allow-Credentials 为 true 则 Access-Control-Allow-Origin 必须 设置确定的域名 不能使用通配符。如下：
@@ -367,24 +366,8 @@ axios.defaults.headers('Access-Control-Allow-Origin:http://127.0.0.1:8080');
 
 axios.defaults.headers('Access-control-Allow-Credentials:true');//默认 false  是否同意发送Cookie  如果前端请求 withCredentials:true 则该项须设置为true
 
-axios.defaults.headers('Access-control-Allow-Methods:GET,POST');*!/
-        this.$http.get(("/download/"+product.id), {
-          headers: {
-            'Content-Type': 'application/x-download',
-            'Access-Control-Allow-Origin':'http://127.0.0.1:8080',
-            'Access-control-Allow-Credentials':'true',
-
-          }
-        }).then(resp=>{
-          this.$message.success("下载成功，请注意查看")
-        }).catch(error=>{
-          this.$message.error(error.message);
-        });
-        console.log("下载文件");
-      },*/
 
 
-      },
     }
   }
 
@@ -486,48 +469,5 @@ axios.defaults.headers('Access-control-Allow-Methods:GET,POST');*!/
   .enroll{
     margin-top: 20px;
   }
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-  }
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
-  .block .el-carousel{
-    width:100%;
-  }
-  .el-row {
-    margin-bottom: 20px;
-/*  .last-child {
-     margin-bottom: 0;*/
-   }
-
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
 </style>
