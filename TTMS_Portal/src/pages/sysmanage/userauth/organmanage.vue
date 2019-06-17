@@ -89,10 +89,10 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="showDialog(true,scope.row.parentid,scope.row)">
+              <el-button size="mini" @click="showDialog(true,scope.row.parentid,scope.row)" v-show="scope.row.status">
                 修改
               </el-button>
-              <el-button  size="mini"  v-show="scope.row.parentid == 0" @click="showDialog(false,scope.row.id)">
+              <el-button  size="mini"   v-show="scope.row.parentid == 0 && scope.row.status"  @click="showDialog(false,scope.row.id)">
                添加部门
               </el-button>
               <el-button size="mini" type="danger" v-show="scope.row.status==1" @click="changeStatus(scope.row)">
@@ -145,6 +145,7 @@ export default {
       totalItem : 20,
       isEdit:false, //是否是编辑模式
       dialogTitle:"",  //会话框标题
+      tree:"",
 		};
 	},
   created(){
@@ -197,10 +198,20 @@ export default {
       });
     },
     changeStatus(table) {
+        console.log(table.children)
       this.$http.put("/sysmanage/userauth/organmanage/valid/" + table.id).then(resp => {
-        this.tableData.filter(data =>{
-          return data.id == table.id;
-        })[0].status = !table.status
+       // if(table.parentid == 0){
+          //父结点
+          var curData = this.tableData.filter(data =>{
+            return data.id == table.id;
+          })[0];
+          curData.status = !table.status;
+          //所有子结点
+        //  table.children.forEach(item=>item.status=!table.status);
+     //   }else{
+          //子结点
+      //  }
+
       }).catch(error => {
       })
     },

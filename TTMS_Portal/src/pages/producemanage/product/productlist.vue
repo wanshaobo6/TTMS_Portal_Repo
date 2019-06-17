@@ -357,7 +357,7 @@
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus==0 ?"待售":"待售" && listItem.productstatus==1 ?"上架":"下架" && listItem.productstatus==2 ?"下架":"下架";;
+            table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname= listItem.productcatnames;
@@ -370,6 +370,7 @@
             table.remain=listItem.lowestnumber;
             table.price=listItem.productprice;
             table.createproname=listItem.productcatnames;
+            table.createusername = listItem.createusername;
             tables.push(table);
           });
           this.tableData = tables;

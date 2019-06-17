@@ -3,7 +3,12 @@
     <el-container>
       <el-main>
         <div class="enroll">
-          <span> <h2>分销商报名入口</h2></span>
+          <el-row :gutter="10">
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" @click="goback"></el-button></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">分销商报名入口</h1></el-col>
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+          </el-row>
         </div>
         <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
@@ -349,6 +354,10 @@
 
 </script>
 <style>
+  .topic{
+    text-align: left;
+    margin-top: 30px;
+  }
   html,body {
     overflow:hidden;
     margin:0px;
