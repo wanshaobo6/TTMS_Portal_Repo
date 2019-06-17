@@ -36,7 +36,7 @@
             <el-dialog title="添加分销商" :visible.sync="dialogFormVisible">
               <el-form :model="form">
                 <el-form-item label="分销商" :label-width="formLabelWidth">
-                  <div class="left">  <el-select v-model="value" placeholder="请选择">
+                  <div class="left">  <el-select v-model="selectedDistributorId" placeholder="请选择">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -45,26 +45,18 @@
                     </el-option>
                   </el-select></div>
                 </el-form-item>
-
-                <el-form-item label="分配数量" :label-width="formLabelWidth" :rules="[
-	  { required: true },]" >
-                  <el-input v-model="form.name" autocomplete="off" ></el-input>
-                </el-form-item>
-            <div class="left">    <el-form-item label="销售日期" :label-width="formLabelWidth" :rules="[
-	  { required: true },]">
-
+            <div class="left">
+              <el-form-item label="销售日期" :label-width="formLabelWidth">
                     <el-date-picker
-                      v-model="value1"
+                      v-model="startTime"
                       type="date"
                       placeholder="开始日期">
                     </el-date-picker>
--
                     <el-date-picker
-                      v-model="value2"
+                      v-model="endTime"
                       type="date"
                       placeholder="结束日期">
                     </el-date-picker>
-
                 </el-form-item>
             </div>
               </el-form>
@@ -132,40 +124,8 @@
             }
           }]
         },
-        value1: '',
-        value2: '',
-
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: '',
-
-        gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-
-        ],
+        gridData: [],
         dialogTableVisible: false,
-        //dialogFormVisible: false,
         dialogFormVisible: false,
         selectdistributor:"",
         form: {
@@ -179,24 +139,12 @@
           desc: ''
         },
         formLabelWidth: '120px',
-
-
-        tableData: [{
-          DistributorNumber: "9",
-          DistributorName: "西安青年旅行社",
-          AssignedAmount: "6",
-          StartData: "2019-6-1",
-          EndData: "2019-7-30",
-        },
-          {
-            DistributorNumber: "9",
-            DistributorName: "西安青年旅行社",
-            AssignedAmount: "6",
-            StartData: "2019-6-1",
-            EndData: "2019-7-30",
-          },
-        ],
+        tableData: [],
         curProduct: "",
+        selectedDistributorId: "",
+        startTime: '',
+        endTime: '',
+        options: [],
       }
     },
     methods: {
@@ -225,8 +173,17 @@
 
       addDistribute() {
         //加载分销商
-        console.log(this.curProduct.id);
-        console.log(this.options.value);
+        //验证数据完整性
+        this.$http.post("/producemanage/product/productlist/privilege/distributor",this.$qs.stringify({
+          productId:this.curProduct.id ,
+          distributorId:this.selectedDistributorId,
+          startTime:new Date(this.startTime).format("yyyy-MM-dd hh:mm:ss"),
+          endTime:new Date(this.endTime).format("yyyy-MM-dd hh:mm:ss")
+        })).then(resp=>{
+          this.loadDistributor();
+        }).catch(error=>{
+
+        })
       },
     loadDistributor(){
       this.$http.get("/producemanage/product/productlist/distributors").then(resp=>{

@@ -16,7 +16,7 @@
             <el-row :gutter="24">
               <el-col :span="10">
                 <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
-                  <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.createuser}}</span></div>
+                  <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.createusername}}</span></div>
                   <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.price}}</span></div>
                 </div>
               </el-col>

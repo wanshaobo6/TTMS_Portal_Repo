@@ -19,7 +19,7 @@
                   <span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
                 <div class="title01">
                   <b>产品负责人:</b>
-                  <span>&nbsp;&nbsp;&nbsp;王毅</span></div>
+                  <span>&nbsp;&nbsp;&nbsp;{{curProduct.createusername}}</span></div>
                 <div class="title01">
                   <b>价格信息：</b>
                   <span>&nbsp;&nbsp;&nbsp;{{curProduct.price}}</span></div>
@@ -53,7 +53,7 @@
                 <el-form-item label="文件" :label-width="formLabelWidth">
                   <el-upload class="upload-demo" action="http://localhost:8080/upload" :on-success="handlesuccess" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
                     <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div></el-upload>
+                    <div slot="tip" class="el-upload__tip">只能上传不超过500kb的文件</div></el-upload>
                 </el-form-item>
               </el-form>
               <div style="padding-left:120px">
@@ -101,7 +101,8 @@
         formLabelWidth: '120px',
         curProduct: {},   //当前产品
         fileList: [],
-        uploadfileresp:"",
+        uploadfileresp:"",  //文件返回下载地址
+        fileName:""
       }
     },
     methods:{
@@ -110,7 +111,7 @@
         console.log(this.form.name);
         console.log(this.uploadfileresp);
         this.$http.post("/resourcemanage/attachment/attachmanage/add",this.$qs.stringify({
-            fileName:this.form.name,
+            fileName:this.fileName,
             productId:this.curProduct.id,
             fileUrl:this.uploadfileresp,
         })).then(
@@ -130,12 +131,13 @@
       console.log(file, fileList);
     },
     handlePreview(file){
-      console.log(file);
+
     },
-      //上传成功之后的结果
-      handlesuccess(response, file, fileList){
-        this.uploadfileresp=response;
-      },
+    //上传成功之后的结果
+    handlesuccess(response, file, fileList){
+      this.uploadfileresp=response;
+      this.fileName = file.name
+    },
     handleExceed(files, fileList){
       this.$message.warning('当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件');
     },
@@ -182,9 +184,7 @@
 </script>
 <style>
   html,body {
-
-    overflow:hidden;
-
+    overflow:scroll;
     margin:0px;
     width:100%;
     height:100%;
@@ -194,7 +194,6 @@
     text-align: left;
     font-size: 17px;
     line-height: 25px;
-    height: 25px;
     text-align: center;
     width: -webkit-max-content;
     margin-bottom: 10px ;
@@ -232,10 +231,8 @@
   }
 
   .el-main {
-
     color: #333;
     text-align: center;
-    height:700px;
     margin-left: 0px;
   }
 

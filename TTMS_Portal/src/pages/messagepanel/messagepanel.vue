@@ -6,7 +6,6 @@
         <div class="top">
           <div class="title03">
             <p class="title" style="color:#B3C0D1">信息面板</p>
-            <p style="color:#2c3e50 ;font-size:15px ">更新时间:2019-5-26</p>
           </div>
           <div class="title02">
             <span>待办事处<p>7</p></span>
