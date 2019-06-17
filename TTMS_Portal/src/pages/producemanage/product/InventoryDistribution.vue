@@ -32,7 +32,7 @@
           </div>
           <div class="body-bottom" style="width:100%;height:70%;">
             <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
-              <el-button type="primary" @click="dialogFormVisible = true">添加分销商</el-button></div>
+              <el-button type="primary"  @click="showAddDistributorUpDialog()">添加分销商</el-button></div>
             <el-dialog title="添加分销商" :visible.sync="dialogFormVisible">
               <el-form :model="form">
                 <el-form-item label="分销商" :label-width="formLabelWidth">
@@ -70,7 +70,7 @@
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary"  @click="addDistribute()">确 定</el-button>
               </div>
             </el-dialog>
             <div class="kk"><el-table :data="tableData" border style="width:100%">
@@ -167,8 +167,9 @@
 
         ],
         dialogTableVisible: false,
+        //dialogFormVisible: false,
         dialogFormVisible: false,
-        dialogFormVisible: false,
+        selectdistributor:"",
         form: {
           name: '',
           region: '',
@@ -197,30 +198,57 @@
             EndData: "2019-7-30",
           },
         ],
-        curProduct:"",
+        curProduct: "",
       }
     },
-        methods:{
-          deleteUser(val){
-            console.log(val)
+    methods: {
+      deleteUser(val) {
+        console.log(val)
 
 //这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
-          },
+      },
 //修改用户
-          modifyUser(val){
-            let self = this;
-          },
-        },
-    created(){
+      modifyUser(val) {
+        let self = this;
+      },
+      showAddDistributorUpDialog() {
+        this.loadDistributor();
+        this.dialogFormVisible = true;
+      },
+
+      addDistribute() {
+        //加载分销商
+        console.log(this.curProduct.id);
+        console.log(this.options.value);
+      },
+    loadDistributor(){
+      this.$http.get("/producemanage/product/productlist/distributors").then(resp=>{
+        var listCats = [];
+        resp.data.forEach(item => {
+          var listCat = {};
+          listCat.label = item.distributorname;
+          listCat.value = item.id;
+          listCats.push(listCat);
+          this.options=listCats;
+        });
+      }).catch(error=>{
+        this.$message.error(error.message);
+      });
+  },
+    },
+    created() {
       //加载当前产品
       var curProduct = JSON.parse(localStorage.getItem("curProduct"));
-      if(curProduct == null){
+      if (curProduct == null) {
         this.$router.push("/login");
       }
       this.curProduct = curProduct;
-    }
+
+      //this.loadDistributor();
+    },
 
   }
+
 
 
 </script>
