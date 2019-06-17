@@ -180,7 +180,7 @@
 
       },
       loadPricePolicyByPid(){
-        this.$http.get("/producemanage/product/productlist/pricepolicy/1").then(resp=>{
+        this.$http.get("/producemanage/product/productlist/pricepolicy/"+this.curProduct.id).then(resp=>{
           this.tableData = [];
           resp.data.forEach(item=>{
             var data = {};
