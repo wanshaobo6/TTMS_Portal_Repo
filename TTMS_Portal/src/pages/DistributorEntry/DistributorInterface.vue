@@ -351,15 +351,25 @@
         });
       },
       downloadfile(row) {
+        //方式1:window.open(this.$http.defaults.baseURL+"/download/" + row.id);
         //Access-Control-Allow-Origin
         localStorage.setItem("signItem", JSON.stringify(row));
         this.$router.replace('/DistributorEntry/DistributorAppendix');
         // console.log(product.id);
-        // this.$http.get("/download/" + product.id).then(resp => {
+        // this.$http.get("/download/" + row.id,{responseType:'arraybuffer'}).then(resp => {
         //   this.$message.success("下载成功，请注意查看")
         // }).catch(error => {
         //   this.$message.error(error.message);
-        //});
+        // });
+        // var downloadElement = document.createElement('a');
+        // var href = this.$http.defaults.baseURL+"/download/" + row.id; //创建下载的链接
+        // downloadElement.href = href;
+        // downloadElement.download = '运营报告.txt'; //下载后文件名
+        // document.body.appendChild(downloadElement);
+        // downloadElement.click(); //点击下载
+        // document.body.removeChild(downloadElement); //下载完成移除元素
+        // window.URL.revokeObjectURL(href); //释放掉blob对象
+
       },
     }
   }

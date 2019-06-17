@@ -147,7 +147,10 @@
       }).catch(error=>{
 
       })
-    }
+    },
+     goback(){
+       this.$router.push("/DistributorEntry/DistributorInterface");
+     }
   },
     created(){
       //加载当前产品
