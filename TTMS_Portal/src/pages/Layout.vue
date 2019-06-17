@@ -73,7 +73,7 @@
       <!--用户头像-->
 
       <v-list-tile avatar close>
-        <el-button type="primary" @click="dialogFormVisible = true" >修改密码</el-button>
+        <el-link type="danger" @click="dialogFormVisible = true"  :underline="false">修改密码</el-link>
           <v-list-tile-avatar>
             <img :src="curUser.image">
           </v-list-tile-avatar>
@@ -286,7 +286,7 @@
   .box {
     width: 90%;
   }
-  .el-button{
+  .el-link{
     margin-right: 20px;
   }
 </style>
