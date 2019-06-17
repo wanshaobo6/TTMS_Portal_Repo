@@ -357,7 +357,7 @@
         //方式1:window.open(this.$http.defaults.baseURL+"/download/" + row.id);
         //Access-Control-Allow-Origin
         localStorage.setItem("signItem", JSON.stringify(row));
-        this.$router.replace('/DistributorEntry/DistributorAppendix');
+        this.$router.push('/DistributorEntry/DistributorAppendix');
         // console.log(product.id);
         // this.$http.get("/download/" + row.id,{responseType:'arraybuffer'}).then(resp => {
         //   this.$message.success("下载成功，请注意查看")
@@ -367,10 +367,6 @@
       },
        loadCurDistributor(){
          this.$http.get("/distributorEntry/getCurDistributor").then(resp=>{
-           if(resp.data.id != this.curDistributor.id){
-             Promise.reject();
-             this.$router.push("/login");
-           }
           this.curDistributor = resp.data;
         }).catch(error=>{
           this.$message.error(error.message);

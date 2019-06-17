@@ -79,7 +79,8 @@
           delivery: false,
           type: [],
           resource: '',
-          desc: ''
+          desc: '',
+          curDistributor:{},
         },
         formLabelWidth: '120px',
         curProduct: {},   //当前产品
@@ -152,6 +153,11 @@
       }
   },
     created(){
+      //获取当前登录者
+      var cdStr = localStorage.getItem("curDistributor");
+      if(cdStr == null || cdStr =="")
+        this.$router.push("/login");
+      this.curDistributor = JSON.parse(cdStr);
       //加载当前产品
       this.loadCurrentProject();
       //加载所有附件
