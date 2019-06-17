@@ -3,7 +3,13 @@
     <el-container>
       <el-main>
         <div class="enroll">
-          <span> <h2>分销商报名入口</h2></span>
+          <el-row :gutter="10">
+            <!--@click="goback"-->
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" ></el-button></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
+            <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">分销商报名入口</h1></el-col>
+            <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>
+          </el-row>
         </div>
         <div class="firstRow" style="margin-top: 60px">
           <el-row :gutter="20">
@@ -132,6 +138,10 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
+                   <v-icon class ="material-icons" @click="downloadfile(scope.row)">
+                      save_alt
+                    </v-icon>
+                    <el-button type="info" icon="el-icon-message" circle></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -147,204 +157,6 @@
                 </el-pagination>
               </div>
             </div>
-    <el-header>
-      <div class="left" style="color:#ffffff;">
-        你好，欢迎来到旅游官方网站
-      </div>
-      <div class="right">
-        <i class="el-icon-message" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;xxxx@qq.com</i>
-        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-        <i class="el-icon-phone" style="color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;400-000-0000</i>
-      </div>
-    </el-header>
-    <el-main>
-
-      <div class="link">
-        <span style="color:goldenrod;">Travel</span>
-        <el-link type="info">首页</el-link>
-        <el-link type="info">关于我们</el-link>
-        <el-link type="info">旅行预约</el-link>
-        <el-link type="info">精选路线</el-link>
-        <el-link type="info">新闻中心</el-link>
-        <el-link type="info">联系我们</el-link>
-      </div>
-      <div class="block">
-        <el-carousel height="600px">
-          <el-carousel-item v-for="item in list" :key="list.id">
-            <!-- <img src="../assets/1.jpg">-->
-            <img :src="item.url">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="image">
-        <h2>select route</h2>
-        <i class="el-icon-star-on"></i>  <i class="el-icon-star-on"></i> <i class="el-icon-star-on"></i>
-        <h2>精选路线</h2>
-
-        <el-row :gutter="20">
-          <el-col :span="2"><div class="grid-content "> </div></el-col>
-          <el-col :span="4"><div class="grid-content route1"><h3>推荐路线</h3> <h3>Recommanded Route</h3></div></el-col>
-          <el-col :span="4"><div class="grid-content route2"><h3>较热路线</h3> <h3>Latest Route</h3></div></el-col>
-          <el-col :span="4"><div class="grid-content route3"><h3>国内路线</h3> <h3>Domestic Route</h3></div></el-col>
-          <el-col :span="4"><div class="grid-content route4"><h3>国外路线</h3> <h3>Foreignc Route</h3></div></el-col>
-          <el-col :span="4"><div class="grid-content route5"><h3>自由行</h3> <h3>Independent travel</h3></div></el-col>
-          <el-col :span="2"><div class="grid-content "> </div></el-col>
-        </el-row>
-      </div>
-      <div class="enroll">
-        <span> <h2>分销商报名入口</h2></span>
-      </div>
-      <div class="firstRow" style="margin-top: 60px">
-        <el-row :gutter="20">
-          <el-col :span="3"><div class="grid-content "><el-select v-model="status"  placeholder="状态">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select></div></el-col>
-          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedFirstCatId" @change="loadCats(selectedFirstCatId,2)" placeholder="一级分类">
-            <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select></div></el-col>
-
-          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedSecondCatId"  @change="loadCats(selectedSecondCatId,3)"placeholder="二级分类">
-            <el-option
-              v-for="item in options2"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select></div></el-col>
-          <el-col :span="3"><div class="grid-content "><el-select v-model="selectedThirdCatId"  placeholder="三级分类">
-            <el-option
-              v-for="item in options3"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select></div></el-col>
-          <el-col :span="4"><div class="grid-content "><el-input v-model="input2" placeholder="项目名称"></el-input></div></el-col>
-          <el-col :span="4"><div class="grid-content "><el-input v-model="input3" placeholder="产品编号"></el-input></div></el-col>
-        </el-row>
-      </div>
-      <div class="secondRow">
-        <el-row :gutter="4">
-          <el-col :span="3"><div class="grid-content "><el-input v-model="input4" placeholder="产品名称"></el-input></div></el-col>
-          <el-col :span="3"><div class="grid-content ">
-            <div class="block">
-              <el-date-picker v-model="StartTime"  value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="开始时间"></el-date-picker></div>
-          </div></el-col>
-          <el-col :span="3"><div class="grid-content ">
-            <div class="block">
-              <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="结束时间"></el-date-picker></div>
-          </div></el-col>
-          <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
-          <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-          <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
-          <div class="body">
-            <el-table
-              ref="multipleTable"
-              :data="tableData"
-              tooltip-effect="dark"
-              style="width: 100%"
-              @selection-change="handleSelectionChange">
-              <el-table-column
-                type="selection"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                prop="status"
-                label="状态"
-                width="35">
-              </el-table-column>
-              <el-table-column
-                prop="classify"
-                label="类别"
-                width="110">
-              </el-table-column>
-              <el-table-column
-                prop="project"
-                label="所属项目"
-                width="110">
-              </el-table-column>
-              <el-table-column
-                prop="Tname"
-                label="团名称"
-                width="110">
-              </el-table-column>
-              <el-table-column
-                prop="ProductID"
-                label="产品编号"
-                width="150">
-              </el-table-column>
-              <el-table-column
-                prop="Pname"
-                label="产品名称"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                prop="start"
-                label="服务开始时间"
-                width="130">
-              </el-table-column>
-              <el-table-column
-                prop="end"
-                label="服务结束时间"
-                width="130">
-              </el-table-column>
-              <el-table-column
-                prop="pre"
-                label="预"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                prop="already"
-                label="已"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                prop="remain"
-                label="余"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                prop="price"
-                label="产品价格"
-                width="70">
-              </el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini" type="primary"    @click="gotolink(scope.row)">查看详情</el-button>
-                  <v-icon class ="material-icons pl-2 pt-2" @click="downloadfile(scope.row.id)">
-                    vertical_align_bottom
-                  </v-icon>
-                </template>
-               <!-- <template slot-scope="scope">
-                <i class =“material-icons”>
-                  vertical_align_bottom
-                </i>
-                </template>-->
-              </el-table-column>
-            </el-table>
-            <div class="page">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[5, 10, 15, 20]"
-                :page-size="5"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="totalItem">
-              </el-pagination>
-            </div>
-          </div>
 
           </el-row>
         </div>
@@ -353,7 +165,6 @@
     </el-container>
   </el-container>
 </template>
-
 <script>
   export default {
     name: 'DistributorInterface',
@@ -541,19 +352,39 @@
           alert(error.message);
         });
       },
-      downloadfile(id){
-        console.log(id);
-        this.$http.get("/download/"+id).then(resp=>{
+      downloadfile(product) {
+        //Access-Control-Allow-Origin
+        console.log(product.id);
+        this.$http.get("/download/" + product.id).then(resp => {
+          this.$message.success("下载成功，请注意查看")
+        }).catch(error => {
+          this.$message.error(error.message);
+        });
+        /*
+        /!*axios.defaults.headers('Access-Control-Allow-Origin:*'); // 远程访问权限允许所有（该项必须设置）
+//注：如果 Access-control-Allow-Credentials 为 true 则 Access-Control-Allow-Origin 必须 设置确定的域名 不能使用通配符。如下：
+axios.defaults.headers('Access-Control-Allow-Origin:http://127.0.0.1:8080');
+
+axios.defaults.headers('Access-control-Allow-Credentials:true');//默认 false  是否同意发送Cookie  如果前端请求 withCredentials:true 则该项须设置为true
+
+axios.defaults.headers('Access-control-Allow-Methods:GET,POST');*!/
+        this.$http.get(("/download/"+product.id), {
+          headers: {
+            'Content-Type': 'application/x-download',
+            'Access-Control-Allow-Origin':'http://127.0.0.1:8080',
+            'Access-control-Allow-Credentials':'true',
+
+          }
+        }).then(resp=>{
           this.$message.success("下载成功，请注意查看")
         }).catch(error=>{
           this.$message.error(error.message);
         });
-
         console.log("下载文件");
+      },*/
+
+
       },
-
-
-
     }
   }
 
@@ -675,10 +506,10 @@
   }
   .el-row {
     margin-bottom: 20px;
-  &:last-child {
-     margin-bottom: 0;
+/*  .last-child {
+     margin-bottom: 0;*/
    }
-  }
+
   .el-col {
     border-radius: 4px;
   }
