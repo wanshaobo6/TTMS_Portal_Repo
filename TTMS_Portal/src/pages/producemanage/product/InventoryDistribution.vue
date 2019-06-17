@@ -32,7 +32,7 @@
           </div>
           <div class="body-bottom" style="width:100%;height:70%;">
             <div class="menu" style="padding: 0px 0px 10px 10px ;text-align:left;">
-              <el-button type="primary"  @click="showAddDistributorUpDialog()">添加分销商</el-button></div>
+            <el-button type="primary"  @click="showAddDistributorUpDialog()">添加分销商</el-button></div>
             <el-dialog title="添加分销商" :visible.sync="dialogFormVisible">
               <el-form :model="form">
                 <el-form-item label="分销商" :label-width="formLabelWidth">
@@ -86,17 +86,13 @@
               </el-table-column>
               <el-table-column prop="EndData" label="销售终止日期" width="150">
               </el-table-column>
-
-
               <el-table-column label="操作" align="center" min-width="70">
                 <template slot-scope="scope">
                 　　　　<el-button type="info" @click="modifyUser()">修改</el-button>
-                  　　　　　　<el-button type="danger" @click="deleteUser(scope.row)">取消分销</el-button>
-</template>
-
-　　</el-table-column>
+                  　　　<el-button type="danger" @click="deleteUser(scope.row)">取消分销</el-button>
+                </template>
+　　            </el-table-column>
             </el-table>
-
             </div>
           </div>
         </div>
@@ -205,11 +201,10 @@
     },
     methods: {
       deleteUser(val) {
-        console.log(val.id);
         this.$http.delete("/producemanage/product/productlist/privilege/distributor",{
           params:{
             productId:this.curProduct.id,
-            productDistributorId:val.id,
+            productDistributorId:val.DistributorNumber,
           }
         }).then(resp=>{
           this.$message.success("取消分销商成功")

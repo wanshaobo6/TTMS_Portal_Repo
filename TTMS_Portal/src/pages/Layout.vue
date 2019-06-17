@@ -269,7 +269,7 @@
         });
       },
       goIndex(){
-        this.$router.push("/index/dashboard");
+        this.$router.push("/messagepanel");
       }
     },
     watch: {},
