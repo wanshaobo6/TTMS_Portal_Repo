@@ -174,8 +174,16 @@
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button
-                    size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
+                    size="mini" type="primary"    @click="gotolink(scope.row)">查看详情</el-button>
+                  <v-icon class ="material-icons pl-2 pt-2" @click="downloadfile(scope.row.id)">
+                    vertical_align_bottom
+                  </v-icon>
                 </template>
+               <!-- <template slot-scope="scope">
+                <i class =“material-icons”>
+                  vertical_align_bottom
+                </i>
+                </template>-->
               </el-table-column>
             </el-table>
             <div class="page">
@@ -395,6 +403,16 @@
         }).catch(error => {
           alert(error.message);
         });
+      },
+      downloadfile(id){
+        console.log(id);
+        this.$http.get("/download/"+id).then(resp=>{
+          this.$message.success("下载成功，请注意查看")
+        }).catch(error=>{
+          this.$message.error(error.message);
+        });
+
+        console.log("下载文件");
       },
 
 
