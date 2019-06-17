@@ -351,13 +351,12 @@
         }).then(resp => {
 
           //成功
-          console.log(resp);
           this.totalItem = resp.data.total;
           var tables = [];
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus==1 ? "上架":"上架" &&  listItem.productstatus==0 ? "待售":"待售" &&  listItem.productstatus==2 ? "下架":"下架";
+            table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname= listItem.productcatnames;
@@ -370,7 +369,7 @@
             table.remain=listItem.lowestnumber;
             table.price=listItem.productprice;
             table.createproname=listItem.productcatnames;
-            table.createusername = listItem.createproductname;
+            table.createusername = listItem.createusername;
             tables.push(table);
           });
           this.tableData = tables;
@@ -438,7 +437,7 @@
 </script>
 <style>
   html,body {
-    overflow:hidden;
+    overflow:scroll;
     margin:0px;
     width:100%;
     height:100%;

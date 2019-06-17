@@ -24,9 +24,10 @@ export default new Router({
     {
       path:"/", // 根路径，路由到 Layout组件
       component: () => import('../pages/Layout'),
-      redirect:"/index/dashboard",
+      redirect:"/messagepanel",
       children:[ // 其它所有组件都是 Layout的子组件
         route("/index/dashboard","/Dashboard","Dashboard"),
+        route("/messagepanel",'/messagepanel/messagepanel',"messagepanel"), //消息面板
         ///#后面的路径index/dashboard   对应带pages/producemanage/group/groupmanage
         route("/news/notifymanage/notifymanage",'/news/notifymanage/notifymanage',"NotifyManage"),
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
@@ -37,7 +38,6 @@ export default new Router({
         route("/producemanage/product/productList/InventoryDistribution",'/producemanage/product/InventoryDistribution',"InventoryDistribution"),
         route("/producemanage/product/productList/appendix",'/producemanage/product/appendix',"appendix"),
         route("/producemanage/product/productList/DreferentialPolicy",'/producemanage/product/DreferentialPolicy',"DreferentialPolicy"),
-        route("/InfoPanel",'/InfoPanel',"InfoPanel"),
         route("/ProductClassify",'/ProductClassify',"ProductClassify"),
         route("/producemanage/product/createproduct",'/producemanage/product/createproduct',"CreateProduct"),
         route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),

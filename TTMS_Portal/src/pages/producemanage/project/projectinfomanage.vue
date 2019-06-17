@@ -97,13 +97,14 @@
             <el-table-column prop="department" label="归属部门" width="80"></el-table-column>
             <el-table-column prop="start" label="开始日期" width="90"></el-table-column>
             <el-table-column prop="end" label="结束日期" width="90"></el-table-column>
+
+            <el-table-column label="备注" prop="comment" width="200"></el-table-column>
             <el-table-column prop="status" label="状态" width="50">
               <template slot-scope="scope">
                 <span v-show="scope.row.status == 1" style="color: green">启用</span>
                 <span v-show="scope.row.status == 0" style="color: red">禁用</span></template>
             </el-table-column>
-            <el-table-column label="备注" prop="comment" width="200"></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" >
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
                 <el-button size="mini" v-show="scope.row.status == 1" @click="validOrInValid(scope.row)">禁用</el-button>

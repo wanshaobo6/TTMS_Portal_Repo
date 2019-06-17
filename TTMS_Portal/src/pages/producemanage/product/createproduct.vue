@@ -258,7 +258,7 @@
         if ( this.selectedGroupId ==""|| this.selectedFirstCatId=="" ||this.selectedSecondCatId=="" ||this.selectedThirdCatId==""
           || this.form.productName=="" || this.form.serverStartTime=="" ||this.form.serverEndTime=="" || this.preSellNumber=="" ||this.lowestNumber==""
           || this.form.upTime=="" || this.form.downTime=="" || this.form.tip=="" ||this.form.desc=="" ) {
-          alert('您还有信息未填')
+          this.$message.error("补充完整信息");
         } else {
           this.$http.post("/producemanage/product/createproduct/createProduct", this.$qs.stringify({
             groupId: this.selectedGroupId,

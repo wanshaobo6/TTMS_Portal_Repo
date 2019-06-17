@@ -6,7 +6,6 @@
         <div class="top">
           <div class="title03">
             <p class="title" style="color:#B3C0D1">信息面板</p>
-            <p style="color:#2c3e50 ;font-size:15px ">更新时间:2019-5-26</p>
           </div>
           <div class="title02">
             <span>待办事处<p>7</p></span>
@@ -144,19 +143,8 @@
 </script>
 
 <style>
-  html,body {
 
-    overflow:hidden;
-
-    margin:0px;
-
-    width:100%;
-
-    height:100%;
-
-  }
   .top{
-    display:flex;
     justify-content: space-between;
     align-items: center;
     vertical-align: middle;
@@ -164,62 +152,6 @@
   .title02{
    display:flex;
 
-  }
-
-
-
-
-
-
-
-  .title {
-    text-align: left;
-    font-size: 20px;
-    margin-bottom: 15px;
-    font-family: "Helvetica Neue";
-    font-style: normal;
-
-
-  }
-
-
-  .el-col {
-    border-radius: 4px;
-  }
-  .left- {
-    position: relative;
-    padding: 10px 10px 10px 10px;
-
-  }
-  .{
-    margin-top: 5px;
-    margin-bottom: 100px;
-    padding: 10px 10px 10px 10px;
-
-  }
-
-
-  .el-main {
-
-    color: #333;
-    text-align: center;
-    height:700px;
-    margin-top:-60px ;
-    background-color: white;
-  }
-
-  body > .el-container {
-    margin-bottom: 40px;
-
-  }
-
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
   }
 
 
@@ -246,25 +178,7 @@
     padding: 10px 0;
     background-color: #f9fafc;
   }
-.body{
-  margin-top: 10px;
-  margin-left: 10px;
 
-}
-.left-top{
-  height: 300px;
-}
-  .right-top{
-    height: 400px;
-  }
-  .left-bottom{
-    height: 150px;
-    padding: 80px 0px 0px 0px;
-  }
-  .right-bottom{
-    height: 150px;
-    padding:60px 0px 0px 0px;
-  }
 .title04{
   display:flex;
   background:#000;
