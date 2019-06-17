@@ -64,12 +64,23 @@
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/>
       </v-btn>
+      <v-btn icon>
+        <i class="material-icons" @click="goIndex">
+          home
+        </i>
+      </v-btn>
       <!--模块名称-->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="module in modules"  :key="module.moduleName" v-text="module.moduleName" @click="updateMenus(module)"></v-btn>
       </v-toolbar-items>
       <!-- 顶部导航标题 -->
       <v-spacer></v-spacer>
+      <v-switch
+        :label="dark ? '暗黑' : '明亮'"
+        v-model="dark"
+        color="dark"
+        hide-details
+      />
       <!--用户头像-->
       <el-dropdown placement="bottom">
         <v-list-tile avatar close>
@@ -256,8 +267,10 @@
           });
         }).catch(() => {
         });
+      },
+      goIndex(){
+        this.$router.push("/index/dashboard");
       }
-
     },
     watch: {},
     created(){

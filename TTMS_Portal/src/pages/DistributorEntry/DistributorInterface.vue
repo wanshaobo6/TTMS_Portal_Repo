@@ -5,7 +5,7 @@
         <div class="enroll">
           <el-row>
             <el-col :xs="12" :sm="13" :md="13" :lg="13" :xl="13"><h1 style="float:right;font-size: 30px;">分销商入口</h1></el-col>
-            <el-col :xs="12" :sm="11" :md="11" :lg="11" :xl="11">当前用户:{{this.curDistributor.distributorname}} {{this.curDistributor.loginname}} <a href="javascriptvoid(0)" @click="logout">退出登录</a></el-col>
+            <el-col :xs="12" :sm="11" :md="11" :lg="11" :xl="11">当前用户:{{this.curDistributor.distributorname}} {{this.curDistributor.loginname}} <a href="javascript:void(0)" @click="logout">退出登录</a></el-col>
           </el-row>
         </div>
         <div class="firstRow" style="margin-top: 60px">
@@ -380,6 +380,24 @@
          })
       },
       logout(){
+        //退出登录
+        this.$confirm('此操作将安全退出当前用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(resp=>{
+          this.$http.get("/distributorEntry/loginout").then(resp=>{
+              this.$message.success("退出成功");
+              setTimeout(()=>{
+                this.$router.push("/login");
+              },1000)
+          }).catch(error=>{
+            this.$message.error(error.message);
+            setTimeout(()=>{
+              this.$router.push("/login");
+            },1000)
+          })
+        });
       }
     }
   }
@@ -425,7 +443,7 @@
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    height:700px;
+    height:800px;
     margin-top: -60px;
   }
 
