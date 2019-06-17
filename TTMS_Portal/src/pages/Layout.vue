@@ -64,6 +64,11 @@
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/>
       </v-btn>
+      <v-btn icon>
+        <i class="material-icons">
+          home
+        </i>
+      </v-btn>
       <!--模块名称-->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="module in modules"  :key="module.moduleName" v-text="module.moduleName" @click="updateMenus(module)"></v-btn>
