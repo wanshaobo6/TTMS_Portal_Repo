@@ -14,15 +14,18 @@
           <div class="body-upside" style="width:100%;height:30%">
             <el-row :gutter="24">
               <el-col :span="10">
-                <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;TPCN-78956789</span></div>
-                  <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;王毅</span></div>
-                  <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;5555￥</span></div>
+                <div class="grid-content"><div class="title01"><b>产品编号：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.ProductID}}</span></div>
+                  <div class="title01"><b>产品负责人:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.createusername}}</span></div>
+                  <div class="title01"><b>价格信息：</b><span>&nbsp;&nbsp;&nbsp;￥{{curProduct.price}}</span></div>
                 </div>
               </el-col>
               <el-col :span="14">
-                <div class="grid-content "><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;兵马俑制作+大明宫游+拓片体验亲子文化游3晚4天</span></div>
-                  <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;2019-05-28~2019-6-29</span></div>
-                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品上架</span></div>
+                <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.Pname}}</span></div>
+                  <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.start}}~{{curProduct.end}}</span></div>
+                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品
+                    <span v-show="curProduct.status==0">待售</span>
+                    <span v-show="curProduct.status==1">上架</span>
+                    <span v-show="curProduct.status==2">下架</span></span></div>
                 </div>
               </el-col>
             </el-row>
@@ -194,7 +197,7 @@
             EndData: "2019-7-30",
           },
         ],
-
+        curProduct:"",
       }
     },
         methods:{
@@ -207,9 +210,15 @@
           modifyUser(val){
             let self = this;
           },
-
-
-        }
+        },
+    created(){
+      //加载当前产品
+      var curProduct = JSON.parse(localStorage.getItem("curProduct"));
+      if(curProduct == null){
+        this.$router.push("/login");
+      }
+      this.curProduct = curProduct;
+    }
 
   }
 

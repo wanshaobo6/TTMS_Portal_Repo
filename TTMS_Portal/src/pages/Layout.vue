@@ -71,19 +71,21 @@
       <!-- 顶部导航标题 -->
       <v-spacer></v-spacer>
       <!--用户头像-->
-
-      <v-list-tile avatar close>
-        <el-link type="danger" @click="dialogFormVisible = true"  :underline="false">修改密码</el-link>
-          <v-list-tile-avatar>
-            <img :src="curUser.image">
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
+      <el-dropdown placement="bottom">
+        <v-list-tile avatar close>
+           <v-list-tile-avatar>
+              <img :src="curUser.image">
+           </v-list-tile-avatar>
+           <v-list-tile-content>
+           <v-list-tile-title v-text="curUser.username"></v-list-tile-title>
           </v-list-tile-content>
-        <v-btn flat icon color="red" @click="logout" >
-          <v-icon >close</v-icon>
-        </v-btn>
-      </v-list-tile>
+        </v-list-tile>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="">基本资料</el-dropdown-item>
+          <el-dropdown-item @click.native="dialogFormVisible = true">修改密码</el-dropdown-item>
+          <el-dropdown-item @click.native="logout()">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </v-toolbar>
 
     <!--中间内容主体-->
@@ -192,6 +194,8 @@
       updateMenus(module){
         this.items = module.menus;
         this.baseUrl = module.path;
+        //跳转当前页面到默认页
+        this.$router.push(this.baseUrl+this.items[0].path+this.items[0].menusItems[0].path);
       },
       open(msg) {
         this.$alert(msg, '提示', {
