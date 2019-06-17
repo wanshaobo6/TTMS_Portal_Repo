@@ -157,30 +157,30 @@
     data() {
       return {
         activeName: 'first',
-        catOptions1:[],
-        catOptions2:[],
-        catOptions3:[],
+        catOptions1: [],
+        catOptions2: [],
+        catOptions3: [],
         groupOptions: [],
         selectedFirstCatId: '',
         selectedSecondCatId: '',
         selectedThirdCatId: '',
-        selectedGroupId:"",
-        chargerName:"",
+        selectedGroupId: "",
+        chargerName: "",
 
         form: {
           productNumber: '', //产品编号
-          productChargerId:"",//产品负责人Id
-          productChargerName:"",  //产品负责人
-          productName:"",  //产品名称
-          serverStartTime:"",   //服务开始时间
-          serverEndTime:"",     //服务结束时间
-          preSellNumber:"",   //预售数量
-          lowestNumber:"",  //最低数量
-          upTime:"",      //上架时间
-          downTime:"",    //下架时间
-          price:"",       //价格
-          tip:"",       //提示
-          desc:"",      //描述
+          productChargerId: "",//产品负责人Id
+          productChargerName: "",  //产品负责人
+          productName: "",  //产品名称
+          serverStartTime: "",   //服务开始时间
+          serverEndTime: "",     //服务结束时间
+          preSellNumber: "",   //预售数量
+          lowestNumber: "",  //最低数量
+          upTime: "",      //上架时间
+          downTime: "",    //下架时间
+          price: "",       //价格
+          tip: "",       //提示
+          desc: "",      //描述
           region: ''
         }
 
@@ -191,22 +191,22 @@
         console.log(tab, event);
       },
       //根据父id和级别加载对应的分类
-      loadNCatById(pid,level){
-        this.$http.get("/producemanage/product/createproduct/queryCatById",{
-          params:{
-            catId : pid
+      loadNCatById(pid, level) {
+        this.$http.get("/producemanage/product/createproduct/queryCatById", {
+          params: {
+            catId: pid
           }
-        }).then(resp=>{
+        }).then(resp => {
           var tempCats = [];
-          resp.data.forEach(item=>{
+          resp.data.forEach(item => {
             var tempCat = {};
             tempCat.label = item.productcatname;
-            tempCat.value =  item.id;
+            tempCat.value = item.id;
             tempCats.push(tempCat);
           });
-          switch(level) {
+          switch (level) {
             case 1:
-             this.catOptions1 = tempCats;
+              this.catOptions1 = tempCats;
               break;
             case 2:
               this.catOptions2 = tempCats;
@@ -217,78 +217,86 @@
             default:
               break;
           }
-        }).catch(error=>{
+        }).catch(error => {
           this.$message.error(error.message);
         })
       },
       //加载二级分类
-      loadSecondCats(pid){
-        this.loadNCatById(pid,2);
+      loadSecondCats(pid) {
+        this.loadNCatById(pid, 2);
       },
       //加载三级分类
-      loadThridCats(pid){
-        this.loadNCatById(pid,3);
+      loadThridCats(pid) {
+        this.loadNCatById(pid, 3);
       },
-      loadGroup(){
-        this.$http.get("/producemanage/product/createproduct/queryAllGroups").then(resp=>{
-            var  tempGroups = [];
-            resp.data.forEach(item=>{
-              var tempGroup = {};
-              tempGroup.label = item.groupname;
-              tempGroup.value = item.id;
-              tempGroups.push(tempGroup);
-            })
-           this.groupOptions = tempGroups;
-        }).catch(error=>{
+      loadGroup() {
+        this.$http.get("/producemanage/product/createproduct/queryAllGroups").then(resp => {
+          var tempGroups = [];
+          resp.data.forEach(item => {
+            var tempGroup = {};
+            tempGroup.label = item.groupname;
+            tempGroup.value = item.id;
+            tempGroups.push(tempGroup);
+          })
+          this.groupOptions = tempGroups;
+        }).catch(error => {
 
         })
       },
+
       //改变要创建团的产品
-      changeGroup(groupId){
-        this.$http.get("/producemanage/product/createproduct/AmIcharger/"+groupId).then(resp=>{
-            this.form.id = resp.data.id;
-            this.form.productChargerName = resp.data.username;
-        }).catch(error=>{
-            this.$message.error(error.message);
+      changeGroup(groupId) {
+        this.$http.get("/producemanage/product/createproduct/AmIcharger/" + groupId).then(resp => {
+          this.form.id = resp.data.id;
+          this.form.productChargerName = resp.data.username;
+        }).catch(error => {
+          this.$message.error(error.message);
         })
       },
       //创建产品
-      createProduct(){
-        this.$http.post("/producemanage/product/createproduct/createProduct",this.$qs.stringify({
-          groupId:this.selectedGroupId,
-          productCatId1:this.selectedFirstCatId,
-          productCatId2:this.selectedSecondCatId,
-          productCatId3:this.selectedThirdCatId,
-          productName:this.form.productName,
-          serverStartTime:new Date(this.form.serverStartTime).format("yyyy-MM-dd hh:mm:ss"),
-          serverEndTime: new Date(this.form.serverEndTime).format("yyyy-MM-dd hh:mm:ss"),
-          preSellNumber:this.form.preSellNumber,
-          lowestNumber:this.form.lowestNumber,
-          selledNumber:"0",
-          onsellTime:new Date(this.form.upTime).format("yyyy-MM-dd hh:mm:ss"),
-          productPrice:this.form.price,
-          upsellTime:new Date(this.form.downTime).format("yyyy-MM-dd hh:mm:ss"),
-          hotTip:this.form.tip,
-          productIntroduction:this.form.desc,
+      createProduct() {
+        if ( this.selectedGroupId ==""|| this.selectedFirstCatId=="" ||this.selectedSecondCatId=="" ||this.selectedThirdCatId==""
+          || this.form.productName=="" || this.form.serverStartTime=="" ||this.form.serverEndTime=="" || this.preSellNumber=="" ||this.lowestNumber==""
+          || this.form.upTime=="" || this.form.downTime=="" || this.form.tip=="" ||this.form.desc=="" ) {
+          alert('您还有信息未填')
+        } else {
+          this.$http.post("/producemanage/product/createproduct/createProduct", this.$qs.stringify({
+            groupId: this.selectedGroupId,
+            productCatId1: this.selectedFirstCatId,
+            productCatId2: this.selectedSecondCatId,
+            productCatId3: this.selectedThirdCatId,
+            productName: this.form.productName,
+            serverStartTime: new Date(this.form.serverStartTime).format("yyyy-MM-dd hh:mm:ss"),
+            serverEndTime: new Date(this.form.serverEndTime).format("yyyy-MM-dd hh:mm:ss"),
+            preSellNumber: this.form.preSellNumber,
+            lowestNumber: this.form.lowestNumber,
+            selledNumber: "0",
+            onsellTime: new Date(this.form.upTime).format("yyyy-MM-dd hh:mm:ss"),
+            productPrice: this.form.price,
+            upsellTime: new Date(this.form.downTime).format("yyyy-MM-dd hh:mm:ss"),
+            hotTip: this.form.tip,
+            productIntroduction: this.form.desc,
 
-        })).then(resp=>{
-          this.$message.success("创建产品成功");
+          })).then(resp => {
+            this.$message.success("创建产品成功");
             console.log(resp.data);
-        }).catch(error=>{
+          }).catch(error => {
             this.$message.error(error.message);
-        })
+          })
+        }
       }
-    },
-    props:[
-     'user',//父组件传来的当前用户参数
-    ],
-    created(){
-      //加载一级分类
-      this.loadNCatById(0,1);
+      },
+      props: [
+        'user',//父组件传来的当前用户参数
+      ],
+      created() {
+        //加载一级分类
+        this.loadNCatById(0, 1);
 
-      //加载可用团
-      this.loadGroup();
-    }
+        //加载可用团
+        this.loadGroup();
+      },
+
   };
 </script>
 
@@ -320,7 +328,7 @@
     line-height: 25px;
     height: 25px;
     text-align: center;
-    width: -webkit-max-content;
+
     margin-bottom: 20px;
 
   }

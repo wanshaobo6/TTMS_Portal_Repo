@@ -22,10 +22,10 @@
               <el-col :span="14">
                 <div class="grid-content bg-purple"><div class="title01"><b>产品名称:</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.Pname}}</span></div>
                   <div class="title01"><b>服务日期：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.start}}~{{curProduct.end}}</span></div>
-                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;产品
-                    <span v-show="curProduct.status==0">待售</span>
+                  <div class="title01"><b>状态：</b><span>&nbsp;&nbsp;&nbsp;{{curProduct.status}}
+                    <!--<span v-show="curProduct.status==0">待售</span>
                     <span v-show="curProduct.status==1">上架</span>
-                    <span v-show="curProduct.status==2">下架</span></span></div>
+                    <span v-show="curProduct.status==2">下架</span>--></span></div>
                 </div>
               </el-col>
             </el-row>
@@ -78,7 +78,9 @@
               </el-table-column>
               <el-table-column prop="DistributorName" label="分销商名称" width="150">
               </el-table-column>
-              <el-table-column prop="AssignedAmount" label="分配数量" width="150">
+              <el-table-column prop="AssignedAmount" label="分销商电话" width="150">
+              </el-table-column>
+              <el-table-column prop="distributionaddress" label="分销商地址" width="150">
               </el-table-column>
               <el-table-column prop="StartData" label="销售开始日期" width="150">
               </el-table-column>
@@ -87,9 +89,9 @@
 
 
               <el-table-column label="操作" align="center" min-width="70">
-                <template>
-                　　　　<el-button type="info" @click="modifyUser(scope.row.phone)">修改</el-button>
-                  　　　　　　<el-button type="danger" @click="deleteUser(scope.row.phone)">删除</el-button>
+                <template slot-scope="scope">
+                　　　　<el-button type="info" @click="modifyUser()">修改</el-button>
+                  　　　　　　<el-button type="danger" @click="deleteUser(scope.row)">取消分销</el-button>
 </template>
 
 　　</el-table-column>
@@ -203,8 +205,18 @@
     },
     methods: {
       deleteUser(val) {
-        console.log(val)
-
+        console.log(val.id);
+        this.$http.delete("/producemanage/product/productlist/privilege/distributor",{
+          params:{
+            productId:this.curProduct.id,
+            productDistributorId:val.id,
+          }
+        }).then(resp=>{
+          this.$message.success("取消分销商成功")
+          this.loadDistributorAll();
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
 //这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
       },
 //修改用户
@@ -235,6 +247,25 @@
         this.$message.error(error.message);
       });
   },
+
+      loadDistributorAll(){
+        this.$http.get("/producemanage/product/productlist/distributor/"+this.curProduct.id).then(resp=>{
+          this.tableData = [];
+          resp.data.forEach(item=>{
+            var data = {};
+            data.DistributorNumber = item.id;
+            data.DistributorName = item.distributorname;
+            data.AssignedAmount = item.distributorphone;
+            data.distributionaddress=item.distributoraddress;
+            data.StartData = new Date(item.serverstarttime).format("yyyy-MM-dd hh:mm:ss");
+            data.EndData = new Date(item.serverendtime).format("yyyy-MM-dd hh:mm:ss");
+
+            this.tableData.push(data);
+          })
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
     },
     created() {
       //加载当前产品
@@ -243,6 +274,7 @@
         this.$router.push("/login");
       }
       this.curProduct = curProduct;
+      this.loadDistributorAll();
 
       //this.loadDistributor();
     },
