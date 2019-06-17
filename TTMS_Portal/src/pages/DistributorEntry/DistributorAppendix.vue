@@ -3,7 +3,7 @@
     <el-main>
       <div class="enroll">
         <el-row :gutter="10">
-          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" @click="goback"></el-button></el-col>
+          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><el-button  class="primary" icon="el-icon-caret-left" @click="goback">返回上一页</el-button></el-col>
           <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"></el-col>
           <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><h1 style="float:right;font-size: 30px;">附件下载页面</h1></el-col>
           <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"></el-col>

@@ -325,7 +325,6 @@
         }).then(resp => {
 
           //成功
-          console.log(resp);
           this.totalItem = resp.data.total;
           var tables = [];
           resp.data.items.forEach(listItem => {
@@ -351,14 +350,16 @@
           alert(error.message);
         });
       },
-      downloadfile(product) {
+      downloadfile(row) {
         //Access-Control-Allow-Origin
-        console.log(product.id);
-        this.$http.get("/download/" + product.id).then(resp => {
-          this.$message.success("下载成功，请注意查看")
-        }).catch(error => {
-          this.$message.error(error.message);
-        });
+        localStorage.setItem("signItem", JSON.stringify(row));
+        this.$router.replace('/DistributorEntry/DistributorAppendix');
+        // console.log(product.id);
+        // this.$http.get("/download/" + product.id).then(resp => {
+        //   this.$message.success("下载成功，请注意查看")
+        // }).catch(error => {
+        //   this.$message.error(error.message);
+        //});
       },
     }
   }
