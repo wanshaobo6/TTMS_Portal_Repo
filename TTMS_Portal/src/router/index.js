@@ -44,7 +44,22 @@ export default new Router({
         route("/sysmanage/userauth/rolemanage",'/sysmanage/userauth/rolemanage',"rolemanage"),
         route("/sysmanage/userauth/usermanage",'/sysmanage/userauth/usermanage',"UserManage"),
         route("/sysmanage/userauth/organmanage",'/sysmanage/userauth/organmanage',"OrganManage"),
-        route("/producemanage/product/productList/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting")
+        route("/producemanage/product/productList/RouteSetting",'/producemanage/product/RouteSetting',"RouteSetting"),
+        route("/producemanage/policy/pricepolicy",'/producemanage/policy/pricepolicy',"pricepolicy"),
+        route("/news/notifymanage/notifymanage",'/news/notifymanage/notifymanage',"notifymanage"),
+        route("/news/notifymanage/pubnotify",'/news/notifymanage/pubnotify',"pubnotify"),
+        route("/sellmanage/order/ordermanage",'/sellmanage/order/ordermanage',"ordermanage"),
+        route("/resourcemanage/travelresource/worldcontinent",'/resourcemanage/travelresource/worldcontinent',"worldcontinent"),
+        route("/resourcemanage/travelresource/country",'/resourcemanage/travelresource/country',"country"),
+        route("/resourcemanage/travelresource/city",'/resourcemanage/travelresource/city',"city"),
+        route("/resourcemanage/guideresource/guideinfomanage",'/resourcemanage/guideresource/guideinfomanage',"guideinfomanage"),
+        route("/resourcemanage/attachment/attachmanage",'/resourcemanage/attachment/attachmanage',"attachmanage"),
+        route("/financemanage/cost/costaudit",'/financemanage/cost/costaudit',"costaudit"),
+        route("/supplymanage/supplier/suppiermanage",'/supplymanage/supplier/suppiermanage',"suppiermanage"),
+        route("/supplymanage/channel/channeinfomanage",'/supplymanage/channel/channeinfomanage',"channinformanage"),
+        route("/supplymanage/channel/channelmanage",'/supplymanage/channel/channelmanage',"channelmanage"),
+        route("/supplymanage/distributor/distributormanage",'/supplymanage/distributor/distributormanage',"distribute"),
+        route("/sysmanage/logmanage/opelog",'/sysmanage/logmanage/opelog',"opelog"),
       ]
     }
   ]
@@ -54,6 +69,7 @@ export default new Router({
 //   routes: [
 //     route("/Layout",'/Layout',"liyunfei"),
 // 		// /login路径，路由到登录组件
+
 // 		route("/Login",'/Login',"Login"),
 // 		route("/InfoManage",'/InfoManage',"InfoManage"),
 // 		route("/City",'/City',"City"),

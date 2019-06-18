@@ -21,51 +21,58 @@
            <el-row :gutter="24">
              <el-col :span="12"><div class="left-top">
                <el-row :gutter="20">
-                 <el-col :span="5"><div class="grid-content"><i class="el-icon-tickets"></i><span><b>最新通知</b></span></div></el-col>
+                 <el-col :span="5"><div class="grid-content"><i class="el-icon-tickets"></i><span><b>您的通知</b></span></div></el-col>
                  <el-col :span="14"><div class="grid-content "><span>&nbsp;</span></div></el-col>
-                 <el-col :span="1"><div class="grid-content "><span><el-button type="primary" plain>更多</el-button>
+                 <el-col :span="1"><div class="grid-content "><span><el-button type="primary" plain v-show="tableData.length == 6">更多</el-button>
 </span></div></el-col>
-               </el-row><el-table
+               </el-row>
+               <el-table
                :data="tableData"
                style="width: 100%">
                <el-table-column
-                 prop="createTime"
+                 prop="title"
+                 label="通知标题"
+                 width="150">
+               </el-table-column>
+               <el-table-column
+                 prop="content"
+                 label="通知内容"
+                 width="250">
+               </el-table-column>
+               <el-table-column
+                 prop="publishTime"
                  label="时间"
                  width="150">
-               </el-table-column>
-               <el-table-column
-                 prop="inform"
-                 label="通知"
-                 width="150">
-               </el-table-column>
-               <el-table-column
-                 prop="name"
-                 label="姓名"
-                 width="180">
                </el-table-column>
              </el-table>
              </div></el-col>
              <el-col :span="12"><div class="right-top">
                <el-row :gutter="20">
-               <el-col :span="5"><div class="grid-content "><i class="el-icon-tickets"></i><span><b>最新通知</b></span></div></el-col>
+               <el-col :span="5"><div class="grid-content "><i class="el-icon-tickets"></i><span><b>最新消息</b></span></div></el-col>
                <el-col :span="14"><div class="grid-content "><span>&nbsp;</span></div></el-col>
-               <el-col :span="1"><div class="grid-content "><span><el-button type="primary" plain>更多</el-button>
+               <el-col :span="1"><div class="grid-content "><span><el-button type="primary" plain v-show="last.length ==  6">更多</el-button>
 </span></div></el-col>
              </el-row>
                <el-table
                  :data="last"
                  style="width: 120%">
                  <el-table-column
-                   prop="createTime"
-                   label="时间"
-                   width="140">
+                   prop="title"
+                   label="标题"
+                   width="100">
                  </el-table-column>
                  <el-table-column
-                   prop="information"
-                   label="订单信息"
-                   width="340">
+                   prop="info"
+                   label="消息"
+                   width="300">
                  </el-table-column>
-               </el-table></div></el-col>
+                 <el-table-column
+                   prop="publishTime"
+                   label="发布时间"
+                   width="140">
+                 </el-table-column>
+               </el-table>
+             </div></el-col>
            </el-row>
            <el-row :gutter="22">
              <el-col :span="11"><div class="left-bottom">
@@ -99,41 +106,44 @@
     name: 'InfoManage',
     data() {
       return {
-        tableData: [{
-          createTime: "2019-5-26",
-          inform: "出团通知",
-          name: "王毅"
-        },],
-        last: [
-          {
-            createTime: "2019-5-26",
-            information: "三亚夏季5日游已经分配分销商：海南旅游网有限公司",
-          },
-          {
-            createTime: "2019-5-26",
-            information: "云南丽江夏季十日九夜精品游",
-          },
-          {
-            createTime: "2019-5-26",
-            information: "北京五日四夜夏季精品游已经分配分配商：北京国际旅游有限公司",
-          },
-          {
-            createTime: "2019-5-26",
-            information: "湖南长沙三日游已经分配分配商：湖南旅游集团有限公司",
-          },
-          {
-            createTime: "2019-5-26",
-            information: "四川七日夏季精品游",
-          },
-          {
-            createTime: "2019-5-26",
-            information: "四川七日夏季精品游",
-          },
-        ],
-
-        methods: {
-        }
+        tableData: [],  //我的通知
+        last: [],         //最新系统消息
       }
+    },
+    methods: {
+      loadYourNotify(){
+        this.tableData=[];
+        this.$http.get("/messagePanel/ofme").then(resp=>{
+          resp.data.forEach(item=>{
+            var temp={};
+            temp.title = item.messagetitle ;
+            temp.content =item.messagecontent;
+            temp.publishTime = new Date(item.sendtime).format("yyyy-MM-dd hh:mm:ss");
+            this.tableData.push(temp);
+          })
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      },
+      loadSystemMessage(){
+        this.last = [];
+        this.$http.get("/messagePanel/querynewsbysize").then(resp=>{
+          resp.data.forEach(item=>{
+            var temp={};
+            temp.title = item.messagetitle ;
+            temp.info =item.messagecontent.substring(0,10)+(item.messagecontent.length<10?"":"...");
+            temp.publishTime = new Date(item.sendtime).format("yyyy-MM-dd hh:mm:ss");
+            this.last.push(temp);
+          })
+        }).catch(error=>{
+          this.$message.error(error.message);
+        })
+      }
+    },
+    created(){
+      //加载面板上的一些消息
+      this.loadYourNotify();
+      this.loadSystemMessage();
     }
   };
 
