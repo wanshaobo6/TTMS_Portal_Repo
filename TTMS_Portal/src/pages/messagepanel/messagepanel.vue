@@ -1,6 +1,5 @@
 <template>
   <el-container>
-
     <el-container>
       <el-main>
         <div class="top">
@@ -75,11 +74,17 @@
              </div></el-col>
            </el-row>
            <el-row :gutter="22">
-             <el-col :span="11"><div class="left-bottom">
-               <el-col :span="5"><div class="grid-content ">
-                 <i class="el-icon-tickets"></i><span><b>待办事项</b></span></div></el-col>
-
-             </div></el-col>
+             <el-col :span="11">
+               <div class="left-bottom">
+               <el-col :span="5">
+                 <div class="grid-content ">
+                 <i class="el-icon-tickets"></i>
+                   <span>
+                   <b>出团统计</b></span>
+                 </div>
+               </el-col>
+             </div>
+             </el-col>
              <el-col :span="11"><div class="right-bottom">
                <el-row :gutter="20">
                    <el-col :span="6"><div class="grid-content "><i class="el-icon-tickets"></i><span><b>最新汇率</b></span></div></el-col>
@@ -92,8 +97,6 @@
                    </el-row>
              </div></el-col>
            </el-row>
-
-
         </div>
 
       </el-main>
@@ -163,8 +166,6 @@
    display:flex;
 
   }
-
-
   .el-row {
     margin-bottom: 20px;
   }
