@@ -30,6 +30,7 @@ export default new Router({
         route("/messagepanel",'/messagepanel/messagepanel',"messagepanel"), //消息面板
         ///#后面的路径index/dashboard   对应带pages/producemanage/group/groupmanage
         route("/news/notifymanage/notifymanage",'/news/notifymanage/notifymanage',"NotifyManage"),
+        route("/news/notifymanage/pubnotify",'/news/notifymanage/pubnotify',"pubnotify"),
         route("/producemanage/group/groupmanage",'/producemanage/group/groupmanage',"GroupManage"),
         route("/producemanage/project/projectinfomanage",'/producemanage/project/projectinfomanage',"ProjectInfoManag"),
         route("/producemanage/product/productlist",'/producemanage/product/productlist',"ProductList"),
