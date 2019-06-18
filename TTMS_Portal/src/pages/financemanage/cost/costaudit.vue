@@ -2,29 +2,29 @@
   <el-container>
     <el-main>
       <div class="top">
-        <p class="title" style="color:#B3C0D1">价格政策</p>
+        <p class="title" style="color:#B3C0D1">成本</p>
         <div class="path">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">
-             产品管理
+              财务管理
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              政策
+              成本
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              价格政策
+              成本审核
             </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
       </div>
-      <div class="body" style="margin-top: 100px;font-size:20px;"><span><b>待实现。。。</b></span></div>
+      <div class="body"style="margin-top: 100px;font-size:20px;"><span>待实现。。。</span></div>
     </el-main>
   </el-container>
 </template>
 
 <script>
   export default {
-    name: 'pricepolicy',
+    name: 'costaudit',
     data() {
       return{
 
@@ -68,14 +68,6 @@
     margin-bottom: 20px;
 
   }
-  .el-main {
-
-    color: #333;
-    text-align: center;
-    height:700px;
-
-    margin-top: -60px;
-  }
   .left{
     float: left;
   }
@@ -83,7 +75,10 @@
   .el-main {
 
     color: #333;
+    text-align: center;
+    height:700px;
 
+    margin-top: -60px;
   }
 
   body > .el-container {

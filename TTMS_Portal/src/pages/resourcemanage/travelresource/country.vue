@@ -2,17 +2,17 @@
   <el-container>
     <el-main>
       <div class="top">
-        <p class="title" style="color:#B3C0D1">价格政策</p>
+        <p class="title" style="color:#B3C0D1">国家地区</p>
         <div class="path">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">
-             产品管理
+              资源管理
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              政策
+              旅游资源
             </el-breadcrumb-item>
             <el-breadcrumb-item>
-              价格政策
+              国家地区
             </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    name: 'pricepolicy',
+    name: 'country',
     data() {
       return{
 
@@ -68,14 +68,6 @@
     margin-bottom: 20px;
 
   }
-  .el-main {
-
-    color: #333;
-    text-align: center;
-    height:700px;
-
-    margin-top: -60px;
-  }
   .left{
     float: left;
   }
@@ -83,7 +75,10 @@
   .el-main {
 
     color: #333;
+    text-align: center;
+    height:700px;
 
+    margin-top: -60px;
   }
 
   body > .el-container {
