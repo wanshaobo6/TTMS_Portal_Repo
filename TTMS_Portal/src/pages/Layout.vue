@@ -206,7 +206,11 @@
         this.items = module.menus;
         this.baseUrl = module.path;
         //跳转当前页面到默认页
-        this.$router.push(this.baseUrl+this.items[0].path+this.items[0].menusItems[0].path);
+        if(module.moduleName != "信息面板"){
+          this.$router.push(this.baseUrl+this.items[0].path+this.items[0].menusItems[0].path);
+        }else{
+          this.$router.push(this.baseUrl);
+        }
       },
       open(msg) {
         this.$alert(msg, '提示', {

@@ -436,12 +436,6 @@
   }
 </script>
 <style>
-  html,body {
-    overflow:scroll;
-    margin:0px;
-    width:100%;
-    height:100%;
-  }
   .title {
     text-align: left;
     font-size: 30px;
@@ -474,7 +468,6 @@
 
     color: #333;
     text-align: center;
-    height:700px;
     margin-top: -60px;
   }
 
