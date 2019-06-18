@@ -206,6 +206,7 @@ export default {
             return data.id == table.id;
           })[0];
           curData.status = !table.status;
+          this.loadData();
           //所有子结点
         //  table.children.forEach(item=>item.status=!table.status);
      //   }else{

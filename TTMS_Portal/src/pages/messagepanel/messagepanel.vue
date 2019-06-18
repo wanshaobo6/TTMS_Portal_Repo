@@ -132,6 +132,40 @@
         ],
 
         methods: {
+          loadData(){
+            this.$http.get("/news/notifymanage/notifymanage/ofme").then(resp=>{
+              /**
+               *  private String messageclassname;
+               private String messagetitle;
+               private String messagecontent;
+               private Integer senderid;
+               private Date sendtime;
+               */
+              /**
+               *  createTime: "2019-5-26",
+               inform: "出团通知",
+               name: "王毅"
+               */
+            }).catch(error=>{
+
+            });
+          },
+          loadDataInfo(){
+            this.$http.get("/news/notifymanage/notifymanage/queryAllnew").then(resp=>{
+              let data=[]
+              resp.data.forEach(item=>{
+                var obj = {};
+                obj.createTime = obj.sendtime;
+                obj.information = item.messagecontent;
+                data.push(obj);
+              })
+            }).catch(error=>{
+                this.$message.error("正在加载");
+            });
+          },
+        },
+        created() {
+          this.loadDataInfo();
         }
       }
     }
