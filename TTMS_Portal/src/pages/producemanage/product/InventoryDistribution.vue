@@ -80,7 +80,6 @@
               </el-table-column>
               <el-table-column label="操作" align="center" min-width="70">
                 <template slot-scope="scope">
-                　　　　<el-button type="info" @click="modifyUser()">修改</el-button>
                   　　　<el-button type="danger" @click="deleteUser(scope.row)">取消分销</el-button>
                 </template>
 　　            </el-table-column>
@@ -157,14 +156,12 @@
         }).then(resp=>{
           this.$message.success("取消分销商成功")
           this.loadDistributorAll();
+          this.dialogFormVisible = false;
         }).catch(error=>{
           this.$message.error(error.message);
+          this.dialogFormVisible = false;
         })
 //这里写相应的逻辑，val是指传进来的参数也就是上面的scope.row.phone；也可以是scope.row.nickname等
-      },
-//修改用户
-      modifyUser(val) {
-        let self = this;
       },
       showAddDistributorUpDialog() {
         this.loadDistributor();
@@ -180,13 +177,20 @@
           startTime:new Date(this.startTime).format("yyyy-MM-dd hh:mm:ss"),
           endTime:new Date(this.endTime).format("yyyy-MM-dd hh:mm:ss")
         })).then(resp=>{
-          this.loadDistributor();
+          this.$message.success("添加分销商成功")
+          this.loadDistributorAll();
+          this.dialogFormVisible = false;
         }).catch(error=>{
-
+          this.$message.error(error.message);
+          this.dialogFormVisible = false;
         })
       },
     loadDistributor(){
-      this.$http.get("/producemanage/product/productlist/distributors").then(resp=>{
+      this.$http.get("/producemanage/product/productlist/distributors",{
+        params:{
+          pid:this.curProduct.id
+        }
+      }).then(resp=>{
         var listCats = [];
         resp.data.forEach(item => {
           var listCat = {};
@@ -196,7 +200,7 @@
           this.options=listCats;
         });
       }).catch(error=>{
-        this.$message.error(error.message);
+        this.$message.info("不存在没有添加的分销商");
       });
   },
 
