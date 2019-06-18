@@ -58,8 +58,8 @@
                 <el-date-picker v-model="EndTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="结束时间"></el-date-picker></div>
             </div></el-col>
             <el-col :span="2"><el-button type="primary" @click="loadData">查询</el-button></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
-            <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>
+          <!--  <el-col :span="2"><div class="grid-content "><el-button type="info">导游信息</el-button></div></el-col>
+            <el-col :span="2"><div class="grid-content "><el-button type="info">行程设置</el-button></div></el-col>-->
             <div class="body">
               <el-table
                 ref="multipleTable"

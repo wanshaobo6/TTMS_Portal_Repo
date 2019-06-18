@@ -25,22 +25,22 @@
 </div></el-col>
 						<el-col :span="5"><div class="grid-content "><div class="block">
    
-    <el-date-picker
+<!--    <el-date-picker
       v-model="value1"
       type="date"
       placeholder="起始日期">
-    </el-date-picker>
+    </el-date-picker>-->
   </div></div></el-col>
 						<el-col :span="5"><div class="block">
    
-    <el-date-picker
+ <!--   <el-date-picker
       v-model="value2"
       type="date"
       placeholder="结束日期">
-    </el-date-picker>
+    </el-date-picker>-->
   </div><div class="grid-content "></div></el-col>
-						<el-col :span="4"><el-input v-model="input2" placeholder="发布人"></el-input><div class="grid-content "></div></el-col>
-						<el-col :span="1"><el-button type="primary">查询</el-button><div class="grid-content "></div></el-col>
+						<!--<el-col :span="4"><el-input v-model="input2" placeholder="发布人"></el-input><div class="grid-content "></div></el-col>-->
+						<el-col :span="1"><el-button type="primary" @click="queryMsg()">查询</el-button><div class="grid-content "></div></el-col>
 					</el-row></div>
 					<div class="body"><el-table
     :data="tableData"
@@ -62,37 +62,37 @@
 	  width="300">
 	</el-table-column>
 	<el-table-column
-	  prop="name"
+	  prop="sendName"
 	  label="发送人"
 	  width="100">
 	</el-table-column>
 	<el-table-column
-	  prop="name"
+	  prop="sendDepartment"
 	  label="发送部门"
 	  width="100">
 	</el-table-column>
 	<el-table-column
 	  prop="date"
 	  label="发送时间"
-	  width="150">
+	  width="200">
 	</el-table-column>
 	<el-table-column
 	  prop="public"
-	  label="发布"
+	  label="状态"
 	  width="50">
 	</el-table-column>
     <el-table-column
       prop="operation"
-      label="操作">
+      label="操作" >
 	  <template slot-scope="scope">
          <el-button
           size="mini"
-          type="text" v-if="scope.row.public == '是'"
-          >撤回</el-button>
+          type="text" v-if="scope.row.public == '发布'"
+          @click="updateState(scope.row)">撤回</el-button>
           <el-button
             size="mini"
-            type="text"
-            v-else>修改 发布</el-button>
+            type="text"  @click="updateState(scope.row)"
+            v-else> 发布</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -101,10 +101,10 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[50, 70, 90, 110]"
+      :page-sizes="[5, 10, 15, 30]"
       :page-size="50"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="110">
+      :total="totalitem">
     </el-pagination>
   </div>
   </div>
@@ -120,15 +120,13 @@ export default {
 	data() {
 		return {
 			options: [{
-			  value: '选项1',
-			  label: '一级分类'
+			  value: '0',
+			  label: '系统消息'
 			}, {
-			  value: '选项2',
-			  label: '二级分类'
-			}, {
-			  value: '选项3',
-			  label: '三级分类'
-			}, ],
+			  value: '1',
+			  label: '我的通知'
+			},],
+      totalitem:10,
 			value: '',
 			input1: '',
 			input2: '',
@@ -159,97 +157,57 @@ export default {
 			},
 			value1: '',
 			value2: '',
-			 tableData: [{
-          number: '23',
-		  date:'2019-5-26',
-          name: '李云飞',
-		  public:'是',
-		  title:'放暑假过后金安国纪啊好久卡好久',
-        }, {
-          number: '23',
-          name: '李云飞',
-		  date:'2019-5-26',
-		  public:'是',
-		  title:'放暑假过后金安国纪啊好久卡好久',
-        }, {
-          number: '23',
-          name: '李云飞',
-		  date:'2019-5-26',
-		  public:'是',
-		  title:'放暑假过后金安国纪啊好久卡好久',
-        }, {
-          number: '23',
-          name: '李云飞',
-		  date:'2019-5-26',
-		  title:'放暑假过后金安国纪啊好久卡好久',
-		  public:'是',
-        },
-		{
-		  number: '34',
-		  name: '万少波',
-		  date:'2019-5-26',
-		  title:'交的话国际快递好几十块',
-		  public:'否',
-		},
-		{
-		  number: '34',
-		  name: '万少波',
-		  date:'2019-5-26',
-		  title:'交的话国际快递好几十块',
-		  public:'否',
-		},
-		{
-		  number: '34',
-		  name: '万少波',
-		  date:'2019-5-26',
-		  title:'交的话国际快递好几十块',
-		  public:'否',
-		},
-		{
-		  number: '54',
-		  name: '欧阳文丽',
-		  date:'2019-5-26',
-		  title:'富商大贾环境就开始倒计时肯定会',
-		  public:'否',
-		},
-		{
-		  number: '54',
-		  name: '欧阳文丽',
-		  date:'2019-5-26',
-		  title:'富商大贾环境就开始倒计时肯定会',
-		  public:'否',
-		},
-		{
-		  number: '54',
-		  name: '欧阳文丽',
-		  date:'2019-5-26',
-		  title:'富商大贾环境就开始倒计时肯定会',
-		  public:'否',
-		}],
+			 tableData: [],
 		currentPage1: 5,
         currentPage2: 5,
         currentPage3: 5,
-        currentPage4: 4
+        currentPage4: 4,
+      name:"",
+      title:"",
 		};
 	},
   created(){
 	  this.loadData();
   },
 	methods: {
+    updateState(val){
+      console.log(val.number);
+      this.$http.get("/news/notifymanage/notifymanage/"+val.number).then(resp=>{
+        this.$message.success("操作成功");
+        this.loadData();
+      }).catch(error=>{
+        this.$message.error(error.message);
+      });
+    },
+    queryMsg(){
+      console.log(this.name);
+      console.log(this.title);
+      this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page",{
+          params:{
+            sendtype:1,
+            messagetitle:this.title,
+          }
+      }
+    ).then(resp=>{
+    }).catch(error=>{
+        this.$message.error(error.message);
+    })
+    },
     loadData(){
       this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page").then(
         resp=>{
           console.log(resp);
-          this.totalItem = resp.data.total;
+          this.totalitem = resp.data.total;
           var tables = [];
           resp.data.items.forEach(msg => {
             var table = {};
             table.number = msg.id;
-            table.username = msg.messageclassname;
+            table.sendName = msg.senderName;
             table.title = msg.messagetitle;
-            table.name = msg.senderid;
-            table.date= msg.sendtime;
-            table.public = msg.valid
+            table.sendDepartment=msg.userDepartment;
+            table.name = msg.sendtype==1 ? "系统消息":"系统消息" && msg.sendtype==0 ? "用户通知":"用户通知" && msg.sendtype==2 ? "其它消息":"其它消息";
+            table.date=  new Date(msg.sendtime).format("yyyy-MM-dd hh:mm:ss");
+            table.public = msg.valid ==1 ?"发布":"撤回"
             tables.push(table);
           });
           this.tableData = tables;
@@ -259,14 +217,17 @@ export default {
         alert(error.message);
       });
     },
-      handleClick(row) {
-        console.log(row);
-      },
+
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
 	  handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+      this.rows = (val);
+      this.loadData();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.currentPage = (val);
+        this.loadData();
       }
     },
 };

@@ -89,7 +89,14 @@
     },
     methods:{
     deleteUser(val){
-      console.log(val)
+      console.log(val.id);
+      this.$http.delete("/producemanage/product/productlist/del/Attachment/"+val.id)
+        .then(resp=>{
+          this.$message.success("操作成功")
+         this.loadAttachments();
+        }).catch(error=>{
+          this.$message.error(error.message);
+      });
     },
     handleRemove(file, fileList){
       console.log(file, fileList);
