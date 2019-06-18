@@ -68,7 +68,7 @@
                         <el-form-item label="服务开始时间" class="left" :rules="[ { required: true },]">
                             <el-date-picker
                               v-model="form.serverStartTime"
-                              type="date"
+                              type="datetime"
                               placeholder="">
                           </el-date-picker>
                         </el-form-item>
@@ -77,7 +77,7 @@
                         <el-form-item label="服务结束时间" class="left" :rules="[ { required: true },]">
                           <el-date-picker
                             v-model="form.serverEndTime"
-                            type="date"
+                            type="datetime"
                             placeholder="">
                           </el-date-picker>
                         </el-form-item>
@@ -98,7 +98,7 @@
                         <el-form-item label="上架时间" class="left" :rules="[ { required: true },]">
                           <el-date-picker
                             v-model="form.upTime"
-                            type="date"
+                            type="datetime"
                             placeholder="">
                           </el-date-picker>
                         </el-form-item>
@@ -107,7 +107,7 @@
                         <el-form-item label="下架时间" class="left" :rules="[ { required: true },]">
                           <el-date-picker
                             v-model="form.downTime"
-                            type="date"
+                            type="datetime"
                             placeholder="">
                           </el-date-picker>
                         </el-form-item>
