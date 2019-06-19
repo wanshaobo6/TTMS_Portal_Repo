@@ -265,7 +265,7 @@ export default {
             valid: this.valid,
             page: this.currentPage,
             rows: 50,   //显示所有
-            pid:treeNode.rowKey
+            pid:tree.id ,
           }
         }).then(resp => {
           //成功
@@ -280,7 +280,6 @@ export default {
             table.hasChildren = false;
             tables.push(table);
           });
-          console.log(tables)
           resolve(tables);
         }).catch(error =>{
          this.$message.error(error.message);
@@ -354,7 +353,6 @@ export default {
 	            margin:0px;
 	            width:100%;
 	            height:100%;
-
 	        }
 .el-header {
     background-color: #B3C0D1;
@@ -371,8 +369,6 @@ export default {
   	margin-bottom: 15px;
   	font-family: "Helvetica Neue";
   	font-style: normal;
-
-
   }
   .path {
   	text-align: left;
@@ -389,7 +385,8 @@ export default {
   }
  .page{
 	 position: relative;
-     padding-top: 20px;
+    padding-top: 20px;
+   padding-bottom: 40px;
  }
   .parentbody{
 	  margin-top: 5px;

@@ -51,7 +51,7 @@
                   <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="文件" :label-width="formLabelWidth">
-                  <el-upload class="upload-demo" action="http://localhost:8080/upload" :on-success="handlesuccess" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
+                  <el-upload class="upload-demo" action="http://192.168.43.139:8080/upload" :on-success="handlesuccess" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="1" :on-exceed="handleExceed" :file-list="fileList">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传不超过500kb的文件</div></el-upload>
                 </el-form-item>

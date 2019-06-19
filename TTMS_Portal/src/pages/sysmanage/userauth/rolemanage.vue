@@ -298,7 +298,6 @@
             this.childDepartOptions = tempDeparts;
           }
         }).catch(error=>{
-          this.$message.error(error.message);
         });
       },
       //根据父id加载子分类
@@ -340,6 +339,7 @@
           }
         )).then(resp=>{
             this.$message.success("创建成功");
+            this.loadData();
         }).catch(error=>{
           this.$message.error("创建失败");
         })
@@ -355,6 +355,7 @@
           }
         )).then(resp=>{
           this.$message.success("更新成功");
+          this.loadData();
         }).catch(error=>{
           this.$message.error("更新失败");
         })

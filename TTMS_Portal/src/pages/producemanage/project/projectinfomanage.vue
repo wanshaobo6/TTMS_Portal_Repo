@@ -300,6 +300,7 @@ export default {
                 note:this.form.desc
           }) ).then(resp=>{
               this.$message("更新项目成功");
+              this.loadData();
             }).catch(error=>{
               this.$message.error(error.message);
             });
@@ -315,13 +316,14 @@ export default {
                 note:this.form.desc
             })).then(resp=>{
               this.$message("新增项目成功");
+              this.loadData();
             }).catch(error=>{
               this.$message.error(error.message);
             });
           }
           //更新表格  关闭弹窗
           this.dialogFormVisible = false;
-          this.loadData();
+
       },
     validOrInValid(row){
         this.$http.get("/producemanage/project/projectinfomanage/validorinvalid/"+row.id).then(resp=>{

@@ -211,7 +211,7 @@ export default {
         });
         this.tableData = tables;
       }).catch(error =>{
-          alert(error.message);
+          console.log(error.message);
       });
     },
     //改变团的状态
