@@ -28,8 +28,36 @@
                         <el-table-column prop="note" label="分类备注" width="80" ></el-table-column>
                         <el-table-column label="操作" width="240">
                           <template slot-scope="scope">
-                            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">新增</el-button>
+                            <el-button size="mini" @click="dialogFormVisible = true">修改</el-button>
+                            <el-dialog title="修改分类" :visible.sync="dialogFormVisible">
+                              <el-form :model="form">
+                                <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                  <el-input v-model="form.name" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                  <el-input v-model="form.note" autocomplete="off"></el-input>
+                                </el-form-item>
+                              </el-form>
+                              <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                              </div>
+                            </el-dialog>
+                            <el-button size="mini" @click="dialogFormVisible = true">新增</el-button>
+                            <el-dialog title="新增分类" :visible.sync="dialogFormVisible">
+                              <el-form :model="form">
+                                <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                  <el-input v-model="form.name" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                  <el-input v-model="form.note" autocomplete="off"></el-input>
+                                </el-form-item>
+                              </el-form>
+                              <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                              </div>
+                            </el-dialog>
                             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button></template>
                         </el-table-column>
                       </el-table>
@@ -48,8 +76,36 @@
                         <el-table-column prop="note" label="分类备注" width="80" ></el-table-column>
                         <el-table-column label="操作" width="240">
                           <template slot-scope="scope">
-                            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">新增</el-button>
+                            <el-button size="mini" @click="dialogFormVisible = true">修改</el-button>
+                            <el-dialog title="修改分类" :visible.sync="dialogFormVisible">
+                              <el-form :model="form">
+                                <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                  <el-input v-model="form.name" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                  <el-input v-model="form.note" autocomplete="off"></el-input>
+                                </el-form-item>
+                              </el-form>
+                              <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                              </div>
+                            </el-dialog>
+                            <el-button size="mini" @click="dialogFormVisible = true">新增</el-button>
+                            <el-dialog title="新增分类" :visible.sync="dialogFormVisible">
+                              <el-form :model="form">
+                                <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                  <el-input v-model="form.name" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                  <el-input v-model="form.note" autocomplete="off"></el-input>
+                                </el-form-item>
+                              </el-form>
+                              <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                              </div>
+                            </el-dialog>
                             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button></template>
                         </el-table-column>
                       </el-table>
@@ -69,8 +125,36 @@
                       <el-table-column prop="note" label="分类备注" width="80" ></el-table-column>
                       <el-table-column label="操作" width="240">
                         <template slot-scope="scope">
-                          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">新增</el-button>
+                          <el-button size="mini" @click="dialogFormVisible = true">修改</el-button>
+                          <el-dialog title="修改分类" :visible.sync="dialogFormVisible">
+                            <el-form :model="form">
+                              <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                <el-input v-model="form.name" autocomplete="off"></el-input>
+                              </el-form-item>
+                              <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                <el-input v-model="form.note" autocomplete="off"></el-input>
+                              </el-form-item>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                              <el-button @click="dialogFormVisible = false">取 消</el-button>
+                              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                            </div>
+                          </el-dialog>
+                          <el-button size="mini" @click="dialogFormVisible = true">新增</el-button>
+                          <el-dialog title="新增分类" :visible.sync="dialogFormVisible">
+                            <el-form :model="form">
+                              <el-form-item label="分类名称" :label-width="formLabelWidth">
+                                <el-input v-model="form.name" autocomplete="off"></el-input>
+                              </el-form-item>
+                              <el-form-item label="分类备注" :label-width="formLabelWidth">
+                                <el-input v-model="form.note" autocomplete="off"></el-input>
+                              </el-form-item>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                              <el-button @click="dialogFormVisible = false">取 消</el-button>
+                              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                            </div>
+                          </el-dialog>
                           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button></template>
                       </el-table-column>
                     </el-table>
@@ -90,6 +174,12 @@
     name: 'ProductCat',
     data() {
       return {
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          note: ''
+        },
+        formLabelWidth: '120px',
         tableData1: [],   //一级分类数据
         tableData2: [],    //二级分类数据
         tableData3: [],    //三级分类数据
