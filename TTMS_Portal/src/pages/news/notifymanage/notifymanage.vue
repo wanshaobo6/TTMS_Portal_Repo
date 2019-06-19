@@ -49,7 +49,7 @@
     <el-table-column
       prop="number"
       label="序号"
-      width="50">
+      width="50" v-if="show">
     </el-table-column>
     <el-table-column
       prop="name"
@@ -81,6 +81,7 @@
 	  label="状态"
 	  width="50">
 	</el-table-column>
+
     <el-table-column
       prop="operation"
       label="操作" >
@@ -164,6 +165,8 @@ export default {
         currentPage4: 4,
       name:"",
       title:"",
+      show:false,
+
 		};
 	},
   created(){
@@ -197,6 +200,7 @@ export default {
       this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page").then(
         resp=>{
           console.log(resp);
+
           this.totalitem = resp.data.total;
           var tables = [];
           resp.data.items.forEach(msg => {
@@ -205,12 +209,13 @@ export default {
             table.sendName = msg.senderName;
             table.title = msg.messagetitle;
             table.sendDepartment=msg.userDepartment;
-            table.name = msg.sendtype==1 ? "系统消息":"系统消息" && msg.sendtype==0 ? "用户通知":"用户通知" && msg.sendtype==2 ? "其它消息":"其它消息";
+            table.name = msg.sendtype==0 ? "系统消息":"系统消息" && msg.sendtype==1 ? "用户通知":"用户通知" && msg.sendtype==2 ? "其它消息":"其它消息";
             table.date=  new Date(msg.sendtime).format("yyyy-MM-dd hh:mm:ss");
-            table.public = msg.valid ==1 ?"发布":"撤回"
+            table.public = msg.valid ==1 ?"发布":"撤回";
             tables.push(table);
           });
           this.tableData = tables;
+
 
         }
       ).catch(error=>{

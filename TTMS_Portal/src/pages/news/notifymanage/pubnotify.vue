@@ -7,7 +7,7 @@
           <el-breadcrumb-item>通知管理</el-breadcrumb-item>
           <el-breadcrumb-item>发布通知</el-breadcrumb-item>
         </el-breadcrumb></div>
-        </div>
+      </div>
         <div class="body">
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="发布标题" :rules="[{ required: true },]">
@@ -99,26 +99,26 @@
     },
     methods: {
       onSubmit(valid) {
-       var b  = this.checkForm();
-       if(b)
-         return ;
-       this.$http.post("/news/notifymanage/pubnotify/pubmsg",this.$qs.stringify(
-         {
-           messageType:this.sysMessage,
-           toid:this.sysMessage == 0 ? "" :this.selectedUserId ,
-           valid:valid,
-           messageTitle:this.form.name,
-           messageContent:this.form.desc
-         }
-       )).then(resp=>{
-         if(valid == 0){
-           this.$message.success("保存成功")
-         }else{
-           this.$message.success("发布成功")
-         }
-       }).catch(error=>{
+        var b  = this.checkForm();
+        if(b)
+          return ;
+        this.$http.post("/news/notifymanage/pubnotify/pubmsg",this.$qs.stringify(
+          {
+            messageType:this.sysMessage,
+            toid:this.sysMessage == 0 ? "" :this.selectedUserId ,
+            valid:valid,
+            messageTitle:this.form.name,
+            messageContent:this.form.desc
+          }
+        )).then(resp=>{
+          if(valid == 0){
+            this.$message.success("保存成功")
+          }else{
+            this.$message.success("发布成功")
+          }
+        }).catch(error=>{
           this.$message.error(error.message);
-       })
+        })
       },
       checkForm(){
         if(this.sysMessage == ""|| (this.sysMessage == 1 && this.selectedUserId =="") ||this.form.name == "" ||this.form.desc==""){
@@ -149,18 +149,18 @@
           this.showUserField= false;
           this.selectedRoleId ="";
           this.selectedUserId="",
-          this.roleoptions=[];
+            this.roleoptions=[];
           this.$http.get("/news/notifymanage/pubnotify/queryrolesbydid",{
             params:{
               did:nval[1]
-             }
+            }
           }).then(resp=>{
             this.roleoptions = [];
             resp.data.forEach(item=>{
-                var temp = {};
-                temp.label = item.name;
-                temp.value = item.id;
-                this.roleoptions.push(temp);
+              var temp = {};
+              temp.label = item.name;
+              temp.value = item.id;
+              this.roleoptions.push(temp);
             })
           })
         }
@@ -169,20 +169,20 @@
         this.useroptions = [];
         this.showUserField= true;
         this.selectedUserId="",
-        this.$http.get("/news/notifymanage/pubnotify/getusersbyrid",{
-          params:{
-            rid:nval
-          }
-        }).then(resp=>{
-          resp.data.forEach(item=>{
-            var temp = {};
-            temp.label = item.username;
-            temp.value = item.id;
-            this.useroptions.push(temp);
-          })
-        }).then(error=>{
+          this.$http.get("/news/notifymanage/pubnotify/getusersbyrid",{
+            params:{
+              rid:nval
+            }
+          }).then(resp=>{
+            resp.data.forEach(item=>{
+              var temp = {};
+              temp.label = item.username;
+              temp.value = item.id;
+              this.useroptions.push(temp);
+            })
+          }).then(error=>{
 
-        })
+          })
       }
     }
   };
