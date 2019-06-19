@@ -100,7 +100,7 @@
     </v-toolbar>
 
     <!--中间内容主体-->
-    <v-content >
+    <v-content style="overflow:hidden;" >
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="width:90%">
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="原密码" prop="oldPassword">

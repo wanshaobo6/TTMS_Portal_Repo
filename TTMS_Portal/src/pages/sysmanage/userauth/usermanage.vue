@@ -37,7 +37,7 @@
                 <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
                   <el-form :model="form">
                     <el-form-item label="照片">
-                      <el-upload class="avatar-uploader" action="http://localhost:8080/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                      <el-upload class="avatar-uploader" action="http://192.168.43.139:8080/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
                         <i v-else="" class="el-icon-plus avatar-uploader-icon"></i>
                       </el-upload>

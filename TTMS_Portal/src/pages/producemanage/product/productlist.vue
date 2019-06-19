@@ -374,7 +374,7 @@
           });
           this.tableData = tables;
         }).catch(error =>{
-          alert(error.message);
+          console.log(error.message);
         });
       },
       goSubPage(pageName){
