@@ -133,6 +133,7 @@
                 </el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
+                    <v-btn small color="primary"  @click="gotolink(scope.row)">Primary</v-btn>
                     <el-button
                       size="mini" type="primary" plain  @click="gotolink(scope.row)">查看详情</el-button>
                     <v-icon class ="material-icons" @click="godownloadfile(scope.row)">
