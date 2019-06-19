@@ -162,7 +162,7 @@
       deletePolicy(val){
         this.$http.delete("/producemanage/product/productlist/privilege/pricepolicy",{
           params:{
-            productId:"1",
+            productId:this.curProduct.id,
             pricePolicyId: val.id
           }
         }).then(resp=>{
@@ -207,7 +207,7 @@
       loadPricePolicyInDialog(){
         this.$http.get("/producemanage/product/productlist/pricepolicy/page",{
          params:{
-           productId:1,
+           productId:this.curProduct.id,
            pricePolicyName:this.policyName,
            startTime : this.startTime,
            endTime: this.endTime,
@@ -243,7 +243,7 @@
         }
         //发送添加请求
         this.$http.post("/producemanage/product/productlist/privilege/pricepolicy",this.$qs.stringify({
-          productId:"1",
+          productId:this.curProduct.id,
           pricespolicyIds:selectedGuPolicyIds.join(",")
         })).then(resp=>{
           this.$message.success("价格政策添加成功");
