@@ -219,6 +219,24 @@
 </script>
 
 <style>
+  html,body {
+
+    overflow:hidden;
+
+    margin:0px;
+
+    width:100%;
+
+    height:100%;
+
+  }
+  .el-main {
+
+    color: #333;
+    text-align: center;
+    height:700px;
+    margin-top: -60px;
+  }
   .top{
     justify-content: space-between;
     align-items: center;

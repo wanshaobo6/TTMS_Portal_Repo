@@ -359,7 +359,7 @@
             table.status = listItem.productstatus;
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
-            table.Tname= listItem.productcatnames;
+            table.Tname= listItem.groupname;
             table.ProductID = listItem.productnumber;
             table.Pname=listItem.productname;
             table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");

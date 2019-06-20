@@ -186,7 +186,8 @@
         baseUrl:"",
         items:[],
         modules:[],
-        curUser:{}
+        curUser:{},
+        heartbeatswitch:"",//心跳开关
       };
 
     },
@@ -260,6 +261,7 @@
         }).then(() => {
           this.$http.get("/logout").then(resp=>{
             this.$message.success("安全退出成功");
+            clearInterval(this.heartbeatswitch);
             setTimeout(()=>{
               this.$router.push("/login");
             },1000)
@@ -292,6 +294,15 @@
       if(this.modules == null){
         this.$router.push("/Login");
       }
+      //开启心跳  25S一个
+      this.heartbeatswitch = setInterval(()=>{
+        //一旦出现错误退回登录页面
+        this.$http.get("/heartbeat").catch(error=>{
+          clearInterval(this.heartbeatswitch);
+          this.$message.error("系统错误");
+          this.$router.push("/login");
+        })
+      },20000);
       //查询当前用户的信息
       this.$http.post("/getCuruser").then(resp=>{
         this.curUser = resp.data;
