@@ -101,9 +101,9 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
+      :current-page="currentPage"
       :page-sizes="[5, 10, 15, 30]"
-      :page-size="50"
+      :page-size="rows"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalitem">
     </el-pagination>
@@ -156,17 +156,13 @@ export default {
 			    }
 			  }]
 			},
-			value1: '',
 			value2: '',
 			 tableData: [],
-		currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
+       currentPage4: 1,
       name:"",
       title:"",
       show:false,
-
+      rows:5,
 		};
 	},
   created(){
@@ -183,44 +179,36 @@ export default {
       });
     },
     queryMsg(){
-      console.log(this.name);
-      console.log(this.title);
-      this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page",{
-          params:{
-            sendtype:1,
-            messagetitle:this.title,
-          }
-      }
-    ).then(resp=>{
-    }).catch(error=>{
-        this.$message.error(error.message);
-    })
+     this.loadData();
     },
     loadData(){
-      this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page").then(
-        resp=>{
-          console.log(resp);
-
-          this.totalitem = resp.data.total;
-          var tables = [];
-          resp.data.items.forEach(msg => {
-            var table = {};
-            table.number = msg.id;
-            table.sendName = msg.senderName;
-            table.title = msg.messagetitle;
-            table.sendDepartment=msg.userDepartment;
-            table.name = msg.sendtype==0 ? "系统消息":"系统消息" && msg.sendtype==1 ? "用户通知":"用户通知" && msg.sendtype==2 ? "其它消息":"其它消息";
-            table.date=  new Date(msg.sendtime).format("yyyy-MM-dd hh:mm:ss");
-            table.public = msg.valid ==1 ?"发布":"撤回";
-            tables.push(table);
-          });
-          this.tableData = tables;
-
-
+      this.$http.get("/news/notifymanage/notifymanage/queryAllnew/page",{
+          params:{
+            page:this.currentPage,
+            rows:this.rows,
+            sendtype:this.value,
+            messagetitle:this.input1,
+          }
         }
-      ).catch(error=>{
-        alert(error.message);
-      });
+      ).then(resp=>{
+        this.totalitem = resp.data.total;
+        this.tableData = [];
+        var tables = [];
+        resp.data.items.forEach(msg => {
+          var table = {};
+          table.number = msg.id;
+          table.sendName = msg.senderName;
+          table.title = msg.messagetitle;
+          table.sendDepartment=msg.userDepartment;
+          table.name = msg.sendtype==0 ? "系统消息":"系统消息" && msg.sendtype==1 ? "用户通知":"用户通知" && msg.sendtype==2 ? "其它消息":"其它消息";
+          table.date=  new Date(msg.sendtime).format("yyyy-MM-dd hh:mm:ss");
+          table.public = msg.valid ==1 ?"发布":"撤回";
+          tables.push(table);
+        });
+        this.tableData = tables;
+      }).catch(error=>{
+        this.$message.error(error.message);
+      })
     },
 
     handleClick(tab, event) {

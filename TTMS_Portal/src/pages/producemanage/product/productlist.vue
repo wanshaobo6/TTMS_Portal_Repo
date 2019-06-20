@@ -148,6 +148,12 @@
             <el-table-column
               prop="Tname"
               label="团名称"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="createusername"
+              center
+              label="负责人"
               width="100">
             </el-table-column>
             <el-table-column
@@ -173,7 +179,7 @@
             <el-table-column
               prop="pre"
               label="预"
-              width="40">
+              width="50">
             </el-table-column>
             <el-table-column
               prop="already"
@@ -356,10 +362,11 @@
           resp.data.items.forEach(listItem => {
             var table = {};
             table.id = listItem.id;
-            table.status = listItem.productstatus;
+            table.status = listItem.productstatus==1 ? "上架":"上架" &&  listItem.productstatus==0 ? "待售":"待售" &&  listItem.productstatus==2 ? "下架":"下架";
             table.classify = listItem.productcatnames;
             table.project = listItem.projectname;
             table.Tname= listItem.groupname;
+            table.createusername = listItem.createusername;
             table.ProductID = listItem.productnumber;
             table.Pname=listItem.productname;
             table.start= new Date(listItem.serverstarttime).format("yyyy-MM-dd hh:mm:ss");

@@ -2,7 +2,7 @@
   <v-app >
     <v-content >
       <div :class="{'distributorImg':!isEmp ,'empImg':isEmp}">
-      <v-container fluid fill-height >
+      <v-container class="loginDialog" fluid fill-height >
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
@@ -93,12 +93,6 @@ export default {
         this.dialog = true;
         return false;
       }
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      });
       this.fullscreenLoading = true;
       this.$http.post("/distributorEntry/login", this.$qs.stringify({
         distributorname: this.username,
@@ -144,5 +138,10 @@ export default {
     width: 100%;
     background-size:100% 100%;
     transition: background-position .5s;
+    z-index: 2;
+  }
+
+  .loginDialog{
+    z-index: 11;
   }
 </style>

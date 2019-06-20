@@ -294,13 +294,15 @@
       if(this.modules == null){
         this.$router.push("/Login");
       }
-      //开启心跳  25S一个
+      //开启心跳  20S一个
       this.heartbeatswitch = setInterval(()=>{
         //一旦出现错误退回登录页面
         this.$http.get("/heartbeat").catch(error=>{
-          clearInterval(this.heartbeatswitch);
-          this.$message.error("系统错误");
-          this.$router.push("/login");
+          this.$http.get("/heartbeat").catch(error=>{
+            clearInterval(this.heartbeatswitch);
+            this.$message.error("系统错误");
+            this.$router.push("/login");
+          })
         })
       },20000);
       //查询当前用户的信息
